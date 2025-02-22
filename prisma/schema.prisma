@@ -12,3 +12,82 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nickname  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  
+  characters Character[]
+}
+
+model Character {
+  id            Int     @id @default(autoincrement())
+  user          User    @relation(fields: [userId], references: [id])
+  userId        Int     @map("user_id")
+  endingCount   Int     @default(0) @map("ending_count")
+  isCheckEnding Boolean @default(false) @map("is_check_ending")
+
+  status     Status?
+  quests     Quest[]
+  userTitles UserTitle[]
+}
+
+model Status {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int       @unique @map("character_id")
+  str         Int       @default(0)
+  int         Int       @default(0)
+  emo         Int       @default(0)
+  fin         Int       @default(0)
+  liv         Int       @default(0)
+}
+
+model Quest {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int       @map("character_id")
+  tagged      String
+  name        String
+  isWeekly    Boolean   @default(false) @map("is_weekly")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @default(now()) @map("updated_at")
+  endDate     DateTime  @map("end_date")
+
+  successDays SuccessDay[]
+}
+
+model Title {
+  id          Int      @id @default(autoincrement())
+  titleName   String   @map("title_name")
+  description String
+  reqStat     String   @map("req_stat")
+  reqValue    Int      @map("req_value")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  userTitles  UserTitle[]
+}
+
+model UserTitle {
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int       @map("character_id")
+  title       Title     @relation(fields: [titleId], references: [id])
+  titleId     Int       @map("title_id")
+  count       Int       @default(1)
+  isSelected  Boolean   @default(false) @map("is_selected")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@id([characterId, titleId]) // composite key
+}
+
+model SuccessDay {
+  id        Int      @id @default(autoincrement())
+  quest     Quest    @relation(fields: [questId], references: [id])
+  questId   Int      @map("quest_id")
+  createdAt DateTime @default(now()) @map("created_at")
+}
