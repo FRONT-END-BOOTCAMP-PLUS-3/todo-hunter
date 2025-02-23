@@ -15,11 +15,6 @@ const buttonVariants = cva(
         green: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] bg-[var(--current-color-green)] text-white active:bg-green-900",
         yellow: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] bg-[var(--warning-color-yellow)] text-white active:bg-yellow-900",
       },
-      textSize: {
-        default: "text-base", 
-        sm: "text-xs",        
-        lg: "text-lg",      
-      },
     },
   }
 )
@@ -28,18 +23,15 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  height?: string;
-  width?: string; 
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, textSize, asChild = false, height, width, ...props }, ref) => {
+  ({ className, variant, asChild = false,...props }, ref) => {
     const Comp = asChild ? Slot : "button";
 
     return (
       <Comp
-        className={cn(buttonVariants({ variant, textSize, className }))}
-        style={{ height: height, width: width }}  
+        className={cn(buttonVariants({ variant, className }))}
         ref={ref}
         {...props}
       />
