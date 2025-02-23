@@ -10,6 +10,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] text-black active:bg-black active:text-white",
+        red: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] bg-[var(--error-color-red)] text-white active:bg-red-900",
+        blue: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] bg-[var(--success-color-blue)] text-white active:bg-blue-900",
+        green: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] bg-[var(--current-color-green)] text-white active:bg-green-900",
+        yellow: "shadow-[5px_0_black,-5px_0_black,0_-5px_black,0_5px_black] margin-[5px_auto] bg-[var(--warning-color-yellow)] text-white active:bg-yellow-900",
       },
       textSize: {
         default: "text-base", 
