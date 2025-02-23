@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'dunggeunmo';
+}
+
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff');
 }
 
 @layer base {
@@ -33,6 +38,10 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --error-color-red: #A72F35;
+    --success-color-blue: #2049BD;
+    --warning-color-yellow: #D5B946;
+    --current-color-green: #3E8B75;
   }
   .dark {
     --background: 240 10% 3.9%;
