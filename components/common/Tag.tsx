@@ -1,36 +1,42 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import { STATUS } from "@/constants";
 
-import { cn } from "@/lib/utils"
+type StatusKey = keyof typeof STATUS;
+type StatusVariant = StatusKey | "default";
 
 const tagVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "two-step-border inline-flex items-center px-2.5 py-0.5 text-sm font-semibold",
   {
     variants: {
       variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground",
-      },
+        default: "bg-white text-black",
+        STR: "bg-red-500 text-white",
+        INT: "bg-blue-500 text-white",
+        EMO: "bg-purple-500 text-white",
+        FIN: "bg-green-500 text-white",
+        LIV: "bg-yellow-500 text-white",
+      } satisfies Record<StatusVariant, string>,
     },
     defaultVariants: {
       variant: "default",
     },
   }
-)
+);
 
 export interface TagProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof tagVariants> {}
-
-function Tag({ className, variant, ...props }: TagProps) {
-  return (
-    <div className={cn(tagVariants({ variant }), className)} {...props} />
-  )
+    VariantProps<typeof tagVariants> {
+  variant?: StatusVariant;
 }
 
-export { Tag, tagVariants }
+function Tag({ className, variant, children, ...props }: TagProps) {
+  return (
+    <div className={cn(tagVariants({ variant }), className)} {...props}>
+      {children}
+    </div>
+  );
+}
+
+export { Tag, tagVariants };
