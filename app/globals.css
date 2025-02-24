@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Galmuri, Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+  font-family: 'Galmuri';
+  src: url('https://fastly.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
 }
 
 @layer base {
@@ -33,6 +38,10 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --error-color-red: #A72F35;
+    --success-color-blue: #2049BD;
+    --warning-color-yellow: #D5B946;
+    --current-color-green: #3E8B75;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -68,5 +77,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .two-step-border {
+    @apply shadow-[4px_0_white,-4px_0_white,0_-4px_white,0_4px_white,8px_0_blue,-8px_0_blue,0_-8px_blue,0_8px_blue,0_0_0_4px_blue];
   }
 }
