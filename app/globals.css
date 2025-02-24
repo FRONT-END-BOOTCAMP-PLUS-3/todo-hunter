@@ -92,6 +92,13 @@ body {
 
 @layer components {
   .two-step-border {
-    @apply shadow-[4px_0_white,-4px_0_white,0_-4px_white,0_4px_white,8px_0_,-8px_0_,0_-8px_,0_8px_,0_0_0_4px_];
+    --border-color: black;
+    @apply shadow-[4px_0_white,-4px_0_white,0_-4px_white,0_4px_white,8px_0_var(--border-color),-8px_0_var(--border-color),0_-8px_var(--border-color),0_8px_var(--border-color),0_0_0_4px_var(--border-color)];
+
   }
+  /* 상태별로 --border-color 값을 오버라이드 클래스 */
+  .state-current { --border-color: var(--current-color-green); }
+  .state-success { --border-color: var(--success-color-blue); }
+  .state-warning { --border-color: var(--warning-color-yellow); }
+  .state-error   { --border-color: var(--error-color-red); }
 }
