@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 body {
-  font-family: 'dunggeunmo';
+  font-family: Galmuri, Arial, Helvetica, sans-serif;
 }
 
 @font-face {
-  font-family: 'DungGeunMo';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff');
+  font-family: 'Galmuri';
+  src: url('https://fastly.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
 }
 
 @layer base {
@@ -77,5 +77,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .two-step-border {
+    @apply shadow-[4px_0_white,-4px_0_white,0_-4px_white,0_4px_white,8px_0_blue,-8px_0_blue,0_-8px_blue,0_8px_blue,0_0_0_4px_blue];
   }
 }
