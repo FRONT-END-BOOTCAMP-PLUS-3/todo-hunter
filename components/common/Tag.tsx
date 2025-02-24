@@ -7,7 +7,7 @@ type StatusKey = keyof typeof STATUS;
 type StatusVariant = StatusKey | "default";
 
 const tagVariants = cva(
-  "two-step-border inline-flex items-center px-2.5 py-0.5 text-sm font-semibold",
+  "is-rounded inline-flex items-center px-2.5 py-0.5 text-sm font-semibold",
   {
     variants: {
       variant: {
