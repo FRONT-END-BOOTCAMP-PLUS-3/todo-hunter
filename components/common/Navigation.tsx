@@ -22,7 +22,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                     flex
                     relative
                         justify-between
-                    w-full h-full
+                    h-full
                         max-[300px]:h-[66px]
                     mt-[-2px]
                     mb-[-2px]
