@@ -8,6 +8,19 @@ export class PrismaStatusRepository implements StatusRepository {
     this.prisma = new PrismaClient();
   }
 
+  async create(characterId: number): Promise<Status> {
+    return await this.prisma.status.create({
+      data: {
+        characterId: characterId,
+        str: 0,
+        int: 0,
+        emo: 0,
+        fin: 0,
+        liv: 0,
+      },
+    });
+  }
+
   async findById(id: number): Promise<Status | null> {
     return await this.prisma.status.findUnique({
       where: {
