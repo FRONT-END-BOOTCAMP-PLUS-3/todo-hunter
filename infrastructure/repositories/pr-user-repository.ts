@@ -9,10 +9,10 @@ export class PrismaUserRepository implements UserRepository {
     this.prisma = new PrismaClient();
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: number): Promise<User | null> {
     return await this.prisma.user.findUnique({
       where: {
-        id: parseInt(id),
+        id: id,
       },
     });
   }

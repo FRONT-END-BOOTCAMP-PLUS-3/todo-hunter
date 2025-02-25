@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 
 export interface UserRepository {
-  findById: (id: string) => Promise<User | null>;
+  findById: (id: number) => Promise<User | null>;
   findByEmail: (email: string) => Promise<User | null>;
   verifyPassword: (user: User, password: string) => Promise<boolean>;
   create: (user: User) => Promise<User>;
