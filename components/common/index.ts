@@ -5,3 +5,4 @@ export * from "@/components/common/Tag";
 export * from "@/components/common/Dialog";
 export * from "@/components/common/Navigation";
 export * from "@/components/common/Sonner";
+export * from "@/components/common/Skeleton";
