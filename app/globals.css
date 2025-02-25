@@ -75,8 +75,8 @@ body {
     font-weight: 400;
     font-display: swap;
     src: local('Galmuri9 Regular'),
-         url('galmuri/dist/Galmuri9.woff2') format('woff2'),
-         url('galmuri/dist/Galmuri9.ttf') format('truetype');
+    url('galmuri/dist/Galmuri9.woff2') format('woff2'),
+    url('galmuri/dist/Galmuri9.ttf') format('truetype');
   }
   .font-galmuri9 {
     font-family: 'Galmuri9', sans-serif;
@@ -99,6 +99,16 @@ body {
 }
 
 @layer components {
+  .input-border {
+    --border-color: black;
+    @apply shadow-[4px_0_white,-4px_0_white,0_-4px_white,0_4px_white,8px_0_var(--border-color),-8px_0_var(--border-color),0_-8px_var(--border-color),0_8px_var(--border-color),0_0_0_4px_var(--border-color)];
+  }
+  /* 상태별로 --border-color 값을 오버라이드 */
+  .state-current { --border-color: var(--current-color-green); }
+  .state-success { --border-color: var(--success-color-blue); }
+  .state-warning { --border-color: var(--warning-color-yellow); }
+  .state-error   { --border-color: var(--error-color-red); }
+
   .two-step-border {
     border-style: solid;
     border-width: 4px;
