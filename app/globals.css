@@ -78,14 +78,23 @@ body {
     url('galmuri/dist/Galmuri9.woff2') format('woff2'),
     url('galmuri/dist/Galmuri9.ttf') format('truetype');
   }
-  .font-galmuri {
+  .font-galmuri9 {
     font-family: 'Galmuri9', sans-serif;
   }
   * {
-    @apply border-border font-galmuri;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  a,abbr,acronym,address,applet,article,aside,
+  b,big,blockquote,body,canvas,caption,center,cite,code,
+  dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,
+  footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,img,ins,kbd,
+  label,legend,li,main,mark,menu,nav,ol,output,
+  p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,
+  table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var{
+    @apply font-galmuri9;
   }
 }
 
@@ -111,7 +120,6 @@ body {
     padding:1rem 1.5rem;
     margin:4px;
   }
-
   .is-rounded {
     border-style: solid;
     border-width: 4px;
@@ -122,5 +130,31 @@ body {
     border-image-outset:2;
     padding:1rem 1.5rem;
     margin:4px;
+  }
+  .is-rounded-navi {
+    border-style: solid;
+    border-width: 4px;
+    border-image-slice:3;
+    border-image-width:3;
+    border-image-repeat:stretch;
+    border-image-source:url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(244,244,245)" /></svg>');
+    border-image-outset:2;
+  }
+  button.is-rounded-navi {
+    border-style: none;
+    border-width: 0px;
+  }
+  .is-rounded-navi[data-state="active"] {
+    border-style: solid;
+    border-width: 4px;
+    border-image-slice:3;
+    border-image-width:3;
+    border-image-repeat:stretch;
+    border-image-source:url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(255,255,255)" /></svg>');
+    border-image-outset:2;
+  }
+  .is-rounded-full {
+    background:url(/images/border_round.svg) center center;
+    background-repeat: no-repeat;
   }
 }
