@@ -22,6 +22,7 @@ const inputVariants = cva(
 
 export type InputProps = React.ComponentProps<"input"> & VariantProps<typeof inputVariants>;
 
+// eslint-disable-next-line react/display-name
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, state, ...props }, ref) => {
     return (
