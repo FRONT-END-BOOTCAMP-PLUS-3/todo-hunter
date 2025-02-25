@@ -1,9 +1,9 @@
 // import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/common/dialog";
+import { Button } from "@/components/common/Button";
 
 // 호출 예시
-/* <DialogModal
+/* <DialogButton
     placeholder="Edit Placeholder"
     title="Edit Profile"
     description="Make changes to your profile here. Click save when you're done."
