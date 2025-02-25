@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Tabs, TabsList, TabsTrigger } from "@/components/common/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/common/Tabs";
 import "@hackernoon/pixel-icon-library/fonts/iconfont.css";
 import menus from "@/constants/menu";
 

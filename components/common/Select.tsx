@@ -106,10 +106,12 @@ const SelectLabel = React.forwardRef<
   />
 ))
 
+type StatusSelect = keyof typeof STATUS | string | number | boolean;
+
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>, "value"> & {
-    value: keyof typeof STATUS;
+    value: StatusSelect;
   }
 >(({ className, value, children, ...props }, ref) => (
   <SelectPrimitive.Item
@@ -118,7 +120,7 @@ const SelectItem = React.forwardRef<
       "relative flex w-full cursor-default select-none items-center py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
-    value={value} // 🎯 `value`를 `StatusVariant`로 강제
+    value={String(value)} // Radix UI는 string을 요구하므로 변환
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -129,7 +131,7 @@ const SelectItem = React.forwardRef<
 
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
-))
+));
 
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
