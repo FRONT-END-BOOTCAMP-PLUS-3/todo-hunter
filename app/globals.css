@@ -75,8 +75,8 @@ body {
     font-weight: 400;
     font-display: swap;
     src: local('Galmuri9 Regular'),
-         url('galmuri/dist/Galmuri9.woff2') format('woff2'),
-         url('galmuri/dist/Galmuri9.ttf') format('truetype');
+    url('galmuri/dist/Galmuri9.woff2') format('woff2'),
+    url('galmuri/dist/Galmuri9.ttf') format('truetype');
   }
   .font-galmuri {
     font-family: 'Galmuri9', sans-serif;
@@ -87,7 +87,6 @@ body {
   body {
     @apply bg-background text-foreground;
   }
- 
 }
 
 @layer components {
