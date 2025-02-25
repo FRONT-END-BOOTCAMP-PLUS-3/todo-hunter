@@ -30,13 +30,15 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                     mr-[4px]
                 ">
                 {/* 왼쪽 그룹 */}
-                <div className="
+                <div className={`
                     flex
                         justify-evenly
                     relative
                     w-full
                     left-[-4px]
-                ">
+                `
+                .replace(/\s+/g, ' ').trim()
+                }>
                     {menus.slice(0, 2).map(({ menu, icon, label }) => (
                     <TabsTrigger key={menu} className={`
                         is-rounded-navi
@@ -48,8 +50,10 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                             min-[430px]:pl-4
                             min-[430px]:pr-4
                         ${selectedMenu === menu ? `pt-1 pb-0` : `pb-1`}
-                    `} value={menu}>
-                        <div className="
+                    `
+                    .replace(/\s+/g, ' ').trim()
+                    } value={menu}>
+                        <div className={`
                             icon
                             flex
                                 justify-center
@@ -57,17 +61,23 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                             h-8
                                 max-[300px]:h-7
                             min-[430px]:pb-2
-                        ">
+                        `
+                        .replace(/\s+/g, ' ').trim()
+                        }>
                         <i className={`
                             hn ${selectedMenu === menu ? `hn-${icon}-solid` : `hn-${icon}`}
                             text-[24px]
-                        `}></i>
+                        `
+                        .replace(/\s+/g, ' ').trim()
+                        }></i>
                         </div>
-                        <span className="
+                        <span className={`
                             pt-1
                             text-xs
                                 min-[430px]:text-sm
-                            ">
+                        `
+                        .replace(/\s+/g, ' ').trim()
+                        }>
                             {(Array.isArray(label) ? label : [label]).map((text, brIndex) => (
                                 <React.Fragment key={brIndex}>
                                     {text}
@@ -80,13 +90,14 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                     ))}
                 </div>
                 {/* 중앙 (something) */}
-                <div className="
+                <div className={`
                     flex
                     relative
                     min-w-[100px]
                         max-[430px]:min-w-[80px]
                         max-[300px]:min-w-[70px]
-                ">
+                `
+                .replace(/\s+/g, ' ').trim()}>
                 {menus[2] && (
                 <TabsTrigger
                     key={menus[2].menu}
@@ -105,19 +116,23 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                             max-[300px]:w-[80px]
                         h-[100px]
                             max-[300px]:h-[80px]
+                        max-[430px]:pt-3
                         border-transparent
                     ${selectedMenu === menus[2].menu ? "bg-white" : "transparent text-white"}
-                    text-lg sm:text-base`}
+                    text-lg sm:text-base`
+                    .replace(/\s+/g, ' ').trim()}
                     value={menus[2].menu}
                 >
-                    <div className="
+                    <div className={`
                         icon
                         flex
                             justify-center
                             items-start
                         h-9
                             max-[430px]:h-7
-                    ">
+                    `
+                    .replace(/\s+/g, ' ').trim()
+                    }>
                         <i className={`hn ${selectedMenu === menus[2].menu ? `hn-${menus[2].icon}-solid` : `hn-${menus[2].icon}`} text-[26px] min-[430px]:text-[30px]`}></i>
                     </div>
                     <span className="text-[16px] max-[430px]:text-[14px]">{menus[2].label}</span>
@@ -125,13 +140,15 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                 )}
                 </div>
                 {/* 오른쪽 그룹 */}
-                <div className="
+                <div className={`
                     flex
                         justify-evenly
                     relative
                     w-full
                     right-[-4px]
-                ">
+                `
+                .replace(/\s+/g, ' ').trim()
+                }>
                     {menus.slice(3, 5).map(({ menu, icon, label }) => (
                     <TabsTrigger key={menu} className={`
                         is-rounded-navi
@@ -143,8 +160,10 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                             min-[430px]:pl-4
                             min-[430px]:pr-4
                         ${selectedMenu === menu ? `pt-1 pb-0` : `pb-1`}
-                    `} value={menu}>
-                        <div className="
+                    `
+                    .replace(/\s+/g, ' ').trim()
+                    } value={menu}>
+                        <div className={`
                             icon
                             flex
                                 justify-center
@@ -152,17 +171,23 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                             h-8
                                 max-[300px]:h-7
                             min-[430px]:pb-2
-                        ">
+                        `
+                        .replace(/\s+/g, ' ').trim()
+                        }>
                         <i className={`
                             hn ${selectedMenu === menu ? `hn-${icon}-solid` : `hn-${icon}`}
                             text-[24px]
-                        `}></i>
+                        `
+                        .replace(/\s+/g, ' ').trim()
+                        }></i>
                         </div>
-                        <span className="
+                        <span className={`
                             pt-1
                             text-xs
                                 min-[430px]:text-sm
-                            ">
+                            `
+                            .replace(/\s+/g, ' ').trim()
+                            }>
                             {(Array.isArray(label) ? label : [label]).map((text, brIndex) => (
                                 <React.Fragment key={brIndex}>
                                     {text}
