@@ -5,7 +5,6 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
 
-//Navigation 컴포넌트에서 사용
 const Tabs = TabsPrimitive.Root
 
 const TabsList = React.forwardRef<
