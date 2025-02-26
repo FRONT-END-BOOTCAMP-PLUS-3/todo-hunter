@@ -1,8 +1,8 @@
 import { PrismaClient, User } from "@prisma/client";
-import { UserRepository } from "@/domain/repositories";
+import { IUserRepository } from "@/domain/repositories";
 import bcrypt from "bcrypt";
 
-export class PrismaUserRepository implements UserRepository {
+export class PriUserRepository implements IUserRepository {
   // refactor : 핫 리로딩으로 인한 prismaClient 의 중복생성을 방지하기 위해 의존성 주입 방식으로 변경
   
   // private prisma: PrismaClient;
