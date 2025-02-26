@@ -1,7 +1,7 @@
 import { PrismaClient, Title } from "@prisma/client";
-import { TitleRepository } from "@/domain/repositories/title-repository";
+import { ITitleRepository } from "@/domain/repositories/ITitleRepository";
 
-export class PrTitleRepository implements TitleRepository {
+export class PriTitleRepository implements ITitleRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
   async findById(id: number): Promise<Title | null> {

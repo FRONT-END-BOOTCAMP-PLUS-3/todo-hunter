@@ -1,6 +1,6 @@
 import { Title } from "@prisma/client";
 
-export interface TitleRepository {
+export interface ITitleRepository {
   findById: (id: number) => Promise<Title | null>;
   findByIds: (ids: number[]) => Promise<Title[]>;
   findAll: () => Promise<Title[]>;
