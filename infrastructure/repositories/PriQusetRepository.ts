@@ -1,12 +1,9 @@
 import { PrismaClient, Quest } from "@prisma/client";
-import { QuestRepository } from "@/domain/repositories/quest-repository";
+import { IQuestRepository } from "@/domain/repositories/IQuestRepository";
 
-export class QuestRepositoryImpl implements QuestRepository {
-    private prisma: PrismaClient;
+export class PriQuestRepository implements IQuestRepository {
   
-    constructor() {
-      this.prisma = new PrismaClient();
-    }
+  constructor(private readonly prisma: PrismaClient) {}
 
   async findById(id: number): Promise<Quest | null>{
     return await this.prisma.quest.findUnique({ where: { id } });

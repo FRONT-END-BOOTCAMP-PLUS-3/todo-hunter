@@ -1,6 +1,6 @@
 import { Quest } from "@prisma/client";
 
-export interface QuestRepository {
+export interface IQuestRepository {
     findById(id: number): Promise<Quest | null>;
     findAll(): Promise<Quest[]>;
     create(quest: Quest): Promise<Quest>;
