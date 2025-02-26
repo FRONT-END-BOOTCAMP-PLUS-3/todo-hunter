@@ -1,6 +1,6 @@
 import { Character } from "@prisma/client";
 
-export interface CharacterRepository {
+export interface ICharacterRepository {
     findById: (id: number) => Promise<Character | null>;
     findByUserId: (userId: number) => Promise<Character | null>;
     addEndingCount: (id: number) => Promise<number>; 

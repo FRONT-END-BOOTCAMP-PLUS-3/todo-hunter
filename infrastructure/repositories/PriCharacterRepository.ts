@@ -1,12 +1,9 @@
-import { CharacterRepository } from "@/domain/repositories";
+import { ICharacterRepository } from "@/domain/repositories";
 import { Character, PrismaClient } from "@prisma/client";
 
-export class PrismaCharacterRepository implements CharacterRepository {
-  private prisma: PrismaClient;
+export class PriCharacterRepository implements ICharacterRepository {
 
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  constructor(private readonly prisma: PrismaClient) {} // 의존성 주입 방식
 
   async findById(id: number):Promise<Character | null> {
     return await this.prisma.character.findUnique({
