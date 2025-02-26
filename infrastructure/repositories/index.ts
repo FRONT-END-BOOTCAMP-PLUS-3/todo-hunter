@@ -1,4 +1,5 @@
 export * from "@/infrastructure/repositories/PriUserRepository";
+export * from "@/infrastructure/repositories/PriQusetRepository";
 export * from "@/infrastructure/repositories/PriCharacterRepository";
 export * from "@/infrastructure/repositories/PriUserTitleRepository";
 export * from "@/infrastructure/repositories/PriSuccessdayRepository";

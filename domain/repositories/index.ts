@@ -1,4 +1,5 @@
 export * from "@/domain/repositories/IUserRepository";
+export * from "@/domain/repositories/IQuestRepository";
 export * from "@/domain/repositories/ICharacterRepository";
 export * from "@/domain/repositories/IUserTitleRepository";
 export * from "@/domain/repositories/ISuccessDayRepository";
