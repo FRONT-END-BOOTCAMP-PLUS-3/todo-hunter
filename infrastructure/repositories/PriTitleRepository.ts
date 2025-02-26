@@ -10,7 +10,7 @@ export class PriTitleRepository implements ITitleRepository {
     });
   }
 
-  async findByIds(ids: number[]): Promise<Title[]> {
+  async findManyByIds(ids: number[]): Promise<Title[]> {
     return this.prisma.title.findMany({
       where: {
         id: {
