@@ -5,5 +5,6 @@ export interface ICharacterRepository {
     findByUserId: (userId: number) => Promise<Character | null>;
     addEndingCount: (id: number) => Promise<number>; 
     create: (userId: number) => Promise<Character>;
-    isCheckEnding: (id: number) => Promise<boolean | null>;
+    updateForSunday: () => Promise<void>;
+    updateForMonday: () => Promise<void>;
 }
