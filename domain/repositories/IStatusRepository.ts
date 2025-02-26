@@ -1,6 +1,6 @@
 import { Status } from "@prisma/client";
 
-export interface StatusRepository {
+export interface IStatusRepository {
   create: (characterId: number) => Promise<Status>;
   findById: (id: number) => Promise<Status | null>;
   findByCharacterId: (characterId: number) => Promise<Status | null>;
