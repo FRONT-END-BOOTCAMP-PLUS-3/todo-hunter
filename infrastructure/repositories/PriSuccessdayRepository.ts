@@ -1,26 +1,25 @@
-import { SuccessDay } from "@prisma/client";
-import { SuccessDayRepository } from "@/domain/repositories";
-import { prisma } from "@/lib/prisma";
+import { PrismaClient, SuccessDay } from "@prisma/client";
+import { ISuccessDayRepository } from "@/domain/repositories";
 
-export class PriSuccessDayRepository implements SuccessDayRepository {
+export class PriSuccessDayRepository implements ISuccessDayRepository {
 
   constructor(private readonly prisma: PrismaClient) {}
 
     async findById(id: number): Promise<SuccessDay | null> {
-        return prisma.successDay.findUnique({
+        return this.prisma.successDay.findUnique({
           where: { id },
         });
       }
 
     async findByQuestId(questId: number): Promise<SuccessDay[]>  {
-        return prisma.successDay.findMany({
+        return  this.prisma.successDay.findMany({
           where: { questId },
           orderBy: { createdAt: "desc" },
         });
       }
 
   async create(questId: number): Promise<SuccessDay> {
-    return prisma.successDay.create({
+    return this.prisma.successDay.create({
       data: {
         questId,
       },
@@ -29,7 +28,7 @@ export class PriSuccessDayRepository implements SuccessDayRepository {
 
   async update(id: number, data: Partial<SuccessDay>): Promise<SuccessDay | null> {
     try {
-      return await prisma.successDay.update({
+      return await this.prisma.successDay.update({
         where: { id },
         data,
       });

@@ -1,9 +1,10 @@
 import { SuccessDay } from "@prisma/client"; 
 
-export interface SuccessDayRepository {
+export interface ISuccessDayRepository {
     findById(id: number): Promise<SuccessDay | null>;
     findByQuestId(questId: number): Promise<SuccessDay[]>;
     create(questId: number): Promise<SuccessDay>;
+    update(id: number, data: Partial<SuccessDay>): Promise<SuccessDay | null>;
     // delete(id: number): Promise<void>;
   }
   
