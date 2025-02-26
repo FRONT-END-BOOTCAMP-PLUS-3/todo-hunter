@@ -1,23 +1,29 @@
 import { PrismaClient, UserTitle } from "@prisma/client";
-import { UserTitleRepository } from "@/domain/repositories";
+import { IUserTitleRepository } from "@/domain/repositories";
 
-export class PrismaUserTitleRepository implements UserTitleRepository {
-  private prisma: PrismaClient;
+export class PriUserTitleRepository implements IUserTitleRepository {
+  // refactor : 핫 리로딩으로 인한 prismaClient 의 중복생성을 방지하기 위해 의존성 주입 방식으로 변경
+  
+  // private prisma: PrismaClient;
 
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  // constructor() {
+  //   this.prisma = new PrismaClient(); // 자체 인스턴스 생성 방식
+  // }
+
+  constructor(private readonly prisma: PrismaClient) {} // 의존성 주입
 
   // 레코드 생성 메서드
-  async createUserTitle(characterId: number, titleId: number): Promise<UserTitle> {
-    return await this.prisma.userTitle.create({
-      data: {
-        characterId: characterId,
-        titleId: titleId,
-        count: 1,  // 기본 값 1
-        isSelected: false,  // 기본 값 false
-        createdAt: new Date(), // 생성일
-      },
+  async create(characterId: number, titleId: number): Promise<UserTitle> {
+    return await this.prisma.$transaction(async (tx) => {
+      return tx.userTitle.create({
+        data: {
+          characterId: characterId,
+          titleId: titleId,
+          count: 1,  // 기본 값 1
+          isSelected: false,  // 기본 값 false
+          createdAt: new Date(), // 생성일
+        },
+      });
     });
   }
 
