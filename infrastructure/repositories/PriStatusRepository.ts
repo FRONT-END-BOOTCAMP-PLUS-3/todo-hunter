@@ -2,14 +2,6 @@ import { PrismaClient, Status } from "@prisma/client";
 import { IStatusRepository } from "@/domain/repositories";
 
 export class PriStatusRepository implements IStatusRepository {
-  // refactor : 핫 리로딩으로 인한 prismaClient 의 중복생성을 방지하기 위해 의존성 주입 방식으로 변경
-  
-  // private prisma: PrismaClient;
-
-  // constructor() {
-  //   this.prisma = new PrismaClient(); // 자체 인스턴스 생성 방식
-  // }
-
   constructor(private readonly prisma: PrismaClient) {} // 의존성 주입
 
   async create(characterId: number): Promise<Status> {
