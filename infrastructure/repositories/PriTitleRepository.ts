@@ -1,5 +1,5 @@
 import { PrismaClient, Title } from "@prisma/client";
-import { ITitleRepository } from "@/domain/repositories/ITitleRepository";
+import { ITitleRepository } from "@/domain/repositories";
 
 export class PriTitleRepository implements ITitleRepository {
   constructor(private readonly prisma: PrismaClient) {}
