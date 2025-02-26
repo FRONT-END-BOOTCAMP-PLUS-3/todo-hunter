@@ -1,2 +1,1 @@
-export * from "@/domain/repositories/user-repository";
-export * from "@/domain/repositories/character-repository";
+export * from "@/domain/repositories/IUserRepository";
