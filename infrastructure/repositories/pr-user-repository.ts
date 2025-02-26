@@ -3,12 +3,16 @@ import { UserRepository } from "@/domain/repositories";
 import bcrypt from "bcrypt";
 
 export class PrismaUserRepository implements UserRepository {
-  private prisma: PrismaClient;
+  // refactor : 핫 리로딩으로 인한 prismaClient 의 중복생성을 방지하기 위해 의존성 주입 방식으로 변경
+  
+  // private prisma: PrismaClient;
 
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
+  // constructor() {
+  //   this.prisma = new PrismaClient(); // 자체 인스턴스 생성 방식
+  // }
 
+  constructor(private readonly prisma: PrismaClient) {} // 의존성 주입 방식
+  
   async findById(id: number): Promise<User | null> {
     return await this.prisma.user.findUnique({
       where: {
