@@ -1,2 +1,2 @@
 export * from "@/domain/repositories/IUserRepository";
-export * from "@/domain/repositories/status-repository";
+export * from "@/domain/repositories/IStatusRepository";
