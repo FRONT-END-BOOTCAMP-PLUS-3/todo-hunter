@@ -8,5 +8,5 @@ export interface IQuestRepository {
     findByCreatedAt: (characterId: number)=> Promise<Quest[]>;
     create: (quest: Quest) => Promise<Quest>;
     update: (id: number, quest: Partial<Quest>) => Promise<Quest>;
-    delete: (id: number) => Promise<Quest>;
+    delete: (id: number) => Promise<void>;
 }

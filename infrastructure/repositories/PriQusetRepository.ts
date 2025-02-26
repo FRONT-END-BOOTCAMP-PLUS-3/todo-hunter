@@ -12,10 +12,13 @@ export class PriQuestRepository implements IQuestRepository {
   // 태그값으로 퀘스트 조회
   async findByTag(tag: string) {
     return await this.prisma.quest.findMany({
-      where: { tagged: tag },
+      where: { tagged: tag, },
+      orderBy: {
+        tagged: "asc", // 가나다순 정렬
+      },
     });
   }
-  
+
 // 주간 퀘스트 여부 조회
   async findWeeklyQuests(characterId: number) {
     return await this.prisma.quest.findMany({
@@ -58,7 +61,7 @@ export class PriQuestRepository implements IQuestRepository {
     });
   }
 
-  async delete(id: number) {
-    return await this.prisma.quest.delete({ where: { id } });
+  async delete(id: number): Promise<void> {
+    await this.prisma.quest.delete({ where: { id } });
   }
 }
