@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 
-export interface UserRepository {
+export interface IUserRepository {
   findById: (id: number) => Promise<User | null>;
   findByEmail: (email: string) => Promise<User | null>;
   verifyPassword: (user: User, password: string) => Promise<boolean>;
