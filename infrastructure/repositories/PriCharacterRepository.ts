@@ -33,15 +33,7 @@ export class PriCharacterRepository implements ICharacterRepository {
     return updatedCharacter.endingCount;
   }
 
-  async create(userId: number): Promise<Character> {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // 0: 일요일, 1: 월요일, ..., 6: 토요일
-
-    let endingState = 1;
-    if (dayOfWeek === 0) { // 일요일
-      endingState = 0;
-    }
-
+  async create(userId: number, endingState: number): Promise<Character> {
     return await this.prisma.character.create({
       data: {
         userId,
@@ -51,8 +43,7 @@ export class PriCharacterRepository implements ICharacterRepository {
     });
   }
 
-  // 일요일에 endingState가 1인 사용자들의 endingState를 2로 업데이트
-
+  // 일요일에 endingState가 1인 사용자들의 endingState를 2로 업데이트 - node-cron 사용
   async updateForSunday(): Promise<void> {
     await this.prisma.character.updateMany({
       where: {
@@ -64,8 +55,7 @@ export class PriCharacterRepository implements ICharacterRepository {
     });
   }
 
-  // 월요일에 모든 사용자의 endingState를 1로 업데이트
-
+  // 월요일에 모든 사용자의 endingState를 1로 업데이트 - node-cron 사용
   async updateForMonday(): Promise<void> {
     await this.prisma.character.updateMany({
       data: {
