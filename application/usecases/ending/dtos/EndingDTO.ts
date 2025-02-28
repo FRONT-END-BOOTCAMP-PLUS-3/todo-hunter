@@ -7,10 +7,5 @@ export interface EndingDTO {
   achievableTitle: {
     titleName: string;
     description: string;
-  }; // 칭호 이름과 설명
+  };
 }
-
-// 엔딩 페이지에서 필요한 데이터
-// 1. 이미 엔딩을 확인했는가? -> UserStore.endingState === EndingDTO.EndingState
-// 2. 이번 엔딩의 대사? -> 로직 처리 필요
-// 3. 이번 엔딩의 이미지? -> 로직 처리 필요
