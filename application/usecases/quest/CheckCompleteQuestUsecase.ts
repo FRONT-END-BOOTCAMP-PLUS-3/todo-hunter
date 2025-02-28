@@ -1,7 +1,7 @@
 import { PriSuccessDayRepository } from "@/infrastructure/repositories/PriSuccessdayRepository";
 import { PrismaClient } from "@prisma/client";
 
-export class CompletedQuestUsecase {
+export class CheckCompleteQuestUsecase {
   private readonly priSuccessDayRepository: PriSuccessDayRepository;
 
   constructor(private readonly prisma: PrismaClient) {
