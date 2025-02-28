@@ -20,6 +20,14 @@ export class PriUserRepository implements IUserRepository {
       },
     });
   }
+  
+  async findByLoginId(loginId: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: {
+        loginId,
+      },
+    });
+  }
 
   async findByEmail(email: string): Promise<User | null> {
     return await this.prisma.user.findUnique({
@@ -29,21 +37,34 @@ export class PriUserRepository implements IUserRepository {
     });
   }
 
+  async findLoginIdByEmail(email: string): Promise<string | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  
+    return user ? user.loginId : null;
+  }
+
   async verifyPassword(user: User, password: string): Promise<boolean> {
     return await bcrypt.compare(password, user.password);
   }
 
-  async create(user: User): Promise<User> {
+  async create(data: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<User> {
     return await this.prisma.$transaction(async (tx) => {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const hashedPassword = await bcrypt.hash(data.password, 10);
 
-      return tx.user.create({
+      const newUser = await tx.user.create({
         data: {
-          email: user.email,
+          loginId: data.loginId,
+          email: data.email,
           password: hashedPassword,
-          nickname: user.nickname,
+          nickname: data.nickname,
         },
       });
+
+      return newUser;
     });
   }
 
