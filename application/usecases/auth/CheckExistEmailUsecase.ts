@@ -1,5 +1,5 @@
 import { IUserRepository } from "@/domain/repositories";
-import { CheckExistEmailDTO } from "./dtos/CheckExistEmailDto";
+import { CheckExistEmailDTO } from "./dtos/CheckExistEmailDTO";
 
 export class CheckExistEmailUsecase {
     constructor(

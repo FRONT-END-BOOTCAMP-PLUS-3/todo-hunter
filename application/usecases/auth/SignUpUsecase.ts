@@ -1,5 +1,5 @@
 import { ICharacterRepository, IStatusRepository, IUserRepository } from "@/domain/repositories";
-import { SignUpDTO } from "./dtos/SignUpDto";
+import { SignUpDTO } from "./dtos/SignUpDTO";
 
 export class SignUpUsecase {
   constructor(
