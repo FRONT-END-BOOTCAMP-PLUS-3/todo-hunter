@@ -14,8 +14,8 @@ export const ENDING_PROMPTS: Record<number, string> = {
 
 // 엔딩 이미지
 export const ENDING_IMAGES: Record<number, string> = {
-  1: "/public/endings/ending1.jpg",
-  2: "/public/endings/ending2.jpg",
-  3: "/public/endings/ending3.jpg",
+  1: "/endings/ending1.jpg",
+  2: "/endings/ending2.jpg",
+  3: "/endings/ending3.jpg",
   // add
 };
