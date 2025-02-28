@@ -41,11 +41,11 @@ export class PriQuestRepository implements IQuestRepository {
   }
 
 // 종료일 기준 퀘스트 조회
-  async findBeforeEndDate(characterId: number, endDate: Date) {
+  async findBeforeEndDate(characterId: number, expiredAt: Date) {
     return await this.prisma.quest.findMany({
       where: {
         characterId: characterId,
-        endDate: { lte: endDate }, // lte) less than or equal: 종료일이 endDate보다 작거나 같은 퀘스트 조회
+        expiredAt: expiredAt,
       },
     });
   }
