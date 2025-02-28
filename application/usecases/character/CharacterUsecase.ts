@@ -1,5 +1,5 @@
 import { IQuestRepository, IStatusRepository, ISuccessDayRepository, IUserRepository } from "@/domain/repositories";
-import { CharacterDto } from "./dtos/characterDto";
+import { CharacterDto } from "./dtos/CharacterDTO";
 
 
 export class CharacterUsecase {
