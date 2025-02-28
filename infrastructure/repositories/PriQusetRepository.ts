@@ -19,11 +19,12 @@ export class PriQuestRepository implements IQuestRepository {
     });
   }
 
-    // 현재일 기준 character의 퀘스트 조회
+    // 현재일 기준 character의 일간 퀘스트 조회
     async findCurrentQuests(characterId: number, currentDay: Date):Promise<Quest[] | null> {
       return await this.prisma.quest.findMany({
         where: {
           characterId: characterId,
+          isWeekly: false, // 일간 퀘스트만 조회
           createdAt: { lte: currentDay },
           updatedAt: { lte: currentDay },
         }

@@ -17,10 +17,10 @@ export class CharacterUsecase {
         // 퀘스트 진행률 구하기!!!!
         // 1. 현재 퀘스트 조회
         const currentQuests = await this.IQuestRepository.findCurrentQuests(characterId, new Date());
-        // 1-1. 현재 퀘스트의 id 조회
+        // 1-1. 현재 일간 퀘스트의 id 조회
         const currentQuestIds = currentQuests?.map((quest) => quest.id);
 
-        // 2. 현재 퀘스트 중 성공한 퀘스트 조회 
+        // 2. 현재 일간 퀘스트 중 성공한 퀘스트 조회 
         if (!currentQuestIds || currentQuestIds.length === 0)throw new Error("currentQuestIds not found");
         const successQuests = await this.ISuccessDayRepository.findCurrentQuests(currentQuestIds, new Date());
 
