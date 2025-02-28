@@ -62,8 +62,10 @@ export class PriQuestRepository implements IQuestRepository {
     });
   }
   
-  async create(quest: Quest) {
-    return await this.prisma.quest.create({ data: quest });
+  async create(questData: Omit<Quest, "id">): Promise<Quest> {
+    return await this.prisma.quest.create({
+      data: questData,
+    });
   }
 
   async update(id: number, quest: Partial<Quest>) {
