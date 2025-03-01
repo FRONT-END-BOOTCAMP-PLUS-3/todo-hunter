@@ -1,3 +1,4 @@
+import { TITLE_IMAGES } from "@/constants/title";
 import { ITitleRepository, IUserTitleRepository } from "@/domain/repositories";
 
 export class UserTitleUsecase {
@@ -23,7 +24,7 @@ export class UserTitleUsecase {
             description: title.description,
             reqStat: title.reqStat,
             reqValue: title.reqValue,
-            // img: title.img,
+            img: TITLE_IMAGES[title.id],
         }));
     }
 
