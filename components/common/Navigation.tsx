@@ -39,7 +39,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                 `
                 .replace(/\s+/g, ' ').trim()
                 }>
-                    {MENUS.slice(0, 2).map(({ menu, icon, label }) => (
+                    {MENUS.slice(0, 2).map(({ menu, icon, label, disabled }) => (
                     <TabsTrigger key={menu} className={`
                         is-rounded-navi
                         flex
@@ -52,7 +52,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                         ${selectedMenu === menu ? `pt-1 pb-0` : `pb-1`}
                     `
                     .replace(/\s+/g, ' ').trim()
-                    } value={menu}>
+                    } value={menu} disabled={disabled}>
                         <div className={`
                             icon
                             flex
@@ -149,7 +149,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                 `
                 .replace(/\s+/g, ' ').trim()
                 }>
-                    {MENUS.slice(3, 5).map(({ menu, icon, label }) => (
+                    {MENUS.slice(3, 5).map(({ menu, icon, label, disabled }) => (
                     <TabsTrigger key={menu} className={`
                         is-rounded-navi
                         flex
@@ -162,7 +162,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                         ${selectedMenu === menu ? `pt-1 pb-0` : `pb-1`}
                     `
                     .replace(/\s+/g, ' ').trim()
-                    } value={menu}>
+                    } value={menu} disabled={disabled}>
                         <div className={`
                             icon
                             flex
