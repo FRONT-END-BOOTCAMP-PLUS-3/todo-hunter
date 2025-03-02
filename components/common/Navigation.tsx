@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/common/tabs";
 import "@hackernoon/pixel-icon-library/fonts/iconfont.css";
-import menus from "@/constants/menu";
+import { MENUS } from "@/constants/menu";
 
 // <Navigation selectedMenu="선택된 메뉴명" />으로 사용
 
@@ -39,7 +39,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                 `
                 .replace(/\s+/g, ' ').trim()
                 }>
-                    {menus.slice(0, 2).map(({ menu, icon, label }) => (
+                    {MENUS.slice(0, 2).map(({ menu, icon, label, disabled }) => (
                     <TabsTrigger key={menu} className={`
                         is-rounded-navi
                         flex
@@ -52,7 +52,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                         ${selectedMenu === menu ? `pt-1 pb-0` : `pb-1`}
                     `
                     .replace(/\s+/g, ' ').trim()
-                    } value={menu}>
+                    } value={menu} disabled={disabled}>
                         <div className={`
                             icon
                             flex
@@ -98,9 +98,9 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                         max-[300px]:min-w-[70px]
                 `
                 .replace(/\s+/g, ' ').trim()}>
-                {menus[2] && (
+                {MENUS[2] && (
                 <TabsTrigger
-                    key={menus[2].menu}
+                    key={MENUS[2].menu}
                     className={`
                         is-rounded-full
                         flex
@@ -118,10 +118,10 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                             max-[300px]:h-[80px]
                         max-[430px]:pt-3
                         border-transparent
-                    ${selectedMenu === menus[2].menu ? "bg-white" : "transparent text-white"}
+                    ${selectedMenu === MENUS[2].menu ? "bg-white" : "transparent text-white"}
                     text-lg sm:text-base`
                     .replace(/\s+/g, ' ').trim()}
-                    value={menus[2].menu}
+                    value={MENUS[2].menu}
                 >
                     <div className={`
                         icon
@@ -133,9 +133,9 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                     `
                     .replace(/\s+/g, ' ').trim()
                     }>
-                        <i className={`hn ${selectedMenu === menus[2].menu ? `hn-${menus[2].icon}-solid` : `hn-${menus[2].icon}`} text-[26px] min-[430px]:text-[30px]`}></i>
+                        <i className={`hn ${selectedMenu === MENUS[2].menu ? `hn-${MENUS[2].icon}-solid` : `hn-${MENUS[2].icon}`} text-[26px] min-[430px]:text-[30px]`}></i>
                     </div>
-                    <span className="text-[16px] max-[430px]:text-[14px]">{menus[2].label}</span>
+                    <span className="text-[16px] max-[430px]:text-[14px]">{MENUS[2].label}</span>
                 </TabsTrigger>
                 )}
                 </div>
@@ -149,7 +149,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                 `
                 .replace(/\s+/g, ' ').trim()
                 }>
-                    {menus.slice(3, 5).map(({ menu, icon, label }) => (
+                    {MENUS.slice(3, 5).map(({ menu, icon, label, disabled }) => (
                     <TabsTrigger key={menu} className={`
                         is-rounded-navi
                         flex
@@ -162,7 +162,7 @@ const Navigation = ({selectedMenu="character"}:{selectedMenu?:string}) => {
                         ${selectedMenu === menu ? `pt-1 pb-0` : `pb-1`}
                     `
                     .replace(/\s+/g, ' ').trim()
-                    } value={menu}>
+                    } value={menu} disabled={disabled}>
                         <div className={`
                             icon
                             flex
