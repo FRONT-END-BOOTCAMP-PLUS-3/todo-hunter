@@ -1,4 +1,3 @@
-/* 로그인 에러 */
 export type LoginErrorType =
   | "MISSING_CREDENTIALS"
   | "LOGIN_ID_NOT_FOUND"

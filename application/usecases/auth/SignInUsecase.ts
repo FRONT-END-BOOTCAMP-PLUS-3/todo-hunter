@@ -1,7 +1,7 @@
 import { IUserRepository } from "@/domain/repositories";
 import { VerifyPasswordUsecase } from "./VerifyPasswordUsecase";
 import { SignInRequestDTO } from "./dtos/SignInRequestDTO";
-import { LoginError } from "@/constants/error";
+import { LoginError } from "./errors/LoginError";
 import { SignInResponseDTO } from "./dtos/SignInResponseDTO";
 
 export class SignInUsecase {

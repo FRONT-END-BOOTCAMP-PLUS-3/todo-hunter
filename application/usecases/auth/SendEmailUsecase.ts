@@ -1,7 +1,7 @@
 import  nodemailer from 'nodemailer';
 import { GenerateVerifyCodeUsecase } from "@/application/usecases/auth/GenerateVerifyCodeUsecase";
 import { IVerificationRepository } from "@/domain/repositories/IVerificationRepository";
-import { sendEmailTemplate } from '@/constants/email';
+import { sendEmailTemplate } from '@/utils/sendEmailTemplate';
 
 export class SendEmailUsecase {
   private transporter;
