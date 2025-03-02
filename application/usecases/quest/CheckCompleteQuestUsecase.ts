@@ -1,16 +1,13 @@
-import { PriSuccessDayRepository } from "@/infrastructure/repositories/PriSuccessdayRepository";
-import { PrismaClient } from "@prisma/client";
+import { ISuccessDayRepository } from "@/domain/repositories";
 
 export class CheckCompleteQuestUsecase {
-  private readonly priSuccessDayRepository: PriSuccessDayRepository;
-
-  constructor(private readonly prisma: PrismaClient) {
-    this.priSuccessDayRepository = new PriSuccessDayRepository(prisma);
-  }
+  constructor (
+    private readonly PriSuccessDayRepository: ISuccessDayRepository,
+   ) {}
 
   // questId와 succeed 객체로 반환
   async isQuestCompleted(questId: number): Promise<{ questId: number, succeed: boolean }> {
-    const successDay = await this.priSuccessDayRepository.findByQuestId(questId);
+    const successDay = await this.PriSuccessDayRepository.findByQuestId(questId);
     const succeed = successDay.length > 0; // 성공 여부 결정
     return { questId, succeed };
   }

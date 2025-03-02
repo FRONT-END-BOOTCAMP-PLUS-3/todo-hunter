@@ -1,5 +1,5 @@
 import { IQuestRepository } from "@/domain/repositories";
-import { ResponseQuestDTO } from "./dtos";
+import { GetQuestDTO } from "./dtos/GetQuestDTO";
 import { STATUS } from "@/constants";
 
 export class ViewQuestUsecase {
@@ -7,7 +7,7 @@ export class ViewQuestUsecase {
         private readonly PrIQuestRepository: IQuestRepository,
     ) {}
 
-    async getQuestList(characterId: number): Promise<ResponseQuestDTO[]> {
+    async getQuestList(characterId: number): Promise<GetQuestDTO[]> {
         const quests = await this.PrIQuestRepository.findCurrentQuests(characterId, new Date());
         if (!quests) throw new Error("characterNickname not found");
 

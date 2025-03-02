@@ -1,5 +1,5 @@
 import {  IQuestRepository, ISuccessDayRepository } from "@/domain/repositories";
-import { ResponseQuestDTO } from "./dtos";
+import { GetQuestDTO } from "./dtos";
 import { STATUS } from "@/constants";
 
 export class WeeklyQuestUsecase{
@@ -8,7 +8,7 @@ export class WeeklyQuestUsecase{
         private readonly successDayRepository: ISuccessDayRepository, 
     ) {}
 
-    async getWeeklyQuestList(characterId: number): Promise<ResponseQuestDTO[]> {
+    async getWeeklyQuestList(characterId: number): Promise<GetQuestDTO[]> {
         let weeklyQuests = await this.questRepository.findWeeklyQuests(characterId);
         if (!weeklyQuests) throw new Error("characterNickname not found");
         

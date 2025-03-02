@@ -1,5 +1,5 @@
 import { IQuestRepository, IStatusRepository } from "@/domain/repositories";
-import { CreateQuestDTO, ResponseQuestDTO } from "@/application/usecases/quest/dtos";
+import { CreateQuestDTO, GetQuestDTO } from "@/application/usecases/quest/dtos";
 import { STATUS } from "@/constants";
 
 export class CreateQuestUseCase {
@@ -8,7 +8,7 @@ export class CreateQuestUseCase {
     private readonly PriStatusRepository: IStatusRepository
   ) {}
 
-  async execute(dto: CreateQuestDTO): Promise<ResponseQuestDTO> {
+  async execute(dto: CreateQuestDTO): Promise<GetQuestDTO> {
     // STATUS가 올바른 값인지 검증
     if (!Object.keys(STATUS).includes(dto.tagged)) {
       throw new Error(`Invalid status tag: ${dto.tagged}`);
