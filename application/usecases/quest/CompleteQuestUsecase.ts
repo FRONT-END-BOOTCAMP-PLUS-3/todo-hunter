@@ -1,4 +1,4 @@
-import { CompleteQuestError } from "@/constants/error";
+import { CompleteQuestError } from "@/application/usecases/quest/errors/CompleteQuestError";
 import { ICharacterRepository, IQuestRepository, IStatusRepository, ISuccessDayRepository } from "@/domain/repositories";
 
 export class CompleteQuestUsecase {
