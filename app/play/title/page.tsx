@@ -6,6 +6,10 @@ import RenderTitleItem from "./_components/renderTitleItem";
 
 export default function TitlePage(){
     const [titles, setTitles] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageSize] = useState(9);
+    const [totalTitles, setTotalTitles] = useState(0);
+
 
     const getTitle = async (page: number, pageSize: number) => {
         try {
@@ -16,6 +20,8 @@ export default function TitlePage(){
             });
             const data = await res.json();
             setTitles(data);
+            setTotalTitles(data.length);
+            console.log("data.length", data.length);
         }
         catch (error) {
             console.log(error);
@@ -23,10 +29,23 @@ export default function TitlePage(){
     }
 
     useEffect(() => {
-        getTitle(1, 9);
-    }, []);
+        getTitle(page, pageSize);
+    }, [page]);
 
     const gridItems = Array.from({ length: 9 }, (_, index) => titles[index] || { name: "잠금", titleId: "df" });
+
+    const handlePreviousPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (totalTitles === 9) {
+            setPage(page + 1);
+        }    
+    };
+
 
     return (
         <div className="bg-slate-400 h-screen flex items-center justify-center">
@@ -38,8 +57,8 @@ export default function TitlePage(){
                     ))}                
                 </div>
                 <div className="flex justify-between items-center mt-10">
-                    <Button size="XS">{"<<"}</Button>
-                    <Button size="XS" >{">>"}</Button>  
+                    <Button size="XS" onClick={handlePreviousPage}>{"<<"}</Button>
+                    <Button size="XS" onClick={handleNextPage}>{">>"}</Button>  
                 </div> 
             </div>
         </div>
