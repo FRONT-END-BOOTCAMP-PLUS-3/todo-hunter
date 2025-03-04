@@ -3,13 +3,10 @@
 import { useEffect, useState } from "react";
 import { EndingDTO } from "@/application/usecases/ending/dtos";
 import {
-  EndingState,
   FADE_STEP_DURATION,
   TOAST_DELAY,
   TOTAL_FADE_DURATION,
 } from "@/constants";
-import Navigation from "@/components/common/Navigation";
-import { Toaster } from "@/components/common";
 import { toast } from "sonner";
 import { EndingImage, EndingScriptBox } from "@/app/play/ending/_components";
 
@@ -102,38 +99,27 @@ const EndingPage = () => {
   };
 
   return (
-    <>
-      <Toaster />
-      <div className="relative min-h-screen bg-black py-3">
-        <div className="flex flex-col items-center justify-center min-h-screen space-y-8">
-          {error ? (
-            <div className="flex flex-col items-center justify-center min-h-screen">
-              <p className="text-red-500">{error}</p>
-            </div>
-          ) : !endingData ? (
-            <div className="flex flex-col items-center justify-center min-h-screen">
-              <p>로딩 중...</p>
-            </div>
-          ) : (
-            <>
-              <EndingImage image={endingData.endingImage} />
-
-              <EndingScriptBox script={endingData.endingPrompt} />
-
-              {/* 추후 삭제 */}
-              <div className="text-sm text-gray-500">
-                상태: {EndingState[endingData.endingState]}
-              </div>
-
-              <div
-                className={`absolute inset-0 bg-black transition-opacity duration-500 ease-[steps(1,end)] pointer-events-none ${getOverlayClass()}`}
-              />
-            </>
-          )}
-          <Navigation selectedMenu="ending" />
-        </div>
+    <div className="relative min-h-screen bg-black">
+      <div className="is-center min-h-screen space-y-8">
+        {error ? (
+          <div className="is-center min-h-screen">
+            <p className="text-red-500">{error}</p>
+          </div>
+        ) : !endingData ? (
+          <div className="is-center min-h-screen">
+            <p>로딩 중...</p>
+          </div>
+        ) : (
+          <>
+            <EndingImage image={endingData.endingImage} />
+            <EndingScriptBox script={endingData.endingPrompt} />
+            <div
+              className={`absolute inset-0 bg-black pointer-events-none ${getOverlayClass()}`}
+            />
+          </>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
