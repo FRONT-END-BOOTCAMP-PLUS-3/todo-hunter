@@ -1,19 +1,21 @@
 import { UserTitleUsecase } from "@/application/usecases/title/UserTitleUsecase";
 import { ITitleRepository, IUserTitleRepository } from "@/domain/repositories";
-import { PriTitleRepository, PriUserTitleRepository } from "@/infrastructure/repositories";
+import { PriCharacterRepository, PriTitleRepository, PriUserTitleRepository } from "@/infrastructure/repositories";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest){
 
     const userIdHeader = req.headers.get("user-id");
-    const characterId = Number(userIdHeader);
-    const page = Number(req.headers.get("page")) || 1;
-    const pageSize = Number(req.headers.get("page-size")) || 10;
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1");
+    const pageSize= 9;
 
-    if (isNaN(characterId)) {
-        return NextResponse.json({ error: "Invalid character ID" }, { status: 400 });
-    }
+    console.log("p", page);
+
+    const characterRepository = new PriCharacterRepository(prisma);
+    const character = await characterRepository.findByUserId(Number(userIdHeader));
+    const characterId = Number(character?.id)
 
     // 리포지토리 인스턴스 생성
     const userTitleRepository: IUserTitleRepository = new PriUserTitleRepository(prisma);
