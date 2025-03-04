@@ -3,7 +3,7 @@ import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const inputVariants = cva(
-  "p-1 input-border outline-none",
+  "p-1 outline-none",
   {
     variants: {
       state: {
