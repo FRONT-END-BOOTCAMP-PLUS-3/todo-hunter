@@ -1,15 +1,31 @@
-import { PrismaClient } from "@prisma/client";
-import { ICharacterRepository } from "@/domain/repositories";
-import { PriCharacterRepository } from "@/infrastructure/repositories";
+import { prisma } from "@/lib/prisma";
+import { ICharacterRepository, IQuestRepository, IStatusRepository, ISuccessDayRepository, IUserRepository } from "@/domain/repositories";
+import { PriCharacterRepository, PriQuestRepository, PriStatusRepository, PriSuccessDayRepository, PriUserRepository } from "@/infrastructure/repositories";
+import { NextRequest, NextResponse } from "next/server";
+import { CharacterUsecase } from "@/application/usecases/character/CharacterUsecase";
+import { CharacterDto } from "@/application/usecases/character/dtos";
 
-export async function GET() {
 
-    // 해당 사용자의 캐릭터 정보를 조회
-    const prisma = new PrismaClient();
-    const characterRepository:ICharacterRepository = new PriCharacterRepository(prisma);
+export async function GET(req: NextRequest) {
+    const userIdHeader = Number(req.headers.get("user-id"));
+    
+    const characterRepository: ICharacterRepository = new PriCharacterRepository(prisma);
+    const statusRepository:IStatusRepository= new PriStatusRepository(prisma);
+    const userRepository:IUserRepository = new PriUserRepository(prisma);
+    const questRepository:IQuestRepository = new PriQuestRepository(prisma);
+    const successDayRepository: ISuccessDayRepository = new PriSuccessDayRepository(prisma);
+    
+    const character = await characterRepository.findByUserId(userIdHeader);
+    const characterId = Number(character?.id);
 
-    const character = await characterRepository.findById(1);
-    if (!character) throw new Error("Character not found");
+    const characterUsecase = new CharacterUsecase(
+        statusRepository,
+        userRepository,
+        questRepository,
+        successDayRepository
+    );
 
-    return character;
+    const characterDto:CharacterDto = await characterUsecase.getStatusAndNickname(characterId, userIdHeader);
+
+    return NextResponse.json(characterDto);
 }
