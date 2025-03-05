@@ -173,4 +173,11 @@ body {
     border-image-outset:4;
     border-radius: 0;
   }
+
+  .is-center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
 }

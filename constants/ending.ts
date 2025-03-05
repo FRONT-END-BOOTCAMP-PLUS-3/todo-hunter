@@ -1,5 +1,6 @@
 // 엔딩 이미지 기본값
-export const DEFAULT_ENDING_IMAGE = "/images/endings/default.jpg";
+// export const DEFAULT_ENDING_IMAGE = "/endings/default.jpg";
+export const DEFAULT_ENDING_IMAGE = "/endings/cyberpunk-street-background4.png";
 
 // 엔딩 프롬프트 기본값
 export const DEFAULT_ENDING_PROMPT = "당신만의 특별한 여정이 새로운 이야기를 만들어냈습니다...";
@@ -19,3 +20,8 @@ export const ENDING_IMAGES: Record<number, string> = {
   3: "/endings/ending3.jpg",
   // add
 };
+
+// 페이드 시간
+export const FADE_STEP_DURATION = 500; // 각 페이드 단계 시간 (ms)
+export const TOTAL_FADE_DURATION = FADE_STEP_DURATION * 7; // 전체(7단계) 페이드 시간
+export const TOAST_DELAY = 500; // 페이드 완료 후 토스트 표시 대기 시간
