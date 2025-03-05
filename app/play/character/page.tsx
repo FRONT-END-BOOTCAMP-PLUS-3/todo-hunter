@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { CharacterDto } from "@/application/usecases/character/dtos";
-import Status from "./_components/status";
-import "./_components/character.css";
+import Status from "@/app/play/character/_components/status";
+import "@/app/play/character/_components/character.css";
 
 
 export default function CharacterPage() {
@@ -13,7 +13,7 @@ export default function CharacterPage() {
       try{
         const res = await fetch(`/api/character`, {
             headers: {
-                "user-id": "1",
+                "user-id": "1", // zustand로 관리할 예정
             }
         });
         
