@@ -12,35 +12,37 @@ import {
 } from "@/components/common/Select";
 import { STATUS } from "@/constants/status";
 import DateSelector from "@/components/common/DateSelcetor";
+import { Input } from "@/components/common";
 
 const AddDailyQuest = () => {
   const router = useRouter();
   const [questName, setQuestName] = useState("");
   const [tagged, setTagged] = useState<"STR" | "INT" | "EMO" | "FIN" | "LIV">("STR");
-  const [characterId, setCharacterId] = useState<number | null>(null);
+  const [user, setUser] = useState<{ characterId: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState("");
+  const [isWeekly, setIsWeekly] = useState(false); // 체크박스 상태 추가
+
 
   // 로그인한 유저의 characterId 가져오기
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUser = async () => {
       try {
-        const response = await fetch("/api/auth", {
+        const response = await fetch("/api/auth/me", {
           method: "GET",
-          credentials: "include", // 쿠키 포함
+          credentials: "include",
         });
 
-        if (!response.ok) throw new Error("사용자 정보를 불러올 수 없습니다.");
+        if (!response.ok) throw new Error("유저 정보를 불러오지 못했습니다.");
 
-        const userData = await response.json();
-        setCharacterId(userData.characterId);
+        const data = await response.json();
+        setUser(data);
       } catch (err) {
         console.error(err);
-        setError("로그인이 필요합니다.");
+        setError("유저 정보를 불러오는 중 오류 발생");
       }
     };
-
-    fetchUserData();
+    fetchUser();
   }, []);
 
   const handleSaveQuest = async () => {
@@ -48,11 +50,13 @@ const AddDailyQuest = () => {
       alert("퀘스트 이름을 입력하세요!");
       return;
     }
-    if (!characterId) {
+    if (!user?.characterId) {
       alert("로그인이 필요합니다.");
       return;
     }
-
+  
+    console.log("저장되는 expiredAt 값:", selectedDate); // 콘솔에서 확인
+  
     try {
       const response = await fetch("/api/quest", {
         method: "POST",
@@ -61,77 +65,84 @@ const AddDailyQuest = () => {
         },
         credentials: "include",
         body: JSON.stringify({
-          characterId,
+          characterId: user.characterId,
           name: questName,
           tagged,
-          isWeekly: false,
-          expiredAt: null,
+          isWeekly,
+          expiredAt: selectedDate || null, // 시간 정보 없이 YYYY-MM-DD로 전송
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error("퀘스트 추가 실패");
       }
-
+  
       router.push("/play/quest");
     } catch (err) {
       console.error(err);
       setError("퀘스트 추가 중 오류가 발생했습니다.");
     }
   };
+  
 
   return (
-    <div className="p-4 bg-white shadow-md">
-      <h2 className="m-4 p-4 bg-black text-white text-center font-bold rounded-md">
-        어떤 일을 하나요?
-      </h2>
+    <div className="flex-1 pt-10 justify-center items-center">
+      <div className="w-full max-w-lg bg-white rounded-lg">
+        <h2 className="bg-black text-white text-center font-bold p-2">
+          어떤 일을 하나요?
+        </h2>
 
-      {/* 스탯 목록 카테고리 */}
-      <div className="w-22 mb-4">
-        <Select value={tagged} onValueChange={(value) => setTagged(value as "STR" | "INT" | "EMO" | "FIN" | "LIV")}>
-          <SelectTrigger className=" p-2 border rounded-md">
-            <SelectValue placeholder="스탯 목록" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="STR">{STATUS.STR}</SelectItem>
-            <SelectItem value="INT">{STATUS.INT}</SelectItem>
-            <SelectItem value="EMO">{STATUS.EMO}</SelectItem>
-            <SelectItem value="FIN">{STATUS.FIN}</SelectItem>
-            <SelectItem value="LIV">{STATUS.LIV}</SelectItem>
-          </SelectContent>
-        </Select>
-        <input
-        type="text"
-        placeholder="퀘스트 이름 입력"
-        value={questName}
-        onChange={(e) => setQuestName(e.target.value)}
-        className="w-full p-2 border rounded-md mb-4"
-      />
+        {/* 스탯 목록 카테고리 */}
+        <div className="pt-5 pb-5 flex gap-5 justify-center items-center">
+          <Select onValueChange={(value) => setTagged(value as any)}>
+            <SelectTrigger className="w-32 h-11 text-sm px-2">
+              <SelectValue placeholder="스탯 목록"/>
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(STATUS).map(([key, label]) => (
+                <SelectItem key={key} value={key}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Input
+            type="text"
+            placeholder="퀘스트를 입력하세요"
+            value={questName}
+            onChange={(e) => setQuestName(e.target.value)}
+            state={questName ? "current" : "default"}
+            className="w-auto h-9 text-sm"
+          />
+        </div>
+
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+
+        <div className="pt-10 pb-10">
+          <h2 className="bg-black text-white text-center font-bold p-2">
+            언제까지 하나요?
+          </h2>
+          <DateSelector onUpdate={setSelectedDate} />
+        </div>
+
+        <div className="flex gap-3 bg-white items-center">
+          <h2 className="p-3 bg-black text-white text-center font-bold">반복 여부</h2>
+          <input
+          type="checkbox"
+          className="w-5 h-5"
+          checked={isWeekly} // 상태 반영
+          onChange={(e) => setIsWeekly(e.target.checked)} // 체크 여부 업데이트
+        />
+        </div>
+
+        <div className="flex p-6 gap-4 justify-center items-center">
+          <Button size="S" state="success" onClick={handleSaveQuest}>
+            할일 추가
+          </Button>
+          <Button size="S" onClick={() => router.push("/play/quest")}>
+            할일 취소
+          </Button>
+        </div>
       </div>
-
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-
-
-      <div className="p-4 bg-white shadow-md">
-      <h2 className="m-4 p-4 bg-black text-white text-center font-bold rounded-md">
-       언제까지 하나요?</h2>
-       <DateSelector onUpdate={(date) => setSelectedDate(date)} />
-      </div>
-
-      <div className="flex bg-white shadow-md">
-      <h2 className="m-4 p-4 bg-black text-white text-center font-bold rounded-md">
-       반복 여부</h2>
-       <input type="checkbox" className="w-5 h-5" />
-      </div>
-
-      <div className="flex gap-4 items-center">
-      <Button size="S" onClick={handleSaveQuest}>
-        할일 추가
-      </Button>
-      <Button size="S" onClick={() => router.push("/play/quest")}>
-        할일 취소
-      </Button>
-    </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 
 const FightField = () => {
@@ -9,8 +9,8 @@ const FightField = () => {
         <Image
           src="/images/backgrounds/underwater-fantasy-background3.png"
           alt="field image"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover" }}
           priority
         />
       </div>);
