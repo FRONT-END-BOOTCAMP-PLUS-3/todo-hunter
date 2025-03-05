@@ -14,6 +14,9 @@
 .progress-purple::-webkit-progress-value { background-color: #603C9B; }
 .progress-purple::-ms-fill { background-color: #603C9B; }
 
+.progress-bar-bg::-webkit-progress-bar{
+    background-color: #e0e0e0;
+}
 
     .custom-progress{
         display: flex;
