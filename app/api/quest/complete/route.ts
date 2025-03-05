@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { CompleteQuestUsecase } from "@/application/usecases/quest/CompleteQuestUsecase";
-import { PriQuestRepository, PriSuccessDayRepository, PriCharacterRepository, PriStatusRepository } from "@/infrastructure/repositories";
 
 export async function POST(req: Request) {
   try {
@@ -12,23 +10,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "characterId와 questId가 필요합니다." }, { status: 400 });
     }
 
-    const questRepository = new PriQuestRepository(prisma);
-    const successDayRepository = new PriSuccessDayRepository(prisma);
-    const characterRepository = new PriCharacterRepository(prisma);
-    const statusRepository = new PriStatusRepository(prisma);
+    // 이미 완료된 기록이 있는지 확인
+    const existingSuccess = await prisma.successDay.findFirst({
+      where: { questId },
+    });
 
-    const completeQuestUsecase = new CompleteQuestUsecase(
-      questRepository,
-      successDayRepository,
-      characterRepository,
-      statusRepository
-    );
-
-    await completeQuestUsecase.completeQuest(characterId, questId);
+    if (!existingSuccess) {
+      // 완료된 적이 없으면 새 성공 기록 추가
+      await prisma.successDay.create({
+        data: {
+          questId,
+        },
+      });
+    }
 
     return NextResponse.json({ message: "퀘스트 완료!" }, { status: 200 });
   } catch (error) {
     console.error("퀘스트 완료 처리 중 오류 발생:", error);
-    return NextResponse.json({ error: error instanceof Error ? error.message : "알 수 없는 오류 발생" }, { status: 500 });
+    return NextResponse.json({ error: "퀘스트 완료 중 오류 발생" }, { status: 500 });
   }
 }

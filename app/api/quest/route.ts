@@ -39,29 +39,25 @@ export async function POST(req: Request) {
 // GET 요청 (모든 퀘스트 조회 또는 특정 ID 기반 조회)
 export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
+    const quests = await prisma.quest.findMany({
+      include: {
+        successDays: true, // 성공 기록 포함하여 가져오기
+      },
+      orderBy: { updatedAt: "desc" }
+    });
+    
+    // successDays 배열을 기반으로 completed 값 추가
+    const formattedQuests = quests
+      .map((quest) => ({
+        ...quest,
+        completed: quest.successDays.length > 0, // 성공 기록이 있으면 true, 없으면 false
+      }));
 
-    if (id) {
-      // 특정 퀘스트 조회
-      const quest = await prisma.quest.findUnique({
-        where: { id: Number(id) },
-      });
-
-      if (!quest) {
-        return NextResponse.json({ error: 'Quest not found' }, { status: 404 });
-      }
-
-      return NextResponse.json(quest, { status: 200 });
-    }
-
-    // 모든 퀘스트 조회
-    const quests = await prisma.quest.findMany();
-    return NextResponse.json(quests, { status: 200 });
+    return NextResponse.json(formattedQuests, { status: 200 });
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-    return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 });
+    console.error("퀘스트 조회 중 오류 발생:", error);
+    return NextResponse.json({ error: "퀘스트 조회 중 오류 발생" }, { status: 500 });
   }
 }
+
+

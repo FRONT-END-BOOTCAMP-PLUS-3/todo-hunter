@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { DeleteQuestUseCase } from "@/application/usecases/quest/DeleteQuestUsecase";
-import { PriQuestRepository } from "@/infrastructure/repositories";
+import { PriQuestRepository, PriSuccessDayRepository } from "@/infrastructure/repositories";
 import { prisma } from "@/lib/prisma";
 import { getUserFromCookie } from "@/utils/auth";
 
@@ -18,14 +18,11 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     }
 
     const questRepository = new PriQuestRepository(prisma);
-    const deleteQuestUseCase = new DeleteQuestUseCase(questRepository);
+    const successDayRepository = new PriSuccessDayRepository(prisma);
+    const deleteQuestUseCase = new DeleteQuestUseCase(questRepository, successDayRepository);
 
-    // DTO 생성 (characterId는 쿠키에서 가져옴)
-    const dto = {
-      id: questId,
-      characterId: user.characterId, // 쿠키에서 추출한 ID 사용
-    };
-
+    // DTO 생성
+    const dto = { id: questId, characterId: user.characterId };
     await deleteQuestUseCase.deleteQuest(dto);
 
     return NextResponse.json({ message: "퀘스트가 삭제되었습니다." }, { status: 200 });
