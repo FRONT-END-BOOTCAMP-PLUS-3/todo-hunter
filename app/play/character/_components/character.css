@@ -1,0 +1,40 @@
+    .progress-red::-moz-progress-bar { background-color: var(--error-color-red); }
+    .progress-green::-moz-progress-bar { background-color: var(--current-color-green); }
+    .progress-yellow::-moz-progress-bar { background-color: var(--warning-color-yellow); }
+    .progress-purple::-moz-progress-bar { background-color: #603C9B; }
+    .custom-progress{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 5%;
+        background-color: #2D3748;
+    }
+    .custom-status-size {
+        width: 80%; 
+        max-width: 600px; 
+        margin-bottom: 10%;
+        padding: 10px; 
+        padding-bottom: 0px;
+        background-color: #E4E4E4; 
+    }
+
+    .character-page-background{
+        background-image: url('/images/backgrounds/Character-Page-Bg.png');
+        background-size: cover; 
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100vh;
+        position: relative;
+    }
+
+    .is-rounded-progress{
+        border-style: solid;
+        border-width: 4px;
+        border-image-slice:3;
+        border-image-width:3;
+        border-image-source:url('data:image/svg+xml;utf8,<?xml version="1.0" encoding="UTF-8" ?><svg version="1.1" width="8" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M3 1 h1 v1 h-1 z M4 1 h1 v1 h-1 z M2 2 h1 v1 h-1 z M5 2 h1 v1 h-1 z M1 3 h1 v1 h-1 z M6 3 h1 v1 h-1 z M1 4 h1 v1 h-1 z M6 4 h1 v1 h-1 z M2 5 h1 v1 h-1 z M5 5 h1 v1 h-1 z M3 6 h1 v1 h-1 z M4 6 h1 v1 h-1 z" fill="rgb(33,37,41)" /></svg>');
+        border-image-repeat:stretch;
+        border-image-outset:2;
+        margin:1px;
+      }
