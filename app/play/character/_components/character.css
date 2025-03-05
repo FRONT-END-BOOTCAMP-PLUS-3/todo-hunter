@@ -1,7 +1,20 @@
-    .progress-red::-moz-progress-bar { background-color: var(--error-color-red); }
-    .progress-green::-moz-progress-bar { background-color: var(--current-color-green); }
-    .progress-yellow::-moz-progress-bar { background-color: var(--warning-color-yellow); }
-    .progress-purple::-moz-progress-bar { background-color: #603C9B; }
+.progress-red::-moz-progress-bar { background-color: var(--error-color-red); }
+.progress-red::-webkit-progress-value { background-color: var(--error-color-red); }
+.progress-red::-ms-fill { background-color: var(--error-color-red); }
+
+.progress-green::-moz-progress-bar { background-color: var(--current-color-green); }
+.progress-green::-webkit-progress-value { background-color: var(--current-color-green); }
+.progress-green::-ms-fill { background-color: var(--current-color-green); }
+
+.progress-yellow::-moz-progress-bar { background-color: var(--warning-color-yellow); }
+.progress-yellow::-webkit-progress-value { background-color: var(--warning-color-yellow); }
+.progress-yellow::-ms-fill { background-color: var(--warning-color-yellow); }
+
+.progress-purple::-moz-progress-bar { background-color: #603C9B; }
+.progress-purple::-webkit-progress-value { background-color: #603C9B; }
+.progress-purple::-ms-fill { background-color: #603C9B; }
+
+
     .custom-progress{
         display: flex;
         align-items: center;
