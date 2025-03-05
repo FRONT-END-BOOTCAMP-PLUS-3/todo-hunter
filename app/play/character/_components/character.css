@@ -19,8 +19,8 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        margin-bottom: 5%;
         background-color: #2D3748;
+        margin-bottom: 5% !important;
     }
     .custom-status-size {
         width: 80%; 
@@ -50,4 +50,4 @@
         border-image-repeat:stretch;
         border-image-outset:2;
         margin:1px;
-      }
+    }
