@@ -22,7 +22,7 @@ export class PriUserTitleRepository implements IUserTitleRepository {
   }
 
   // 모든 획득한 칭호를 가져오는 메서드 (페이지네이션 방식) (기본값 10)
-  async findAllByCharacterId(characterId: number, page: number, pageSize: number = DEFAULT_PAGE_SIZE): Promise<UserTitle[]> {
+  async findAllByCharacterId(characterId: number, page: number): Promise<UserTitle[]> {
     return await this.prisma.userTitle.findMany({
       where: {
         characterId: characterId,  // 주어진 character_id에 해당하는 모든 UserTitle을 조회
@@ -30,8 +30,8 @@ export class PriUserTitleRepository implements IUserTitleRepository {
       orderBy: {
         createdAt: 'desc',  // 생성일 기준 내림차순 정렬
       },
-      skip: (page - 1) * pageSize,  // 페이지 계산: 첫 번째 페이지는 0개 건너뛰고, 두 번째 페이지는 10개 건너뛰기 등
-      take: pageSize,               // 페이지 크기만큼 데이터 가져오기
+      skip: (page - 1) * DEFAULT_PAGE_SIZE,  // 페이지 계산: 첫 번째 페이지는 0개 건너뛰고, 두 번째 페이지는 10개 건너뛰기 등
+      take: DEFAULT_PAGE_SIZE,               // 페이지 크기만큼 데이터 가져오기
     });
   }
 

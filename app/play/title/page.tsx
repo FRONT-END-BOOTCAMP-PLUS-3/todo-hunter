@@ -7,15 +7,14 @@ import RenderTitleItem from "./_components/renderTitleItem";
 export default function TitlePage(){
     const [titles, setTitles] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize] = useState(9);
     const [totalTitles, setTotalTitles] = useState(0);
 
 
-    const getTitle = async (page: number, pageSize: number) => {
+    const getTitle = async (page: number) => {
         try {
-            const res = await fetch(`/api/title?page=${page}&page-size=${pageSize}`, {
+            const res = await fetch(`/api/title?page=${page}`, {
                 headers: {
-                    "user-id": "1",
+                    "user-id": "1", // zustand로 관리할 예정
                 }
             });
             const data = await res.json();
@@ -29,7 +28,7 @@ export default function TitlePage(){
     }
 
     useEffect(() => {
-        getTitle(page, pageSize);
+        getTitle(page);
     }, [page]);
 
     const gridItems = Array.from({ length: 9 }, (_, index) => titles[index] || { name: "잠금", titleId: "df" });
@@ -58,6 +57,7 @@ export default function TitlePage(){
                 </div>
                 <div className="flex justify-between items-center mt-10">
                     <Button size="XS" onClick={handlePreviousPage}>{"<<"}</Button>
+                    <p>{page}</p>
                     <Button size="XS" onClick={handleNextPage}>{">>"}</Button>  
                 </div> 
             </div>
