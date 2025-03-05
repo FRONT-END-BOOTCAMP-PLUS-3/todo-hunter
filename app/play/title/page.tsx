@@ -7,7 +7,6 @@ import RenderTitleItem from "./_components/renderTitleItem";
 export default function TitlePage(){
     const [titles, setTitles] = useState([]);
     const [page, setPage] = useState(1);
-    const [totalTitles, setTotalTitles] = useState(0);
 
 
     const getTitle = async (page: number) => {
@@ -19,17 +18,12 @@ export default function TitlePage(){
             });
             const data = await res.json();
             setTitles(data);
-            setTotalTitles(data.length);
             console.log("data.length", data.length);
         }
         catch (error) {
             console.log(error);
         }
     }
-
-    useEffect(() => {
-        getTitle(page);
-    }, [page]);
 
     const gridItems = Array.from({ length: 9 }, (_, index) => titles[index] || { name: "잠금", titleId: "df" });
 
@@ -40,10 +34,15 @@ export default function TitlePage(){
     };
 
     const handleNextPage = () => {
-        if (totalTitles === 9) {
+        if (titles.length && titles.length % 9 === 0) {
             setPage(page + 1);
         }    
     };
+    
+    useEffect(() => {
+        getTitle(page);
+    }, [page]);
+
 
 
     return (

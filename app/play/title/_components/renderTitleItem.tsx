@@ -1,11 +1,8 @@
+import { RenderTitleDTO } from "@/application/usecases/title/dtos";
 import Image from "next/image";
 
 type TitleItemProps = {
-    title: {
-        name: string;
-        titleId: number;
-        img: string;
-    };
+    title: RenderTitleDTO;
     index: number;
 };
 

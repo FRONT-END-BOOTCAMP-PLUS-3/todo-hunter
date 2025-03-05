@@ -9,10 +9,7 @@ export async function GET(req: NextRequest){
     const userIdHeader = req.headers.get("user-id");
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
-    const pageSize= 9;
-
-    console.log("p", page);
-
+    
     const characterRepository = new PriCharacterRepository(prisma);
     const character = await characterRepository.findByUserId(Number(userIdHeader));
     const characterId = Number(character?.id)
@@ -29,7 +26,7 @@ export async function GET(req: NextRequest){
 
     try {
         // 사용자의 타이틀 목록 가져오기
-        const userTitles = await userTitleUsecase.getUserTitles(characterId, page, pageSize);
+        const userTitles = await userTitleUsecase.getUserTitles(characterId, page);
         return NextResponse.json(userTitles);
     } catch (error) {
         console.error("Error fetching user titles:", error);
