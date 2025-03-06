@@ -36,19 +36,19 @@ export class CompleteQuestUsecase {
 
     // 태그에 따라 상태 값을 증가시킴
     switch (tagged) {
-      case "str":
+      case "STR":
         status.str += 1;
         break;
-      case "int":
+      case "INT":
         status.int += 1;
         break;
-      case "emo":
+      case "EMO":
         status.emo += 1;
         break;
-      case "fin":
+      case "FIN":
         status.fin += 1;
         break;
-      case "liv":
+      case "LIV":
         status.liv += 1;
         break;
       default:
