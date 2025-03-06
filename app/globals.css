@@ -201,5 +201,18 @@ body {
   .gap-box button + button {
     margin-top: 1.4rem;
   }
+
+  .gap-box .input-box:first-child {
+    margin-top: 0;
+  }
+  .gap-box .input-box + .input-box {
+    margin-top: 1rem;
+  }
+  .gap-box button:first-child {
+    margin-top: 0;
+  }
+  .gap-box button + button {
+    margin-top: 1.4rem;
+  }
 }
 }
