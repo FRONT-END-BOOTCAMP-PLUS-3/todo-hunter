@@ -1,5 +1,5 @@
 import { ICharacterRepository, IStatusRepository, IUserRepository } from "@/domain/repositories";
-import { SignUpDTO } from "./dtos/SignUpDTO";
+import { SignUpRequestDTO } from "./dtos/SignUpRequestDTO";
 
 export class SignUpUsecase {
   constructor(
@@ -8,7 +8,7 @@ export class SignUpUsecase {
     private readonly statusRepository: IStatusRepository,
   ) {}
 
-  async execute(request: SignUpDTO): Promise<void> {
+  async execute(request: SignUpRequestDTO): Promise<void> {
     const user = await this.userRepository.create({
       loginId: request.loginId,
       email: request.email,

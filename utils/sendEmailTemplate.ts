@@ -1,4 +1,4 @@
-export function sendEmailTemplate(verificationCode: string): string {
+export function sendSignUpEmailTemplate(verificationCode: string): string {
   return `<!DOCTYPE html>
   <html lang="ko">
     <head>
