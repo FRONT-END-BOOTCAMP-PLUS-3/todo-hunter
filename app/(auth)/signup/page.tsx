@@ -29,7 +29,7 @@ const SignUp = () => {
     }
 
     // Validate login ID format
-    const loginIdRegex = /^[a-zA-Z0-9]+$/;
+    const loginIdRegex = /^[a-zA-Z0-9_]+$/;
     if (!loginIdRegex.test(loginId)) {
       setLoginIdInvalid(true);
       setLoginIdExists(null);
