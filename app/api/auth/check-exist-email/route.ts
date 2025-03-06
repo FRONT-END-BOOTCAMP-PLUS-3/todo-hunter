@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { PriUserRepository } from '@/infrastructure/repositories/PriUserRepository';
 import { CheckExistEmailUsecase } from '@/application/usecases/auth/CheckExistEmailUsecase';
 
-const prisma = new PrismaClient();
 const userRepository = new PriUserRepository(prisma);
 const checkExistEmailUsecase = new CheckExistEmailUsecase(userRepository);
 
