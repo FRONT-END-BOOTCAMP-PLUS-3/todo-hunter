@@ -7,14 +7,13 @@ import { VerifyPasswordUsecase } from "@/application/usecases/auth/VerifyPasswor
 import { SignInResponseDTO } from "@/application/usecases/auth/dtos/SignInResponseDTO";
 import { SignInRequestDTO } from "@/application/usecases/auth/dtos/SignInRequestDTO";
 import { LoginError, LoginErrorType } from "@/application/usecases/auth/errors/LoginError";
-import { IVerifyPasswordUsecase } from "@/application/usecases/auth/interfaces/IVerifyPasswordUsecase";
 
 export async function POST(req: NextRequest) {
     try {
         const request: SignInRequestDTO = await req.json();
         const prisma = new PrismaClient();
         const userRepository: IUserRepository = new PriUserRepository(prisma);
-        const verifyPasswordUsecase:IVerifyPasswordUsecase = new VerifyPasswordUsecase();
+        const verifyPasswordUsecase = new VerifyPasswordUsecase();
         const signInUsecase = new SignInUsecase(userRepository, verifyPasswordUsecase);
         const signInResponseDto: SignInResponseDTO = await signInUsecase.execute(request);
     
