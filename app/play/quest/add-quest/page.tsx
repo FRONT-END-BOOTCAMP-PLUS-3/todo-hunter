@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { useQuestStore } from "@/utils/stores/questStore";
+import { useQuestFormStore } from "@/utils/stores/useQuestFormStore";
 import { Button } from "@/components/common/Button";
 import {
   Select,
@@ -18,41 +19,47 @@ import { Input } from "@/components/common";
 const AddDailyQuest = () => {
   const router = useRouter();
   const { addQuest } = useQuestStore();
+  const {
+    questName,
+    tagged,
+    selectedDate,
+    isWeekly,
+    setQuestName,
+    setTagged,
+    setSelectedDate,
+    setIsWeekly,
+    resetForm,
+  } = useQuestFormStore();
 
-  const [questName, setQuestName] = useState("");
-  const [tagged, setTagged] = useState<"STR" | "INT" | "EMO" | "FIN" | "LIV">("STR");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [isWeekly, setIsWeekly] = useState(false);
-  
   const onSaveQuestHandler = async () => {
     if (!questName.trim()) {
       alert("퀘스트 이름을 입력하세요!");
       return;
     }
-  
-    const user = { characterId: 1 }; // *** 추후 실제 로그인된 유저 정보로 대체 
-  
+
+    const user = { characterId: 1 }; // 추후 실제 로그인된 유저 정보로 대체
+
     if (!user?.characterId) {
       alert("로그인이 필요합니다.");
       return;
     }
-  
+
     try {
       await addQuest({
-        characterId: user.characterId,
+        characterId: user.characterId, 
         name: questName,
         tagged,
         isWeekly,
-        expiredAt: selectedDate || null, 
+        expiredAt: selectedDate || null,
         completed: false,
       });
-  
+
+      resetForm(); // 폼 초기화
       router.push("/play/quest");
     } catch (err) {
       console.error("퀘스트 추가 중 오류 발생", err);
     }
   };
-  
 
   return (
     <div className="flex-1 pt-10 justify-center items-center">
@@ -104,7 +111,12 @@ const AddDailyQuest = () => {
           <Button size="S" state="success" onClick={onSaveQuestHandler}>
             할일 추가
           </Button>
-          <Button size="S" onClick={() => router.push("/play/quest")}>할일 취소</Button>
+          <Button size="S" onClick={() => {
+            resetForm(); // 폼 초기화
+            router.push("/play/quest");
+          }}>
+            할일 취소
+          </Button>
         </div>
       </div>
     </div>
