@@ -18,6 +18,8 @@ const DailyQuest = () => {
   const [user, setUser] = useState<{ characterId: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAttacking, setIsAttacking] = useState(false);
+
   const router = useRouter();
 
   // 로그인된 유저 정보 가져오기
@@ -77,6 +79,12 @@ const DailyQuest = () => {
   
       if (!response.ok) throw new Error("퀘스트 완료 실패");
   
+      // 공격 애니메이션 트리거
+      setIsAttacking(true);
+
+      // 공격 애니메이션 지속 후 다시 기본 상태로
+      setTimeout(() => setIsAttacking(false), 400); // 4프레임 x 100ms
+
       // 완료된 퀘스트를 다시 불러오기 (DB에서 반영된 값 가져오기)
       fetchQuests();
     } catch (err) {
