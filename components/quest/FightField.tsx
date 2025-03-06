@@ -61,6 +61,7 @@ const FightField = ({ isAttacking }: { isAttacking: boolean }) => {
         top="60%"
         left="70%"
         flip={true}
+        isShaking={isAttacking}
       />
     </div>
   );

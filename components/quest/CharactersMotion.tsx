@@ -12,6 +12,7 @@ interface CharacterProps {
   isMoving?: boolean; // 이동 상태 추가
   isAttacking?: boolean; // 공격 상태 추가
   onMoveComplete?: () => void; // 이동 완료 시 호출할 함수
+  isShaking?: boolean; // 🔥 추가: 진동 여부 토큰
 }
 
 const CharacterMotion: React.FC<CharacterProps> = ({
@@ -25,6 +26,7 @@ const CharacterMotion: React.FC<CharacterProps> = ({
   isMoving = false,
   isAttacking = false,
   onMoveComplete,
+  isShaking = false, // 🔥 기본값 false
 }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
   const [position, setPosition] = useState({ top, left });
@@ -58,6 +60,7 @@ const CharacterMotion: React.FC<CharacterProps> = ({
         top: position.top,
         left: position.left,
         transform: `translate(-50%, -50%) ${flip ? "scaleX(-1)" : ""}`,
+        animation: isShaking ? "shake 0.5s infinite" : "none", // 🔥 토큰을 기반으로 진동 효과 적용
       }}
     >
       <Image
