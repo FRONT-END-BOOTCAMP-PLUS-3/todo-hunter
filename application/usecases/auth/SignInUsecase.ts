@@ -29,11 +29,9 @@ export class SignInUsecase {
         }
 
         return {
-            user: {
-                loginId: request.loginId,
-                nickname: user.nickname,
-                createdAt: user.createdAt,
-            }
+            loginId: request.loginId,
+            nickname: user.nickname,
+            createdAt: user.createdAt,
         };
     }
 }
