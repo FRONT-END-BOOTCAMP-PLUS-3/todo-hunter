@@ -49,7 +49,8 @@ const FightField = ({ isAttacking }: { isAttacking: boolean }) => {
         alt="Player"
         top="60%"
         left="30%"
-        isAttacking={isAttacking} // 공격 상태 전달
+        isAttacking={isAttacking}
+        isMoving = {isAttacking} // 공격 상태 전달
       />
 
       {/* 몬스터 (웨어울프) */}

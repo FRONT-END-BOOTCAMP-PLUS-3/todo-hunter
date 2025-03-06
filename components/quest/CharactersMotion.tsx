@@ -38,7 +38,8 @@ const CharacterMotion: React.FC<CharacterProps> = ({
       setPosition({ top: "60%", left: "65%" }); // 몬스터 근처로 이동
       setTimeout(() => {
         onMoveComplete?.();
-      }, 500); // 500ms 후에 공격 시작
+        setPosition({ top, left }); // 원위치로 이동
+      }, 3000); // 500ms 후에 공격 시작
     }
 
     if (isAttacking) {
@@ -48,7 +49,7 @@ const CharacterMotion: React.FC<CharacterProps> = ({
     }
 
     return () => clearInterval(interval);
-  }, [isAttacking, isMoving, frameRate, idleFrames.length, attackFrames.length]);
+  }, [isAttacking, isMoving, frameRate, idleFrames.length, attackFrames.length, top, left]);
 
   return (
     <div
