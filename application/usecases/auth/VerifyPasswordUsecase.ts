@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
-import { IVerifyPasswordUsecase } from "./interfaces/IVerifyPasswordUsecase";
 
-export class VerifyPasswordUsecase implements IVerifyPasswordUsecase {
+export class VerifyPasswordUsecase {
   async execute(password: string, hashed: string): Promise<boolean> {
     // bcrypt로 해싱된 비밀번호(만) 검증
     //return await bcrypt.compare(password, hashed);
