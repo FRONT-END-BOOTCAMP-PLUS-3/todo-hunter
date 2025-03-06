@@ -49,14 +49,16 @@ export const useQuestStore = create<QuestStore>((set) => ({
 
   completeQuest: async (questId) => {
     try {
+      const user = { characterId: 1 }; // 실제 로그인한 유저 정보로 교체 필요
+  
       const response = await fetch("/api/quest/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ questId }),
+        body: JSON.stringify({ characterId: user.characterId, questId }), // characterId 추가
       });
-
+  
       if (!response.ok) throw new Error("퀘스트 완료 실패");
-
+  
       set((state) => ({
         quests: state.quests.map((q) =>
           q.id === questId ? { ...q, completed: true } : q

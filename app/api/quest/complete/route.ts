@@ -1,27 +1,38 @@
 import { NextResponse } from "next/server";
+import { CompleteQuestUsecase } from "@/application/usecases/quest/CompleteQuestUsecase";
+import { PriQuestRepository, PriSuccessDayRepository, PriCharacterRepository, PriStatusRepository } from "@/infrastructure/repositories";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { questId } = body; // body에서 questId를 가져옴
+    const { characterId, questId } = body; // characterId 추가
 
-    if (!questId) {
-      return NextResponse.json({ success: false, error: "퀘스트 ID가 필요합니다." }, { status: 400 });
+    if (!characterId || !questId) {
+      return NextResponse.json({ success: false, error: "characterId와 questId가 필요합니다." }, { status: 400 });
     }
 
-    // 완료된 기록이 있는지 확인
-    const existingSuccess = await prisma.successDay.findFirst({
-      where: { questId },
-    });
+    console.log(`[DEBUG] 퀘스트 완료 API 호출: characterId=${characterId}, questId=${questId}`);
 
-    if (!existingSuccess) {
-      await prisma.successDay.create({ data: { questId } });
-    }
+    // UseCase 인스턴스 생성
+    const questRepository = new PriQuestRepository(prisma);
+    const successDayRepository = new PriSuccessDayRepository(prisma);
+    const characterRepository = new PriCharacterRepository(prisma);
+    const statusRepository = new PriStatusRepository(prisma);
 
-    return NextResponse.json({ success: true, message: "퀘스트 완료!" }, { status: 200 });
+    const completeQuestUsecase = new CompleteQuestUsecase(
+      questRepository,
+      successDayRepository,
+      characterRepository,
+      statusRepository
+    );
+
+    // UseCase 실행
+    await completeQuestUsecase.completeQuest(characterId, questId);
+
+    return NextResponse.json({ success: true, message: "퀘스트 완료 처리 성공!" }, { status: 200 });
   } catch (error) {
-    console.error("퀘스트 완료 처리 중 오류 발생:", error);
+    console.error("[ERROR] 퀘스트 완료 처리 중 오류 발생:", error);
     return NextResponse.json({ success: false, error: "퀘스트 완료 중 오류 발생" }, { status: 500 });
   }
 }
