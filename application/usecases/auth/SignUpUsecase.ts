@@ -1,5 +1,6 @@
 import { ICharacterRepository, IStatusRepository, IUserRepository } from "@/domain/repositories";
 import { SignUpRequestDTO } from "./dtos/SignUpRequestDTO";
+import { createTokens } from "@/utils/auth";
 
 export class SignUpUsecase {
   constructor(
@@ -8,7 +9,8 @@ export class SignUpUsecase {
     private readonly statusRepository: IStatusRepository,
   ) {}
 
-  async execute(request: SignUpRequestDTO): Promise<void> {
+  // async execute(request: SignUpRequestDTO): Promise<void>
+  async execute(request: SignUpRequestDTO): Promise<{ accessToken: string; refreshToken: string; }> {
     const user = await this.userRepository.create({
       loginId: request.loginId,
       email: request.email,
@@ -26,5 +28,16 @@ export class SignUpUsecase {
 
     const character = await this.characterRepository.create(user.id, endingState);
     await this.statusRepository.create(character.id);
+
+    // 토큰 생성
+    const userPayload = {
+      loginId: user.loginId,
+      nickname: user.nickname,
+      createdAt: user.createdAt.toISOString(),
+    };
+    const tokens = createTokens(userPayload);
+
+    // 필요에 따라 토큰 반환 또는 사용
+    return tokens;
   }
 }

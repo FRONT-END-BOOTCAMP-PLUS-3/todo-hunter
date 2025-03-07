@@ -4,4 +4,6 @@ export interface SignInResponseDTO {
     nickname: string;
     createdAt: Date;
     // updatedAt: Date;
+    accessToken?: string; // 임시 적용
+    refreshToken?: string; // 임시 적용
 }

@@ -2,18 +2,16 @@ import { SignUpRequestDTO } from "@/application/usecases/auth/dtos/SignUpRequest
 import { SignUpUsecase } from "@/application/usecases/auth/SignUpUsecase";
 import { ICharacterRepository, IStatusRepository, IUserRepository } from "@/domain/repositories";
 import { PriCharacterRepository, PriStatusRepository, PriUserRepository } from "@/infrastructure/repositories";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     const userData: SignUpRequestDTO = await req.json();
 
+    // 필수 필드 체크
     if (!userData.loginId || !userData.email || !userData.nickname || !userData.password) {
         return NextResponse.json({ error: "모든 필드를 입력해야 합니다." }, { status: 400 });
     }
-
-    // 프리즈마 주입
-    const prisma = new PrismaClient();
 
     // 리포지토리 생성
     const userRepository:IUserRepository = new PriUserRepository(prisma);
@@ -27,7 +25,7 @@ export async function POST(req: NextRequest) {
     await signUpUsecase.execute(userData);
     
     try {
-        return NextResponse.json({message:"회원가입 성공"}, {status: 201});
+        return NextResponse.json({ message:"회원가입 성공" }, { status: 201 });
     } catch (error) {
         console.error("❌ 회원가입 오류", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
