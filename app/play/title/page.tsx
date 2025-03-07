@@ -18,7 +18,6 @@ export default function TitlePage(){
             });
             const data = await res.json();
             setTitles(data);
-            console.log("data.length", data.length);
         }
         catch (error) {
             console.log(error);
@@ -46,8 +45,8 @@ export default function TitlePage(){
 
 
     return (
-        <div className="bg-slate-400 h-screen flex items-center justify-center">
-            <div className="bg-white h-full w-full p-8 pt-17">
+        <div className="bg-slate-400 flex items-center justify-center p-5 flex-1 overflow-hidden">
+            <div className="bg-white p-8 pt-17 h-full w-full overflow-hidden">
                 <h1 className="mb-20 text-2xl">칭호 도감</h1>
                 <div className="grid grid-cols-3 gap-5">
                     {gridItems.map((title, index) => (
