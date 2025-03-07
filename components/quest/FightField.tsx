@@ -1,10 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import CharacterMotion from "./CharactersMotion";
+import { useQuestStore } from "@/utils/stores/questStore";
+import useProgressStore from "@/utils/stores/useProgressStore";
 
-const FightField = ({ isAttacking }: { isAttacking: boolean }) => {
+const FightField = () => {
+  const { isMoving, isAttacking, isDefeated, setDefeated } = useQuestStore();
+  const { progress } = useProgressStore(); // 경험치 가져오기
+
+  useEffect(() => {
+    if (progress >= 100) {
+      setDefeated(true); // 경험치가 100%면 werewolf 제거
+    }
+  }, [progress, setDefeated]);
+
   const playerIdleFrames = [
     "/images/characters/player/idle01.png",
     "/images/characters/player/idle02.png",
@@ -25,13 +36,6 @@ const FightField = ({ isAttacking }: { isAttacking: boolean }) => {
     "/images/characters/werewolf/werewolf-idle3.png",
   ];
 
-  const werewolfAttackFrames = [
-    "/images/characters/werewolf/werewolf-attack1.png",
-    "/images/characters/werewolf/werewolf-attack2.png",
-    "/images/characters/werewolf/werewolf-attack3.png",
-    "/images/characters/werewolf/werewolf-attack4.png",
-  ];
-
   return (
     <div className="relative w-auto h-[200px]">
       <Image
@@ -42,25 +46,29 @@ const FightField = ({ isAttacking }: { isAttacking: boolean }) => {
         priority
       />
 
-      {/* 플레이어 */}
+      {/* 플레이어 (이동 & 공격 반영) */}
       <CharacterMotion
         idleFrames={playerIdleFrames}
         attackFrames={playerAttackFrames}
         alt="Player"
         top="60%"
-        left="30%"
-        isAttacking={isAttacking} // 공격 상태 전달
+        left={isMoving ? "65%" : "30%"}
+        isMoving={isMoving}
+        isAttacking={isAttacking}
       />
 
-      {/* 몬스터 (웨어울프) */}
-      <CharacterMotion
-        idleFrames={werewolfIdleFrames}
-        attackFrames={werewolfAttackFrames}
-        alt="Werewolf"
-        top="60%"
-        left="70%"
-        flip={true}
-      />
+      {/* 몬스터 (werewolf) */}
+      {!isDefeated && ( // 경험치가 100%일 때 werewolf 제거
+        <CharacterMotion
+          idleFrames={werewolfIdleFrames}
+          attackFrames={[]}
+          alt="Werewolf"
+          top="60%"
+          left="70%"
+          flip={true}
+          isDefeated={isDefeated} // 패배 애니메이션 적용
+        />
+      )}
     </div>
   );
 };

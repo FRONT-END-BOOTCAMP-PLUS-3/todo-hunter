@@ -9,9 +9,9 @@ interface CharacterProps {
   left: string;
   flip?: boolean;
   frameRate?: number;
-  isMoving?: boolean; // 이동 상태 추가
-  isAttacking?: boolean; // 공격 상태 추가
-  onMoveComplete?: () => void; // 이동 완료 시 호출할 함수
+  isMoving?: boolean;
+  isAttacking?: boolean;
+  isDefeated?: boolean; // 패배 애니메이션 상태 추가
 }
 
 const CharacterMotion: React.FC<CharacterProps> = ({
@@ -24,22 +24,14 @@ const CharacterMotion: React.FC<CharacterProps> = ({
   frameRate = 100,
   isMoving = false,
   isAttacking = false,
-  onMoveComplete,
+  isDefeated = false,
 }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [position, setPosition] = useState({ top, left });
+  const [opacity, setOpacity] = useState(1); // 투명도 상태 추가
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     const frames = isAttacking ? attackFrames : idleFrames;
-
-    if (isMoving) {
-      // 플레이어가 몬스터 위치로 이동하는 애니메이션
-      setPosition({ top: "60%", left: "65%" }); // 몬스터 근처로 이동
-      setTimeout(() => {
-        onMoveComplete?.();
-      }, 500); // 500ms 후에 공격 시작
-    }
 
     if (isAttacking) {
       interval = setInterval(() => {
@@ -47,16 +39,26 @@ const CharacterMotion: React.FC<CharacterProps> = ({
       }, frameRate);
     }
 
+    if (isDefeated) {
+      // werewolf가 사라지는 애니메이션
+      setOpacity(1);
+      setTimeout(() => {
+        setOpacity(0); // 서서히 사라지기
+      }, 500); // 0.5초 후 사라짐
+    }
+
     return () => clearInterval(interval);
-  }, [isAttacking, isMoving, frameRate, idleFrames.length, attackFrames.length]);
+  }, [isAttacking, isDefeated, frameRate, idleFrames.length, attackFrames.length]);
 
   return (
     <div
       className="absolute cursor-pointer transition-all duration-500"
       style={{
-        top: position.top,
-        left: position.left,
+        top,
+        left,
         transform: `translate(-50%, -50%) ${flip ? "scaleX(-1)" : ""}`,
+        opacity, //  패배 시 투명도 조절
+        transition: "opacity 0.5s ease-out", //  자연스럽게 사라지는 효과
       }}
     >
       <Image

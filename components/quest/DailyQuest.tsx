@@ -60,7 +60,7 @@ const DailyQuest = () => {
         </div>
       )}
 
-      <Button size="M" className="mt-2 w-[360px]" onClick={onAddQuestHandler}>
+      <Button size="M" className="mt-2 w-full" onClick={onAddQuestHandler}>
         ⚡ 할 일 추가
       </Button>
     </div>
