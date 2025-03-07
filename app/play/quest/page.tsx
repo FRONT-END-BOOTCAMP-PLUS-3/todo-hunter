@@ -15,7 +15,7 @@ const QuestPage = () => {
       <FightField />
 
       {/* 퀘스트 영역 */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 p-5">
           <DailyQuest />
           <WeeklyQuest />
       </div>
