@@ -1,13 +1,13 @@
 "use client";
 
-import useProgressStore from "@/utils/stores/useProgressStore";
+import characterStore from "@/utils/stores/characterStore";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { progress, fetchUserData } = useProgressStore();
+  const { progress, fetchCharacterData } = characterStore();
 
   useEffect(() => {
-    fetchUserData();
+    fetchCharacterData();
   }, [progress]);
 
   return (
