@@ -12,8 +12,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-black">
-  <img src="/Images/Logo.png" alt="로고" />
-  <Button size="M" state="success" onClick={handleClickStart} className="mt-20">
+  <img src="/Images/Logo.png" alt="로고" className="p-6"/>
+  <Button size="L" state="success" onClick={handleClickStart} className="mt-20">
     시작하기
   </Button>
 </div>
