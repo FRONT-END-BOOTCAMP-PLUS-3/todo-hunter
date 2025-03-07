@@ -1,6 +1,6 @@
 export interface CharacterDto {
-    nickname: string;
-    progress: number;
+    nickname?: string;
+    progress?: number;
     str: number;
     int: number;
     emo: number;

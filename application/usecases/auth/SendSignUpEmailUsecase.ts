@@ -1,22 +1,25 @@
 import  nodemailer from 'nodemailer';
 import { GenerateVerifyCodeUsecase } from "@/application/usecases/auth/GenerateVerifyCodeUsecase";
 import { IVerificationRepository } from "@/domain/repositories/IVerificationRepository";
-import { sendEmailTemplate } from '@/utils/sendEmailTemplate';
+import { sendSignUpEmailTemplate } from '@/utils/sendEmailTemplate';
 
-export class SendEmailUsecase {
+export class SendSignUpEmailUsecase {
   private transporter;
   constructor(
-    private generateVerificationCodeUseCase : GenerateVerifyCodeUsecase,
+    private generateVerifyCodeUsecase : GenerateVerifyCodeUsecase,
     private verificationRepository : IVerificationRepository
   ) {
     this.transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST, // .env에서 관리
       port: parseInt(process.env.SMTP_PORT as string, 10),
-      secure: false,
+      // secure: false,
+      secure: process.env.SMTP_PORT === '465',
       auth: {
         user: process.env.SMTP_USER_EMAIL,
         pass: process.env.SMTP_PASSWORD,
       },
+      logger: true, // 디버그 로그 활성화
+      debug: false,  // 디버그 로그 비활성화 (활성화 시 메일 내용이 로그에 전부 출력됨)
     });
   }
 
@@ -24,12 +27,12 @@ export class SendEmailUsecase {
     if (!email) 
       throw new Error("이메일을 입력해야 합니다.");
     
-    const verificationCode = this.generateVerificationCodeUseCase.execute();
+    const verificationCode = this.generateVerifyCodeUsecase.execute();
     console.log(`🔹 생성된 인증 코드: ${verificationCode}`);
 
     await this.verificationRepository.saveVerificationCode(email, verificationCode, 300);
 
-    const emailHtml = sendEmailTemplate(verificationCode);
+    const emailHtml = sendSignUpEmailTemplate(verificationCode);
     const mailOptions = {
       from: `"TODO HUNTER Team" <${process.env.SMTP_USER_EMAIL}>`,
       to:email,

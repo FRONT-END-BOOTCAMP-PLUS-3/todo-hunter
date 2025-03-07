@@ -8,7 +8,7 @@ export class CreateQuestUseCase {
     private readonly PriStatusRepository: IStatusRepository
   ) {}
 
-  async execute(dto: CreateQuestDTO): Promise<GetQuestDTO> {
+  async createQuest(dto: CreateQuestDTO): Promise<GetQuestDTO> {
     // STATUS가 올바른 값인지 검증
     if (!Object.keys(STATUS).includes(dto.tagged)) {
       throw new Error(`Invalid status tag: ${dto.tagged}`);
