@@ -52,23 +52,21 @@ const FightField = () => {
         attackFrames={playerAttackFrames}
         alt="Player"
         top="60%"
-        left={isMoving ? "65%" : "30%"}
-        isMoving={isMoving}
+        left="30%"
         isAttacking={isAttacking}
+        isMoving = {isAttacking} // 공격 상태 전달
       />
 
-      {/* 몬스터 (werewolf) */}
-      {!isDefeated && ( // 경험치가 100%일 때 werewolf 제거
-        <CharacterMotion
-          idleFrames={werewolfIdleFrames}
-          attackFrames={[]}
-          alt="Werewolf"
-          top="60%"
-          left="70%"
-          flip={true}
-          isDefeated={isDefeated} // 패배 애니메이션 적용
-        />
-      )}
+      {/* 몬스터 (웨어울프) */}
+      <CharacterMotion
+        idleFrames={werewolfIdleFrames}
+        attackFrames={werewolfAttackFrames}
+        alt="Werewolf"
+        top="60%"
+        left="70%"
+        flip={true}
+        isShaking={isAttacking}
+      />
     </div>
   );
 };
