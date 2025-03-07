@@ -1,3 +1,5 @@
+import { STATUS } from "@/constants";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 interface Quest {
@@ -64,27 +66,35 @@ export const useQuestStore = create<QuestStore>((set) => ({
   // 애니메이션과 관련된 상태 (isMoving, isAttacking) completeQuest()가 실행될 때 상태를 변경
   completeQuest: async (questId) => {
     try {
-      const user = { characterId: 1 }; // 로그인한 유저 정보
+      const user = { characterId: 1 }; // 임시 유저 정보
   
-      // 1. 앞으로 이동 시작
+      // 1. 해당 퀘스트 찾기
+      const quest = useQuestStore.getState().quests.find((q) => q.id === questId);
+      if (!quest) return;
+  
+      // 2. 낙관적 UI 업데이트 (즉시 반영)
+      set((state) => ({
+        quests: state.quests.map((q) =>
+          q.id === questId ? { ...q, completed: true } : q
+        ),
+      }));
+  
+      // 3. 애니메이션 실행
       set({ isMoving: true, isMovingForward: true });
   
       setTimeout(() => {
-        // 2. 이동 완료 후 공격 시작
         set({ isMoving: false, isAttacking: true });
   
         setTimeout(() => {
-          // 3. 공격 후 복귀 시작
           set({ isAttacking: false, isMoving: true, isMovingForward: false });
   
           setTimeout(() => {
-            // 4. 복귀 완료 후 초기화
             set({ isMoving: false, isMovingForward: true });
           }, 600);
         }, 1000);
       }, 600);
   
-      // API 요청
+      // 4. API 요청
       const response = await fetch("/api/quest/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -92,9 +102,20 @@ export const useQuestStore = create<QuestStore>((set) => ({
       });
   
       if (!response.ok) throw new Error("퀘스트 완료 실패");
+  
+      // 5. 완료 후 상태 메시지 띄우기
+      toast.success(` ${STATUS[quest.tagged]} 스탯이 +1 증가했습니다!`);
     } catch (err) {
       console.error(err);
+  
+      // 실패 시 애니메이션 중단 & 상태 롤백
       set({ isMoving: false, isAttacking: false, isMovingForward: true });
+  
+      set((state) => ({
+        quests: state.quests.map((q) =>
+          q.id === questId ? { ...q, completed: false } : q
+        ),
+      }));
     }
   },
 

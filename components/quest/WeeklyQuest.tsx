@@ -47,12 +47,17 @@ const WeeklyQuest = () => {
               >
                 <div className="flex flex-col">
                   <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5 border-2 border-black"
-                      checked={completed}
-                      onChange={() => completeQuest(id)}
-                    />
+                  <input
+                  type="checkbox"
+                  className="w-5 h-5 border-2 border-black"
+                  checked={completed}
+                  disabled={completed} // 완료된 항목은 체크 불가능
+                  onChange={() => {
+                    if (!completed) {
+                      completeQuest(id);
+                    }
+                  }}
+                />
                     <span className="text-lg">{name}</span>
                   </div>
                   {expiredAt && (
