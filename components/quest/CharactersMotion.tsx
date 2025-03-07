@@ -9,11 +9,11 @@ interface CharacterProps {
   left: string;
   flip?: boolean;
   frameRate?: number;
-  isDefeated?: boolean; // 패배 애니메이션 상태 추가
-  isMoving?: boolean; // 이동 상태 추가
-  isAttacking?: boolean; // 공격 상태 추가
-  onMoveComplete?: () => void; // 이동 완료 시 호출할 함수
-  isShaking?: boolean; // 🔥 추가: 진동 여부 토큰
+  isMoving?: boolean;
+  isMovingForward?: boolean;
+  isAttacking?: boolean;
+  isDefeated?: boolean;
+  isShaking?: boolean;
 }
 
 const CharacterMotion: React.FC<CharacterProps> = ({
@@ -25,25 +25,33 @@ const CharacterMotion: React.FC<CharacterProps> = ({
   flip = false,
   frameRate = 100,
   isMoving = false,
+  isMovingForward = true,
   isAttacking = false,
   isDefeated = false,
-  onMoveComplete,
-  isShaking = false, // 🔥 기본값 false
+  isShaking = false,
 }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [opacity, setOpacity] = useState(1); // 투명도 상태 추가
+  const [position, setPosition] = useState({ top, left });
+  const [opacity, setOpacity] = useState(1);
+  const [shake, setShake] = useState("");
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     const frames = isAttacking ? attackFrames : idleFrames;
 
     if (isMoving) {
-      // 플레이어가 몬스터 위치로 이동하는 애니메이션
-      setPosition({ top: "60%", left: "65%" }); // 몬스터 근처로 이동
-      setTimeout(() => {
-        onMoveComplete?.();
-        setPosition({ top, left }); // 원위치로 이동
-      }, 3000); // 500ms 후에 공격 시작
+      // 이동 방향에 따라 위치 변경
+      setPosition({
+        top: "60%",
+        left: isMovingForward ? "65%" : "30%", // 앞으로 이동 or 뒤로 복귀
+      });
+
+      // 뒤로 이동일 경우 0.6초 후 원래 자리로 복귀
+      if (!isMovingForward) {
+        setTimeout(() => {
+          setPosition({ top, left });
+        }, 600);
+      }
     }
 
     if (isAttacking) {
@@ -60,27 +68,31 @@ const CharacterMotion: React.FC<CharacterProps> = ({
       }, 500); // 0.5초 후 사라짐
     }
 
+    if (isShaking) {
+      setShake("translateX(-3px)");
+      setTimeout(() => setShake("translateX(3px)"), 100);
+      setTimeout(() => setShake("translateX(-3px)"), 200);
+      setTimeout(() => setShake("translateX(3px)"), 300);
+      setTimeout(() => setShake("translateX(0)"), 400);
+    } else {
+      setShake("");
+    }
+
     return () => clearInterval(interval);
-  }, [isAttacking, isMoving, frameRate, idleFrames.length, attackFrames.length, top, left]);
+  }, [isAttacking, isDefeated, isMoving, isMovingForward, isShaking]);
 
   return (
     <div
       className="absolute cursor-pointer transition-all duration-500"
       style={{
-        top,
-        left,
-        transform: `translate(-50%, -50%) ${flip ? "scaleX(-1)" : ""}`,
-        opacity, //  패배 시 투명도 조절
-        transition: "opacity 0.5s ease-out", //  자연스럽게 사라지는 효과
-        animation: isShaking ? "shake 0.5s infinite" : "none", // 🔥 토큰을 기반으로 진동 효과 적용
+        top: position.top,
+        left: position.left,
+        transform: `translate(-50%, -50%) ${flip ? "scaleX(-1)" : ""} ${shake}`,
+        opacity,
+        animation: isShaking ? "shake 0.5s infinite" : "none", //  진동 효과
       }}
     >
-      <Image
-        src={isAttacking ? attackFrames[currentFrame] : idleFrames[currentFrame]}
-        alt={alt}
-        width={120}
-        height={120}
-      />
+      <Image src={isAttacking ? attackFrames[currentFrame] : idleFrames[currentFrame]} alt={alt} width={120} height={120} />
     </div>
   );
 };

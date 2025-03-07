@@ -1,26 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import DailyQuest from "@/components/quest/DailyQuest";
 import WeeklyQuest from "@/components/quest/WeeklyQuest";
 import FightField from "@/components/quest/FightField";
 import { useQuestStore } from "@/utils/stores/questStore";
 
 const QuestPage = () => {
-  const quests = useQuestStore((state) => state.quests);
-  const [isAttacking, setIsAttacking] = useState(false);
-
-  // 미구현 : 퀘스트 완료 useEffect 반응해야하는데
-  // 지금은 퀘스트가 추가되면 3초간 공격 상태로 변경
-  useEffect(() => {
-    if (quests.length > 0) {
-      
-      setIsAttacking(true);
-      const timer = setTimeout(() => setIsAttacking(false), 3000);
-      return () => clearTimeout(timer);
-
-    }
-  }, [quests.length]);
+  const { quests, isAttacking } = useQuestStore(); // Zustand에서 isAttacking 바로 사용
 
   return (
     <div className="flex-1 mt-3 min-vh">
@@ -29,7 +16,7 @@ const QuestPage = () => {
         경험치 쌓는 중...
       </div>
 
-      <FightField isAttacking={isAttacking}/>
+      <FightField />
 
       {/* 퀘스트 영역 */}
       <div className="flex flex-col gap-3">

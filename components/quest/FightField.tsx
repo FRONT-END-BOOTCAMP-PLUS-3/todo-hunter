@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import CharacterMotion from "./CharactersMotion";
 import { useQuestStore } from "@/utils/stores/questStore";
 import useProgressStore from "@/utils/stores/useProgressStore";
 
+// FightField에서 상태 추가
 const FightField = () => {
-  const { isMoving, isAttacking, isDefeated, setDefeated } = useQuestStore();
-  const { progress } = useProgressStore(); // 경험치 가져오기
+  const { isMoving, isMovingForward, isAttacking, isDefeated, setDefeated } = useQuestStore();
+  const { progress } = useProgressStore();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (progress >= 100) {
-      setDefeated(true); // 경험치가 100%면 werewolf 제거
+      setDefeated(true);
     }
   }, [progress, setDefeated]);
 
@@ -53,20 +54,22 @@ const FightField = () => {
         alt="Player"
         top="60%"
         left="30%"
+        isMoving={isMoving}
+        isMovingForward={isMovingForward} // 이동 방향 전달
         isAttacking={isAttacking}
-        isMoving = {isAttacking} // 공격 상태 전달
       />
 
-      {/* 몬스터 (웨어울프) */}
-      <CharacterMotion
-        idleFrames={werewolfIdleFrames}
-        attackFrames={werewolfAttackFrames}
-        alt="Werewolf"
-        top="60%"
-        left="70%"
-        flip={true}
-        isShaking={isAttacking}
-      />
+      {/* 몬스터 (werewolf) */}
+      {!isDefeated && (
+        <CharacterMotion
+          idleFrames={werewolfIdleFrames}
+          alt="Werewolf"
+          top="60%"
+          left="70%"
+          flip={true}
+          isShaking={isAttacking}
+          isDefeated={isDefeated} attackFrames={[]}        />
+      )}
     </div>
   );
 };

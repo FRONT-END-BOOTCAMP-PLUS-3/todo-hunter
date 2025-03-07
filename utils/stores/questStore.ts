@@ -60,45 +60,29 @@ export const useQuestStore = create<QuestStore>((set) => ({
       });
     }
   },
-
+  // API요청, quests 상태,
+  // 애니메이션과 관련된 상태 (isMoving, isAttacking) completeQuest()가 실행될 때 상태를 변경
   completeQuest: async (questId) => {
     try {
       const user = { characterId: 1 }; // 로그인한 유저 정보
   
+      // 1. 앞으로 이동 시작
       set({ isMoving: true, isMovingForward: true });
   
-      const performAction = (step: number) => {
-        switch (step) {
-          case 1: // 몬스터 앞으로 이동 시작
-            set({ isMoving: true, isMovingForward: true });
-            setTimeout(() => performAction(2), 600); // 0.6초 후 공격 시작
-            break;
-          case 2: // 이동 완료 후 공격 시작
-            set({ isMoving: false, isAttacking: true });
-            setTimeout(() => performAction(3), 800); // 0.8초 후 멈춤 상태 유지
-            break;
-          case 3: // 공격 종료 후 잠깐 멈춤 (뒤로 이동 X)
-            set({ isAttacking: false, isMoving: false, isMovingForward: false }); 
-            setTimeout(() => performAction(4), 400); // 0.4초 동안 멈춘 후 이동 시작
-            break;
-          case 4: // 멈춘 후 뒤로 이동 시작
-            set({ isMoving: true, isMovingForward: false });
-            setTimeout(() => performAction(5), 600); // 0.6초 후 복귀 완료
-            break;
-          case 5: // 복귀 완료 후 종료
-            set((state) => ({
-              quests: state.quests.map((q) =>
-                q.id === questId ? { ...q, completed: true } : q
-              ),
-              isMoving: false,
-              isMovingForward: true, // 다음 공격을 위해 초기화
-            }));
-            break;
-        }
-      };
+      setTimeout(() => {
+        // 2. 이동 완료 후 공격 시작
+        set({ isMoving: false, isAttacking: true });
   
-      // 첫 번째 단계 실행 (이동 시작)
-      performAction(1);
+        setTimeout(() => {
+          // 3. 공격 후 복귀 시작
+          set({ isAttacking: false, isMoving: true, isMovingForward: false });
+  
+          setTimeout(() => {
+            // 4. 복귀 완료 후 초기화
+            set({ isMoving: false, isMovingForward: true });
+          }, 600);
+        }, 1000);
+      }, 600);
   
       // API 요청
       const response = await fetch("/api/quest/complete", {
@@ -110,7 +94,7 @@ export const useQuestStore = create<QuestStore>((set) => ({
       if (!response.ok) throw new Error("퀘스트 완료 실패");
     } catch (err) {
       console.error(err);
-      set({ isMoving: false, isAttacking: false, isMovingForward: true }); // 에러 발생 시 초기화
+      set({ isMoving: false, isAttacking: false, isMovingForward: true });
     }
   },
 
