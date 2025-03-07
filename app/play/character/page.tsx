@@ -33,7 +33,7 @@ export default function CharacterPage() {
         <div className="character-page-background">
             <div className="flex flex-col items-center">
                 <p className="mb-2 mt-10 text-xl text-white">{character?.nickname}님, 오늘의 경험치에요!</p>
-                <div className="flex">
+                <div className="flex mb-5">
                     <p className="mr-2 text-white text-xl">{character?.progress}%</p>
                     <progress className="bg-white is-rounded-progress " value={character?.progress} max="100"></progress>
                 </div>

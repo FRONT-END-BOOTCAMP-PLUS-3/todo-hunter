@@ -6,7 +6,7 @@ import WeeklyQuest from "@/components/quest/WeeklyQuest";
 
 const QuestPage = () => {
   return (
-    <div className="flex-1 mt-3 min-vh">
+    <div className="flex-1 mt-3 min-vh overflow-x-hidden">
       {/* 경험치 진행 UI */}
       <div className="mb-3 w-full bg-black text-white text-center font-bold">
         경험치 쌓는 중...
@@ -15,7 +15,7 @@ const QuestPage = () => {
       <FightField />
 
       {/* 퀘스트 영역 */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 p-5">
           <DailyQuest />
           <WeeklyQuest />
       </div>
