@@ -133,12 +133,7 @@ useEffect(() => {
         주간 퀘스트 ({quests.filter((q) => q.completed).length}/
         {quests.length})
       </h2>
-      {loading ? (
-        <p className="text-center text-gray-500">로딩 중...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
-      ) : (
-        <div className="max-h-[160px] overflow-y-auto space-y-2 pt-2">
+      <div className="max-h-[160px] overflow-y-auto space-y-2 pt-2">
   {quests.map(({ id, name, tagged, completed, expiredAt }) => (
     <div
       key={id}
@@ -172,8 +167,7 @@ useEffect(() => {
       </div>
     </div>
   ))}
-</div>
-      )}
+</div>  
       <Button size="M" className="mt-2 w-[360px]" onClick={handleAddQuest}>
         ⚡ 할 일 추가
       </Button>
