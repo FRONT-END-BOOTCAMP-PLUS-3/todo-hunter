@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { VerifyAccessTokenUsecase } from "@/application/usecases/auth/VerifyAccessTokenUsecase";
-import { VerifyRefreshTokenUsecase } from "@/application/usecases/auth/VerifyRefreshTokenUsecase";
-import { GenerateAccessTokenUsecase } from "@/application/usecases/auth/GenerateAccessTokenUsecase";
-import { RenewRefreshTokenUsecase } from "@/application/usecases/auth/RenewRefreshTokenUsecase";
 import { RdAuthenticationRepository } from "@/infrastructure/repositories/RdAuthenticationRepository";
 import jwt from "jsonwebtoken";
 
@@ -29,41 +26,34 @@ export async function middleware(req: NextRequest) {
     }
 
     const authenticationRepository = new RdAuthenticationRepository();
-    const verifyRefreshTokenUsecase = new VerifyRefreshTokenUsecase();
-    const generateAccessTokenUsecase = new GenerateAccessTokenUsecase();
-    const renewRefreshTokenUsecase = new RenewRefreshTokenUsecase(authenticationRepository);
-
     const refreshToken = await authenticationRepository.getRefreshToken(loginId);
     if (!refreshToken) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // Refresh Token 검증
-    const decodedRefreshToken = await verifyRefreshTokenUsecase.execute(refreshToken);
-    let newAccessToken: string;
+    // Refresh Token 검증 및 Access Token 재발급은 route에서 처리
+    const response = await fetch(new URL("/api/auth/refresh", req.url), {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ loginId, refreshToken }),
+    });
 
-    if (decodedRefreshToken) {
-        // Refresh Token이 유효하면 새 Access Token 발급
-        newAccessToken = await generateAccessTokenUsecase.execute({ id: loginId });
-    } else {
-        // Refresh Token이 만료되었으면 갱신
-        const newRefreshToken = await renewRefreshTokenUsecase.execute({ id: loginId });
-        if (!newRefreshToken) {
-            return NextResponse.redirect(new URL("/login", req.url));
-        }
-        newAccessToken = await generateAccessTokenUsecase.execute({ id: loginId });
+    if (!response.ok) {
+        return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    const response = NextResponse.next();
-    // response.headers.set("Authorization", `Bearer ${newAccessToken}`);
-    response.cookies.set("accessToken", newAccessToken, {
+    const { newAccessToken } = await response.json();
+    const nextResponse = NextResponse.next();
+    nextResponse.cookies.set("accessToken", newAccessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         path: "/",
         maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600", 10),
     });
-    return response;
+    return nextResponse;
 }
 
 export const config = {
