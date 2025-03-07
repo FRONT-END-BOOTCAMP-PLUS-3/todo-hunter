@@ -5,6 +5,7 @@ import { CharacterDto } from "@/application/usecases/character/dtos";
 import Status from "@/app/play/character/_components/status";
 import "@/app/play/character/_components/character.css";
 import useProgressStore from "@/utils/stores/useProgressStore";
+import Character from "@/app/play/character/_components/character";
 
 
 export default function CharacterPage() {
@@ -41,7 +42,7 @@ export default function CharacterPage() {
                     <progress className="bg-white is-rounded-progress " value={progress} max="100"></progress>
                 </div>
             </div>
-            <div>캐릭터 이미지</div>
+            <Character />
             {character && (
                 <Status
                     str={character.str}

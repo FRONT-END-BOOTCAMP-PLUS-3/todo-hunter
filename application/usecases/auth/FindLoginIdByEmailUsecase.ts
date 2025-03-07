@@ -1,6 +1,6 @@
 import { IUserRepository } from "@/domain/repositories";
 
-export class FindEmailUsecase {
+export class FindLoginIdByEmailUsecase {
     constructor (
         private readonly userRepository: IUserRepository,
     ) {}
