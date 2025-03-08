@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navigation from "@/components/common/Navigation";
 import { useEffect, useState } from "react";
+import { MENUS } from "@/constants/menu";
 
 export default function NavigationWrapper() {
   const pathname = usePathname();
@@ -30,5 +31,13 @@ export default function NavigationWrapper() {
 
   if (shouldHideNavigation) return null; // 네비게이션 숨김
 
-  return <Navigation className="fixed bottom-0 w-full" />;
+  // 현재 경로에 따라 selectedMenu 설정
+  const getSelectedMenu = () => {
+    const matchedMenu = MENUS.find((menu) => pathname.includes(menu.menu));
+    return matchedMenu ? matchedMenu.menu : "character"; // 기본값 "character"
+  };
+
+  return <Navigation selectedMenu={getSelectedMenu()} className="fixed bottom-0 w-full" />;
+
+  
 }
