@@ -1,25 +1,12 @@
 "use client";
 
-import { Button } from "@/components/common";
+import { Button, Dialog } from "@/components/common";
 import { useEffect, useState } from "react";
 
 export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    };
-  }, []);
-
-  const handleInstallClick = () => {
+  const installHandler = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult: any) => {
@@ -33,17 +20,30 @@ export default function InstallPrompt() {
     }
   };
 
-  const handleCloseClick = () => {
+  const closeHandler = () => {
     setDeferredPrompt(null);
   };
+
+  useEffect(() => {
+    const handlebeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handlebeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handlebeforeInstallPrompt);
+    };
+  }, []);
 
   return (
     deferredPrompt && (
       <div>
-        <Button onClick={handleInstallClick}>
+        <Button onClick={installHandler}>
           홈 화면에 추가
         </Button>
-        <Button onClick={handleCloseClick}>
+        <Button onClick={closeHandler}>
           닫기
         </Button>
       </div>
