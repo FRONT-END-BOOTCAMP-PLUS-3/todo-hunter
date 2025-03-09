@@ -29,18 +29,6 @@ export async function POST(req: NextRequest) {
         
         // 사용자 ID 생성
         const loginId = signInResponseDto.loginId;
-        
-        // // 토큰 생성
-        // const userPayload = {
-        //     loginId: signInResponseDto.loginId,
-        //     nickname: signInResponseDto.nickname,
-        //     createdAt: signInResponseDto.createdAt.toISOString(),
-        // };
-        // const tokens = createTokens(userPayload);
-    
-        // // return NextResponse.json(signInResponseDto, {status:200});
-        // // return NextResponse.json({ ...signInResponseDto, ...tokens }, { status: 200 });
-        // return NextResponse.json({ ...tokens }, { status: 200 });
 
         // 기존 Refresh Token 확인
         const existingRefreshToken = await authenticationRepository.getRefreshToken(loginId);
@@ -54,16 +42,15 @@ export async function POST(req: NextRequest) {
                 refreshToken = existingRefreshToken;
             } else {
                 // 유효하지 않으면 새로 발급
-                refreshToken = await renewRefreshTokenUsecase.execute({ id: loginId });
+                refreshToken = await renewRefreshTokenUsecase.execute({ loginId: loginId });
             }
         } else {
             // Refresh Token이 없으면 새로 발급
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            refreshToken = await generateRefreshTokenUsecase.execute({ id: loginId });
+            refreshToken = await generateRefreshTokenUsecase.execute({ loginId: loginId });
         }
 
         // Access Token 생성
-        const accessToken = await generateAccessTokenUsecase.execute({ id: loginId });
+        const accessToken = await generateAccessTokenUsecase.execute({ loginId: loginId });
 
         // 쿠키 설정 및 응답
         const response = NextResponse.json({ accessToken }, { status: 200 });
@@ -72,6 +59,12 @@ export async function POST(req: NextRequest) {
             secure: process.env.NODE_ENV === "production", // 프로덕션에서만 Secure 적용
             path: "/", // 모든 경로에서 사용 가능
             maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600", 10), // 유효기간 (초 단위)
+        });
+        response.cookies.set("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            path: "/",
+            maxAge: parseInt(process.env.REFRESH_TOKEN_EXPIRES || "3600", 10), // 유효기간 (초 단위)
         });
 
         return response;

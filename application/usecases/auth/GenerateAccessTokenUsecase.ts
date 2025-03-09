@@ -1,13 +1,17 @@
-// application/usecases/generateAccessToken.ts
-import jwt from 'jsonwebtoken';
+import { SignJWT } from "jose";
 
 export class GenerateAccessTokenUsecase {
     // Access Token 생성
-    generate(user: { id: string }) {
-        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: parseInt(process.env.ACCESS_TOKEN_EXPIRES!, 10) });
+    async generate(user: { loginId: string }) {
+        const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN_SECRET!);
+        const iat = Math.floor(Date.now() / 1000);
+        return await new SignJWT({ id: user.loginId, iat })
+            .setProtectedHeader({ alg: "HS256" })
+            .setExpirationTime(process.env.ACCESS_TOKEN_EXPIRES!) // 예: "1h"
+            .sign(secret);
     }
 
-    async execute(user: { id: string }) {
+    async execute(user: { loginId: string }) {
         return this.generate(user);
     }
 }

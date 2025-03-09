@@ -1,11 +1,12 @@
-// application/usecases/VerifyRefreshToken.ts
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from "jose";
 
 export class VerifyRefreshTokenUsecase {
     // Refresh Token 검증
-    verify(token: string) {
+    async verify(token: string) {
         try {
-            return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!);
+            const secret = new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET!);
+            const { payload } = await jwtVerify(token, secret);
+            return payload; // { id: string, ... } 형태로 반환
         } catch (error) {
             console.error(error);
             return null;

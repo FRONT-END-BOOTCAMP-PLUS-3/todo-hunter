@@ -1,12 +1,16 @@
 import { ICharacterRepository, IStatusRepository, IUserRepository } from "@/domain/repositories";
+import { IRdAuthenticationRepository } from "@/domain/repositories/IRdAuthenticationRepository";
 import { SignUpRequestDTO } from "./dtos/SignUpRequestDTO";
-import { createTokens } from "@/utils/auth";
+// import { createTokens } from "@/utils/auth";
+import { GenerateAccessTokenUsecase } from "./GenerateAccessTokenUsecase";
+import { GenerateRefreshTokenUsecase } from "./GenerateRefreshTokenUsecase";
 
 export class SignUpUsecase {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly characterRepository: ICharacterRepository,
     private readonly statusRepository: IStatusRepository,
+    private readonly rdAuthenticationRepository: IRdAuthenticationRepository // Refresh Token 저장을 위한 의존성 추가
   ) {}
 
   // async execute(request: SignUpRequestDTO): Promise<void>
@@ -29,15 +33,17 @@ export class SignUpUsecase {
     const character = await this.characterRepository.create(user.id, endingState);
     await this.statusRepository.create(character.id);
 
-    // 토큰 생성
-    const userPayload = {
-      loginId: user.loginId,
-      nickname: user.nickname,
-      createdAt: user.createdAt.toISOString(),
-    };
-    const tokens = createTokens(userPayload);
+    // 유즈케이스를 사용해 토큰 생성
+    const accessTokenUsecase = new GenerateAccessTokenUsecase();
+    const refreshTokenUsecase = new GenerateRefreshTokenUsecase(this.rdAuthenticationRepository);
 
-    // 필요에 따라 토큰 반환 또는 사용
-    return tokens;
+    const userPayload = { loginId: user.loginId }; // GenerateAccessTokenUsecase와 GenerateRefreshTokenUsecase가 요구하는 형식
+    const accessToken = await accessTokenUsecase.execute(userPayload);
+    const refreshToken = await refreshTokenUsecase.execute(userPayload);
+
+    // // 필요에 따라 토큰 반환 또는 사용
+    // return tokens;
+
+    return { accessToken, refreshToken };
   }
 }

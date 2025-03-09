@@ -6,7 +6,7 @@ export class RenewAccessTokenUsecase {
     constructor(private authenticationRepository: RdAuthenticationRepository) {}
 
     // 새로운 Access Token 생성
-    async execute(user: { id: string }) {
+    async execute(user: { loginId: string }) {
         const generateAccessTokenUsecase = new GenerateAccessTokenUsecase();
         return generateAccessTokenUsecase.execute(user);
     }
@@ -20,7 +20,7 @@ export class RenewAccessTokenUsecase {
         if (!decoded || typeof decoded === 'string') return null;
 
         // `decoded`가 JwtPayload 타입임을 확신할 수 있으므로 `id` 속성에 안전하게 접근
-        const newAccessToken = await new GenerateAccessTokenUsecase().execute({ id: decoded.id });
+        const newAccessToken = await new GenerateAccessTokenUsecase().execute({ loginId: (decoded as { id: string }).id });
 
         return newAccessToken;
     }

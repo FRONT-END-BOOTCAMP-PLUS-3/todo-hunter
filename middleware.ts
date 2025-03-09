@@ -1,61 +1,50 @@
-import { NextRequest, NextResponse } from "next/server";
-import { VerifyAccessTokenUsecase } from "@/application/usecases/auth/VerifyAccessTokenUsecase";
-import { RdAuthenticationRepository } from "@/infrastructure/repositories/RdAuthenticationRepository";
-import jwt from "jsonwebtoken";
+import { NextResponse, NextRequest } from "next/server";
+import { getUserFromCookie } from "@/utils/auth";
 
-export async function middleware(req: NextRequest) {
-    const accessToken = req.cookies.get("accessToken")?.value;
-    if (!accessToken) {
-        return NextResponse.redirect(new URL("/login", req.url));
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // '/play' 및 '/signin' 경로를 미들웨어가 처리하지 않도록 제외
+  if (pathname === "/signin"
+    || pathname === "/signup"
+    || pathname === "/findid"
+    || pathname.startsWith("/play")) {
+    return NextResponse.next();
+  }
+
+  console.log("요청 경로:", request.nextUrl.pathname);
+
+  const { user, response } = await getUserFromCookie(request);
+  
+  if (user) {
+    console.log("🔑 사용자 정보:", user);
+    // Access Token이 유효하거나 새로 발급된 경우 '/play'로 리다이렉트
+    if (response) {
+      // 새 Access Token이 설정된 응답을 사용해 리다이렉트
+      const redirectResponse = NextResponse.redirect(new URL("/play", request.url));
+      // response에서 쿠키를 복사
+      const cookies = response.cookies.get("accessToken");
+      if (cookies) {
+        redirectResponse.cookies.set({
+          name: "accessToken",
+          value: cookies.value,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          maxAge: cookies.maxAge,
+        });
+      }
+      return redirectResponse;
     }
+    return NextResponse.redirect(new URL("/play", request.url));
+  } else {
+    console.log("❌ 인증되지 않은 사용자");
+    // 인증되지 않은 경우 '/signin'으로 리다이렉트
+    return NextResponse.redirect(new URL("/signin", request.url));
+  }
 
-    const verifyAccessTokenUsecase = new VerifyAccessTokenUsecase();
-    const decodedAccessToken = await verifyAccessTokenUsecase.execute(accessToken);
-
-    if (decodedAccessToken) {
-        // Access Token이 유효하면 Bearer 헤더 추가
-        const response = NextResponse.next();
-        response.headers.set("Authorization", `Bearer ${accessToken}`);
-        return response;
-    }
-
-    // Access Token 만료 시
-    const loginId = (jwt.decode(accessToken) as { id?: string })?.id;
-    if (!loginId) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    const authenticationRepository = new RdAuthenticationRepository();
-    const refreshToken = await authenticationRepository.getRefreshToken(loginId);
-    if (!refreshToken) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    // Refresh Token 검증 및 Access Token 재발급은 route에서 처리
-    const response = await fetch(new URL("/api/auth/refresh", req.url), {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ loginId, refreshToken }),
-    });
-
-    if (!response.ok) {
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    const { newAccessToken } = await response.json();
-    const nextResponse = NextResponse.next();
-    nextResponse.cookies.set("accessToken", newAccessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600", 10),
-    });
-    return nextResponse;
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/((?!login|_next).*)"],
+  matcher: ["/((?!_next/|api/).*)"], // _next 및 /api 경로 제외
 };

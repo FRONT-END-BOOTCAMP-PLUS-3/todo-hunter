@@ -1,4 +1,3 @@
-// application/usecases/GenerateNewRefreshTokens.ts
 import { RdAuthenticationRepository } from '@/infrastructure/repositories/RdAuthenticationRepository';
 import { GenerateRefreshTokenUsecase } from './GenerateRefreshTokenUsecase';
 import { VerifyRefreshTokenUsecase } from './VerifyRefreshTokenUsecase';
@@ -8,8 +7,8 @@ export class RenewRefreshTokenUsecase {
     constructor(private authenticationRepository: IRdAuthenticationRepository) {}
 
     // 새로운 Refresh Token 생성
-    async execute(user: { id: string }) {
-        await this.authenticationRepository.deleteRefreshToken(user.id);
+    async execute(user: { loginId: string }) {
+        await this.authenticationRepository.deleteRefreshToken(user.loginId);
         const generateRefreshTokenUsecase = new GenerateRefreshTokenUsecase(this.authenticationRepository);
         return generateRefreshTokenUsecase.execute(user);
     }
@@ -23,7 +22,8 @@ export class RenewRefreshTokenUsecase {
         const rdAuthenticationRepository = new RdAuthenticationRepository();
         const generateRefreshTokenUsecase = new GenerateRefreshTokenUsecase(rdAuthenticationRepository);
         if (typeof decoded === 'string' || !decoded.id) return null;
-        const newRefreshToken = await generateRefreshTokenUsecase.execute({ id: decoded.id });
+        // const newRefreshToken = await generateRefreshTokenUsecase.execute({ id: decoded.id });
+        const newRefreshToken = await generateRefreshTokenUsecase.execute({ loginId: (decoded as { id: string }).id });
         return newRefreshToken;
     }
 }

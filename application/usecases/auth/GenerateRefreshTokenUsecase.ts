@@ -1,5 +1,4 @@
-// application/usecases/generateRefreshToken.ts
-import jwt from 'jsonwebtoken';
+import { SignJWT } from "jose";
 import { IRdAuthenticationRepository } from '@/domain/repositories/IRdAuthenticationRepository';
 
 export class GenerateRefreshTokenUsecase {
@@ -10,13 +9,18 @@ export class GenerateRefreshTokenUsecase {
     }
 
     // Refresh Token 생성
-    async generate(user: { id: string }) {
-        const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: parseInt(process.env.REFRESH_TOKEN_EXPIRES!, 10) });
-        await this.repository.saveRefreshToken(user.id, refreshToken);
+    async generate(user: { loginId: string }) {
+        const secret = new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET!);
+        const iat = Math.floor(Date.now() / 1000);
+        const refreshToken = await new SignJWT({ id: user.loginId, iat })
+            .setProtectedHeader({ alg: "HS256" })
+            .setExpirationTime(process.env.REFRESH_TOKEN_EXPIRES!) // 예: "7d"
+            .sign(secret);
+        await this.repository.saveRefreshToken(user.loginId, refreshToken);
         return refreshToken;
     }
 
-    async execute(user: { id: string }) {
+    async execute(user: { loginId: string }) {
         return this.generate(user);
     }
 }
