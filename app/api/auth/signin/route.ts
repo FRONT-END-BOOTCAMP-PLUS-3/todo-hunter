@@ -28,6 +28,8 @@ export async function POST(req: NextRequest) {
         const verifyRefreshTokenUsecase = new VerifyRefreshTokenUsecase();
         
         // 사용자 ID 생성
+        const id = signInResponseDto.id;
+        // 사용자 로그인인 ID 생성
         const loginId = signInResponseDto.loginId;
 
         // 기존 Refresh Token 확인
@@ -42,15 +44,15 @@ export async function POST(req: NextRequest) {
                 refreshToken = existingRefreshToken;
             } else {
                 // 유효하지 않으면 새로 발급
-                refreshToken = await renewRefreshTokenUsecase.execute({ loginId: loginId });
+                refreshToken = await renewRefreshTokenUsecase.execute({ id: id, loginId: loginId });
             }
         } else {
             // Refresh Token이 없으면 새로 발급
-            refreshToken = await generateRefreshTokenUsecase.execute({ loginId: loginId });
+            refreshToken = await generateRefreshTokenUsecase.execute({ id: id, loginId: loginId });
         }
 
         // Access Token 생성
-        const accessToken = await generateAccessTokenUsecase.execute({ loginId: loginId });
+        const accessToken = await generateAccessTokenUsecase.execute({ id: id, loginId: loginId });
 
         // 쿠키 설정 및 응답
         const response = NextResponse.json({ accessToken }, { status: 200 });

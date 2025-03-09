@@ -1,4 +1,5 @@
 export interface SignInResponseDTO {
+    id: number;
     loginId: string;
     // email: string;
     nickname: string;

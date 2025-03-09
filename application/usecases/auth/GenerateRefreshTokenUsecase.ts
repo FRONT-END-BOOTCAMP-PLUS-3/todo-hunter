@@ -9,10 +9,10 @@ export class GenerateRefreshTokenUsecase {
     }
 
     // Refresh Token 생성
-    async generate(user: { loginId: string }) {
+    async generate(user: { id: number, loginId: string }) {
         const secret = new TextEncoder().encode(process.env.REFRESH_TOKEN_SECRET!);
         const iat = Math.floor(Date.now() / 1000);
-        const refreshToken = await new SignJWT({ id: user.loginId, iat })
+        const refreshToken = await new SignJWT({ loginId: user.loginId, iat })
             .setProtectedHeader({ alg: "HS256" })
             .setExpirationTime(process.env.REFRESH_TOKEN_EXPIRES!) // 예: "7d"
             .sign(secret);
@@ -20,7 +20,7 @@ export class GenerateRefreshTokenUsecase {
         return refreshToken;
     }
 
-    async execute(user: { loginId: string }) {
+    async execute(user: { id: number, loginId: string }) {
         return this.generate(user);
     }
 }

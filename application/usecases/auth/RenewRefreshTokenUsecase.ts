@@ -7,7 +7,7 @@ export class RenewRefreshTokenUsecase {
     constructor(private authenticationRepository: IRdAuthenticationRepository) {}
 
     // 새로운 Refresh Token 생성
-    async execute(user: { loginId: string }) {
+    async execute(user: { id: number, loginId: string }) {
         await this.authenticationRepository.deleteRefreshToken(user.loginId);
         const generateRefreshTokenUsecase = new GenerateRefreshTokenUsecase(this.authenticationRepository);
         return generateRefreshTokenUsecase.execute(user);
@@ -23,7 +23,7 @@ export class RenewRefreshTokenUsecase {
         const generateRefreshTokenUsecase = new GenerateRefreshTokenUsecase(rdAuthenticationRepository);
         if (typeof decoded === 'string' || !decoded.id) return null;
         // const newRefreshToken = await generateRefreshTokenUsecase.execute({ id: decoded.id });
-        const newRefreshToken = await generateRefreshTokenUsecase.execute({ loginId: (decoded as { id: string }).id });
+        const newRefreshToken = await generateRefreshTokenUsecase.execute({ id: decoded.id as number, loginId: decoded.loginId as string });
         return newRefreshToken;
     }
 }

@@ -29,6 +29,7 @@ export class SignInUsecase {
         }
 
         return {
+            id: user.id,
             loginId: request.loginId,
             nickname: user.nickname,
             createdAt: user.createdAt,
