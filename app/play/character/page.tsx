@@ -17,6 +17,7 @@ export default function CharacterPage() {
     return (
         <div className="character-page-background">
             <div className="flex flex-col items-center">
+
                 <p className="mb-2 mt-10 text-xl text-white">{characterData?.nickname}님, 오늘의 경험치에요!</p>
                 <div className="flex">
                     <p className="mr-2 text-white text-xl">{characterData?.progress}%</p>

@@ -61,13 +61,14 @@ const DailyQuest = () => {
                   </button>
                 </div>
               </div>
-            ))}
-        </div>
-      )}
-
-      <Button size="M" className="mt-2 w-full" onClick={onAddQuestHandler}>
-        ⚡ 할 일 추가
-      </Button>
+            </div>
+          ))}
+      </div>
+      <div className="flex justify-center">
+        <Button size="L" className="mt-2" onClick={handleAddQuest}>
+          ⚡ 할 일 추가
+        </Button>
+      </div>
     </div>
   );
 };
