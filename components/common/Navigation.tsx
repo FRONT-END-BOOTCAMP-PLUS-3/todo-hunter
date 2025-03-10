@@ -64,6 +64,7 @@ const Navigation: React.FC<NavigationProps> = ({ selectedMenu = "character", cla
               className={`is-rounded-full flex flex-col justify-center items-center absolute left-1/2 -translate-x-1/2 -translate-y-1/2
                 min-w-[100px] max-[430px]:min-w-[90px] max-[300px]:w-[80px]
                 h-[100px] max-[300px]:h-[80px] max-[430px]:pt-3 border-transparent
+                data-[state=active]:bg-transparent data-[state=active]:text-white
                 ${selectedMenu === MENUS[2].menu ? "bg-white" : "transparent text-white"} text-lg sm:text-base`}
               value={MENUS[2].menu}
             >
