@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/common/Select";
 import { STATUS } from "@/constants/status";
-import DateSelector from "@/components/common/DateSelcetor";
+import DateSelector from "@/components/common/DateSelector";
 import { Input } from "@/components/common";
 
 const AddDailyQuest = () => {
