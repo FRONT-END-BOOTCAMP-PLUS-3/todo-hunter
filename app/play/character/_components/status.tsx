@@ -3,7 +3,7 @@ import { CharacterDto } from "@/application/usecases/character/dtos";
 
 const Status = ({ str, int, emo, fin, liv }: CharacterDto) => {
     return (
-        <div className="is-rounded-progress custom-status-size ">
+        <div className="is-rounded-progress custom-status-size ml-5">
                 <div className="custom-progress is-rounded-progress">
                     <p className="text-white">체력</p>
                     <progress className="progress-bar-bg is-rounded-progress w-9/12 progress-red" value={str} max="30"></progress>

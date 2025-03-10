@@ -189,6 +189,17 @@ body {
     align-items: center;
     flex-direction: column;
     justify-content: center;
+  .gap-box .input-box:first-child {
+    margin-top: 0;
+  }
+  .gap-box .input-box + .input-box {
+    margin-top: 1rem;
+  }
+  .gap-box button:first-child {
+    margin-top: 0;
+  }
+  .gap-box button + button {
+    margin-top: 1.4rem;
   }
 
   .gap-box .input-box:first-child {
@@ -204,3 +215,26 @@ body {
     margin-top: 1.4rem;
   }
 }
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%) translateX(0) scaleX(-1); filter: brightness(0);}
+  /* 25% { filter: hue-rotate(0deg) saturate(1000%) brightness(1); } */
+  25% {filter: brightness(1);}
+  50% { transform: translate(-50%, -50%) translateX(5px) scaleX(-1);}
+  75% { filter: hue-rotate(0deg) saturate(1000%) brightness(1);}
+  /* 75% {filter: brightness(1);} */
+  100% { transform: translate(-50%, -50%) translateX(0) scaleX(-1); filter: brightness(0);}
+}
+}
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%) translateX(0) scaleX(-1); filter: brightness(0);}
+  /* 25% { filter: hue-rotate(0deg) saturate(1000%) brightness(1); } */
+  25% {filter: brightness(1);}
+  50% { transform: translate(-50%, -50%) translateX(5px) scaleX(-1);}
+  75% { filter: hue-rotate(0deg) saturate(1000%) brightness(1);}
+  /* 75% {filter: brightness(1);} */
+  100% { transform: translate(-50%, -50%) translateX(0) scaleX(-1); filter: brightness(0);}
+}
+
+
