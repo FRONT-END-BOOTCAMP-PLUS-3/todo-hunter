@@ -3,17 +3,19 @@
 import { Button } from "@/components/common";
 import { useEffect, useState } from "react";
 import RenderTitleItem from "./_components/renderTitleItem";
+import { useUserStore } from "@/utils/stores/userStore";
 
 export default function TitlePage(){
     const [titles, setTitles] = useState([]);
     const [page, setPage] = useState(1);
 
+    const { id } = useUserStore();
 
     const getTitle = async (page: number) => {
         try {
             const res = await fetch(`/api/title?page=${page}`, {
                 headers: {
-                    "user-id": "1", // zustand로 관리할 예정
+                    "user-id": id?.toString() || "",                 
                 }
             });
             const data = await res.json();
