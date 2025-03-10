@@ -143,7 +143,6 @@ export const useQuestStore = create<QuestStore>((set) => ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(quest),
       });
-
       if (!response.ok) throw new Error("퀘스트 추가 실패");
 
       await useQuestStore.getState().fetchQuests();
