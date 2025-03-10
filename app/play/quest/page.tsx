@@ -1,8 +1,9 @@
 "use client";
 
+import React from "react";
 import DailyQuest from "@/components/quest/DailyQuest";
-import FightField from "@/components/quest/FightField";
 import WeeklyQuest from "@/components/quest/WeeklyQuest";
+import FightField from "@/components/quest/FightField";
 
 const QuestPage = () => {
   return (
@@ -16,8 +17,8 @@ const QuestPage = () => {
 
       {/* 퀘스트 영역 */}
       <div className="flex flex-col gap-3">
-          <DailyQuest />
-          <WeeklyQuest />
+        <DailyQuest />
+        <WeeklyQuest />
       </div>
     </div>
   );
