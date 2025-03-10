@@ -6,4 +6,5 @@ export interface CharacterDto {
     emo: number;
     fin: number;
     liv: number;
+    endingCount?: number;
 }

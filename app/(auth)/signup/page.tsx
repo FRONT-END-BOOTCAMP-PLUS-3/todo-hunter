@@ -359,11 +359,11 @@ const SignUp = () => {
 
     alert("가입이 완료되었습니다!");
 
-    /* ************************************************** */
-    // 회원가입 완료 후 가입된 회원정보를 가져와서 로그인하는 로직 필요
-    /* ************************************************** */
+    // // 가입 성공 시 로그인 페이지로 이동
+    // router.push("/signin");
 
-    router.push("/signin"); // 가입 성공 시 로그인 페이지로 이동
+    // 가입 성공 시 인게임 페이지로 이동
+    router.push("/play");
   };
   /* 가입 끝 */
   
@@ -589,17 +589,14 @@ const SignUp = () => {
                   </Button>
                 )}
             </div>
-            {(isCodeSent &&
-              (verificationCodeEmpty
-                || isVerified !== null
-                || showVerificationMessage)
-              ) && (
+            {isCodeSent && (
             <span
               className={
                 `
                 absolute
-                ${verificationCodeEmpty || !isVerified || showVerificationMessage ?
-                  "text-[#A72F35]" : "text-[#2FA770]"}
+                ${verificationCodeEmpty || showVerificationMessage ||
+                  isVerified === false ? "text-[#A72F35]"
+                  : isVerified === null ? "text-[#2FA770]" : "text-[#2FA770]"}
                 ${isVerified ? "-bottom-[26px]" : "-bottom-[22px]"}
                 `
                 .replace(/\s+/g, " ").trim()
