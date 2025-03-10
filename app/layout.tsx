@@ -61,9 +61,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased p-3 flex flex-col min-h-screen`}>
-        <main className="flex-1">{children}
+        <main className="flex-1">
+          <InstallPrompt />
+          {children}
         </main>
-        {/* 설치 유도 팝업 <InstallPrompt /> */}
         <Navigation />
       </body>
     </html>
