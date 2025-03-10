@@ -1,32 +1,35 @@
 import { NextResponse } from "next/server";
+import { CompleteQuestUsecase } from "@/application/usecases/quest/CompleteQuestUsecase";
+import { PriQuestRepository, PriSuccessDayRepository, PriCharacterRepository, PriStatusRepository } from "@/infrastructure/repositories";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { characterId, questId } = body;
+    const { characterId, questId } = body; // characterId 추가
 
     if (!characterId || !questId) {
-      return NextResponse.json({ error: "characterId와 questId가 필요합니다." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "characterId와 questId가 필요합니다." }, { status: 400 });
     }
 
-    // 이미 완료된 기록이 있는지 확인
-    const existingSuccess = await prisma.successDay.findFirst({
-      where: { questId },
-    });
+    // UseCase 인스턴스 생성
+    const questRepository = new PriQuestRepository(prisma);
+    const successDayRepository = new PriSuccessDayRepository(prisma);
+    const characterRepository = new PriCharacterRepository(prisma);
+    const statusRepository = new PriStatusRepository(prisma);
 
-    if (!existingSuccess) {
-      // 완료된 적이 없으면 새 성공 기록 추가
-      await prisma.successDay.create({
-        data: {
-          questId,
-        },
-      });
-    }
+    const completeQuestUsecase = new CompleteQuestUsecase(
+      questRepository,
+      successDayRepository,
+      characterRepository,
+      statusRepository
+    );
 
-    return NextResponse.json({ message: "퀘스트 완료!" }, { status: 200 });
+    // UseCase 실행
+    await completeQuestUsecase.completeQuest(characterId, questId);
+
+    return NextResponse.json({ success: true, message: "퀘스트 완료 처리 성공!" }, { status: 200 });
   } catch (error) {
-    console.error("퀘스트 완료 처리 중 오류 발생:", error);
-    return NextResponse.json({ error: "퀘스트 완료 중 오류 발생" }, { status: 500 });
+    return NextResponse.json({ success: false, error: "퀘스트 완료 중 오류 발생" }, { status: 500 });
   }
 }
