@@ -1,12 +1,13 @@
 import { create } from "zustand";
+import { STATUS } from "@/constants/status";
 
 interface QuestFormState {
   questName: string;
-  tagged: "STR" | "INT" | "EMO" | "FIN" | "LIV";
+  tagged: keyof typeof STATUS;
   selectedDate: string;
   isWeekly: boolean;
   setQuestName: (name: string) => void;
-  setTagged: (tag: "STR" | "INT" | "EMO" | "FIN" | "LIV") => void;
+  setTagged: (tag: keyof typeof STATUS) => void;
   setSelectedDate: (date: string) => void;
   setIsWeekly: (isWeekly: boolean) => void;
   resetForm: () => void; // 추가: 폼 초기화 함수
