@@ -1,10 +1,14 @@
 "use client";
 
+import React from "react";
 import DailyQuest from "@/components/quest/DailyQuest";
-import FightField from "@/components/quest/FightField";
 import WeeklyQuest from "@/components/quest/WeeklyQuest";
+import FightField from "@/components/quest/FightField";
+import { useQuestStore } from "@/utils/stores/questStore";
 
 const QuestPage = () => {
+  const { quests, isAttacking } = useQuestStore(); // Zustand에서 isAttacking 바로 사용
+
   return (
     <div className="flex-1 mt-3 min-vh overflow-x-hidden">
       {/* 경험치 진행 UI */}
