@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
     const characterUsecase = new CharacterUsecase(
         statusRepository,
         userRepository,
+        characterRepository,
         questRepository,
         successDayRepository
     );

@@ -14,12 +14,16 @@ export class PriCharacterRepository implements ICharacterRepository {
   }
 
   async findByUserId(userId: number): Promise<Character | null> {
-    return await this.prisma.character.findFirst({
-      where: {
-        userId,
-      },
-    })
-  };
+    try {
+      return await this.prisma.character.findFirst({
+        where: {
+          userId,
+        },
+      });
+    } finally {
+      await this.prisma.$disconnect();
+    }
+  }
 
   async addEndingCount(id: number): Promise<number> {
     const updatedCharacter = await this.prisma.character.update({
