@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { CharacterDto } from "@/application/usecases/character/dtos";
 import Status from "@/app/play/character/_components/status";
 import "@/app/play/character/_components/character.css";
-import Character from "./_components/character";
+import Character from "@/app/play/character/_components/character";
 
 
 export default function CharacterPage() {
     const [character, setCharacter] = useState<CharacterDto | null>(null);
+
 
     const getCharacter = async () => {
       try{
@@ -20,6 +21,7 @@ export default function CharacterPage() {
         
         const data:CharacterDto = await res.json();
         setCharacter(data);
+        console.log("Fetched character progress:", data.progress);
       }catch(error){
         console.log(error);
       }
