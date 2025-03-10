@@ -1,4 +1,4 @@
-import { IQuestRepository, IStatusRepository, ISuccessDayRepository, IUserRepository } from "@/domain/repositories";
+import { ICharacterRepository, IQuestRepository, IStatusRepository, ISuccessDayRepository, IUserRepository } from "@/domain/repositories";
 import { CharacterDto } from "./dtos/CharacterDTO";
 
 
@@ -6,6 +6,7 @@ export class CharacterUsecase {
     constructor(
         private readonly statusRepository: IStatusRepository,
         private readonly IUserRepository: IUserRepository,
+        private readonly characterRepository: ICharacterRepository,
         private readonly IQuestRepository: IQuestRepository,
         private readonly ISuccessDayRepository: ISuccessDayRepository
     ) {}
@@ -13,6 +14,7 @@ export class CharacterUsecase {
     async getStatusAndNickname(characterId: number, userId:number): Promise<CharacterDto> {
         const characterStatus = await this.statusRepository.findByCharacterId(characterId);
         const characterNickname = await this.IUserRepository.findById(userId);
+        const characterInfo = await this.characterRepository.findById(characterId);
 
         // 퀘스트 진행률 구하기!!!!
         // 1. 현재 퀘스트 조회
@@ -33,6 +35,7 @@ export class CharacterUsecase {
             emo: characterStatus?.emo || 0,
             fin: characterStatus?.fin || 0,
             liv: characterStatus?.liv || 0,
+            endingCount: characterInfo?.endingCount || 0,
           };
         }
 

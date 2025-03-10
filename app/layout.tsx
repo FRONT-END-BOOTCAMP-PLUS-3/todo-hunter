@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavigationWrapper from "@/components/common/NavigationWrapper"; // 클라이언트 전용 네비게이션
 
+import { Toaster } from "@/components/common";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
