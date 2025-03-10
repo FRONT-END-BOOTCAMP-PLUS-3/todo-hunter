@@ -19,6 +19,7 @@ export async function middleware(request: NextRequest) {
   if (user) {
     console.log("🔑 사용자 정보:", user);
 
+    // 루트 경로 접속 시 액션
     if (pathname === "/") {
       // Access Token이 유효하거나 새로 발급된 경우 '/play'로 리다이렉트
       if (response) {
