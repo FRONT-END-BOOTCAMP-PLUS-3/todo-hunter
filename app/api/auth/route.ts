@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getUserFromCookie } from "@/utils/auth";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const user = await getUserFromCookie(req);
 

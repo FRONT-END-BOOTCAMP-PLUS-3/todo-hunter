@@ -1,6 +1,10 @@
 import Redis from "ioredis";
 
+console.log("REDIS_URL from env:", process.env.REDIS_URL);
+// console.log("REDIS_URL from env:", REDIS_URL);
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+console.log("Using REDIS_URL:", REDIS_URL);
+
 const redisClient = new Redis(REDIS_URL);
 
 // const redisClient = new Redis({
@@ -11,6 +15,10 @@ const redisClient = new Redis(REDIS_URL);
 
 redisClient.on("error", (err) => {
   console.error("Redis connection error:", err);
+});
+
+redisClient.on("connect", () => {
+  console.log("Connected to Redis");
 });
 
 export default redisClient;

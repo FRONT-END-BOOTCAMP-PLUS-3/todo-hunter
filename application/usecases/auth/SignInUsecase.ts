@@ -11,7 +11,7 @@ export class SignInUsecase {
     ) {}
 
     async execute(request: SignInRequestDTO): Promise<SignInResponseDTO> {
-
+        // 로그인 아이디와 비밀번호 확인
         if (!request.loginId?.trim() || !request.password?.trim()) {
             throw new LoginError("MISSING_CREDENTIALS","이메일과 비밀번호를 모두 입력해주세요.")
         }
@@ -29,6 +29,7 @@ export class SignInUsecase {
         }
 
         return {
+            id: user.id,
             loginId: request.loginId,
             nickname: user.nickname,
             createdAt: user.createdAt,
