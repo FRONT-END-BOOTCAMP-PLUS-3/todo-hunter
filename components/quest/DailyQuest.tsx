@@ -61,20 +61,12 @@ const DailyQuest = () => {
                   </button>
                 </div>
               </div>
-<<<<<<< HEAD
             ))}
         </div>
       )}
 
       <div className="flex justify-center">
         <Button size="L" className="mt-2" onClick={onAddQuestHandler}>
-=======
-            </div>
-          ))}
-      </div>
-      <div className="flex justify-center">
-        <Button size="L" className="mt-2" onClick={handleAddQuest}>
->>>>>>> 3c4d7dc14c0fe2fdb12d50399e8aa1a29955f0dd
           ⚡ 할 일 추가
         </Button>
       </div>

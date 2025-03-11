@@ -1,6 +1,7 @@
 import { STATUS } from "@/constants";
 import { toast } from "sonner";
 import { create } from "zustand";
+import { useUserStore } from "@/utils/stores/userStore";
 
 interface Quest {
   id: number;
@@ -41,7 +42,12 @@ export const useQuestStore = create<QuestStore>((set) => ({
     set({ loading: true, error: null });
 
     try {
-      const response = await fetch("/api/quest");
+    const { id } = useUserStore.getState();
+    if (!id) throw new Error("로그인이 필요합니다.");
+    console.log("id값:", id);
+
+
+      const response = await fetch(`/api/quest?characterId=${id}`);
       if (!response.ok) throw new Error("퀘스트 데이터를 불러오지 못했습니다.");
 
       const json = await response.json();
@@ -50,11 +56,8 @@ export const useQuestStore = create<QuestStore>((set) => ({
         throw new Error("퀘스트 데이터를 올바르게 받아오지 못했습니다.");
       }
 
-      const sortedQuests = [...json.quests].sort(
-        (a, b) => Number(a.completed) - Number(b.completed)
-      );
 
-      set({ quests: sortedQuests, loading: false });
+      set({ quests: json.quests, loading: false });
     } catch (err) {
       set({
         error: err instanceof Error ? err.message : "알 수 없는 오류 발생",
@@ -66,51 +69,57 @@ export const useQuestStore = create<QuestStore>((set) => ({
   // 애니메이션과 관련된 상태 (isMoving, isAttacking) completeQuest()가 실행될 때 상태를 변경
   completeQuest: async (questId) => {
     try {
-      const user = { characterId: 1 }; // 임시 유저 정보
-  
+      const { id: characterId } = useUserStore.getState(); // 로그인한 유저 ID 가져오기
+      if (!characterId) throw new Error("로그인이 필요합니다.");
+
+      console.log("completeQuest 실행됨! characterId:", characterId, "questId:", questId);
+
       // 1. 해당 퀘스트 찾기
       const quest = useQuestStore.getState().quests.find((q) => q.id === questId);
       if (!quest) return;
-  
+
       // 2. 낙관적 UI 업데이트 (즉시 반영)
       set((state) => ({
         quests: state.quests.map((q) =>
           q.id === questId ? { ...q, completed: true } : q
         ),
       }));
-  
+
       // 3. 애니메이션 실행
       set({ isMoving: true, isMovingForward: true });
-  
+
       setTimeout(() => {
         set({ isMoving: false, isAttacking: true });
-  
+
         setTimeout(() => {
           set({ isAttacking: false, isMoving: true, isMovingForward: false });
-  
+
           setTimeout(() => {
             set({ isMoving: false, isMovingForward: true });
           }, 600);
         }, 1000);
       }, 600);
-  
-      // 4. API 요청
+
+      // 4. API 요청 (로그인한 유저의 `characterId`로 설정)
       const response = await fetch("/api/quest/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ characterId: user.characterId, questId }),
+        credentials: "include", // 인증 정보 포함
+        body: JSON.stringify({ characterId, questId }), // 로그인한 유저의 ID로 설정
       });
-  
+
+      console.log("서버 응답 상태 코드:", response.status);
+
       if (!response.ok) throw new Error("퀘스트 완료 실패");
-  
+
       // 5. 완료 후 상태 메시지 띄우기
       toast.success(` ${STATUS[quest.tagged]} 스탯이 +1 증가했습니다!`);
     } catch (err) {
-      console.error(err);
-  
+      console.error("completeQuest 오류:", err);
+
       // 실패 시 애니메이션 중단 & 상태 롤백
       set({ isMoving: false, isAttacking: false, isMovingForward: true });
-  
+
       set((state) => ({
         quests: state.quests.map((q) =>
           q.id === questId ? { ...q, completed: false } : q
@@ -121,33 +130,47 @@ export const useQuestStore = create<QuestStore>((set) => ({
 
   deleteQuest: async (questId) => {
     try {
-      const response = await fetch(`/api/quest/${questId}`, {
+      const { id: characterId } = useUserStore.getState(); // 로그인한 유저 ID 가져오기
+      if (!characterId) throw new Error("로그인이 필요합니다.");
+  
+      console.log("deleteQuest 실행됨! characterId:", characterId, "questId:", questId);
+  
+      const response = await fetch(`/api/quest/${questId}?characterId=${characterId}`, {
         method: "DELETE",
-        credentials: "include",
+        credentials: "include", // 인증 정보 포함
       });
-
+  
+      console.log("서버 응답 상태 코드:", response.status);
+  
       if (!response.ok) throw new Error("삭제 실패");
-
+  
       set((state) => ({
         quests: state.quests.filter((q) => q.id !== questId),
       }));
     } catch (err) {
-      console.error(err);
+      console.error("deleteQuest 오류:", err);
     }
   },
+  
 
-  addQuest: async (quest: Omit<Quest, "id"> & { characterId: number }) => {
+  addQuest: async (quest: Omit<Quest, "id" | "characterId">) => {
     try {
+      const { id } = useUserStore.getState(); // 로그인한 유저 ID 가져오기
+      if (!id) throw new Error("로그인이 필요합니다.");
+
+      const requestData = { ...quest, characterId: id }; // 로그인한 유저의 ID를 characterId에 설정
+      console.log("전송할 퀘스트 데이터:", requestData); // characterId 확인
+
       const response = await fetch("/api/quest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(quest),
+        credentials: "include",
+        body: JSON.stringify(requestData),
       });
-      if (!response.ok) throw new Error("퀘스트 추가 실패");
 
-      await useQuestStore.getState().fetchQuests();
+      if (!response.ok) throw new Error("퀘스트 추가 실패");
     } catch (err) {
-      console.error(err);
+      console.error("퀘스트 추가 실패:", err);
     }
   },
 }));
