@@ -28,8 +28,15 @@ export async function POST(req: Request) {
     // UseCase 실행
     await completeQuestUsecase.completeQuest(characterId, questId);
 
-    return NextResponse.json({ success: true, message: "퀘스트 완료 처리 성공!" }, { status: 200 });
+    return NextResponse.json(
+      { success: true, message: "퀘스트 완료 처리 성공!" },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({ success: false, error: "퀘스트 완료 중 오류 발생" }, { status: 500 });
+    console.error("퀘스트 완료 중 오류 발생:", error); // 에러 로그 수정
+    return NextResponse.json(
+      { success: false, error: "퀘스트 완료 중 오류 발생" },
+      { status: 500 }
+    );
   }
 }
