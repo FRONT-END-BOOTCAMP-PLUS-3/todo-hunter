@@ -34,6 +34,8 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --loading-spinner-color: #000;
+    --slider-bullet-color: #333;
     --error-color-red: #A72F35;
     --success-color-blue: #2049BD;
     --warning-color-yellow: #D5B946;
@@ -96,9 +98,34 @@ body {
   table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var{
     @apply font-galmuri9;
   }
+
+  /* 서비스 소개 슬라이드 네비게이션 버튼 스타일 변경 */
+  #fp-nav ul li a span, .fp-slidesNav ul li a span {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  .fp-slidesNav ul li a.active span {
+    background-color: white;
+    margin: -2px 0 0 -2px !important;
+  }
+  #fp-nav ul li:hover a span, .fp-slidesNav ul li:hover a span {
+    margin: -2px 0 0 -2px !important;
+  }
+  .fp-slidesNav ul li:hover a span:nth-child(2) {
+    margin: -2px 0 0 -2px !important;
+  }
 }
 
 @layer components {
+  #loading-spinner {
+    animation: loading-spin 1s linear infinite;
+    height: 10px;
+    width: 10px;
+    top: 50%;
+    left: 50%;
+    margin: -5px;
+  }
+  
   .input-border {
     --border-color: black;
     @apply shadow-[4px_0_white,-4px_0_white,0_-4px_white,0_4px_white,8px_0_var(--border-color),-8px_0_var(--border-color),0_-8px_var(--border-color),0_8px_var(--border-color),0_0_0_4px_var(--border-color)];
@@ -213,6 +240,332 @@ body {
   }
   .gap-box button + button {
     margin-top: 1.4rem;
+  }
+}
+
+@keyframes loading-spin {
+  0% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  6.25% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  12.5% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  18.75% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  25% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  31.25% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  37.5% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px transparent,
+      -10px -30px transparent;
+  }
+  43.75% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px transparent;
+  }
+  50% {
+    box-shadow: 
+      0px -30px transparent, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px var(--loading-spinner-color), 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  56.25% {
+    box-shadow: 
+      0px -30px #000, 
+      10px -30px transparent, 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px var(--loading-spinner-color), 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  62.5% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px transparent, 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px var(--loading-spinner-color), 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  68.75% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px transparent, 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px var(--loading-spinner-color), 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  75% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px transparent, 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px var(--loading-spinner-color), 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  81.25% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px transparent, 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px var(--loading-spinner-color), 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  87.5% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px transparent, 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px var(--loading-spinner-color),
+      -10px -30px var(--loading-spinner-color);
+  }
+  93.75% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px transparent, 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px var(--loading-spinner-color);
+  }
+  100% {
+    box-shadow: 
+      0px -30px var(--loading-spinner-color), 
+      10px -30px var(--loading-spinner-color), 
+      20px -20px var(--loading-spinner-color), 
+      30px -10px var(--loading-spinner-color), 
+      30px 0px var(--loading-spinner-color), 
+      30px 10px var(--loading-spinner-color), 
+      20px 20px var(--loading-spinner-color), 
+      10px 30px var(--loading-spinner-color), 
+      0px 30px transparent, 
+      -10px 30px transparent, 
+      -20px 20px transparent, 
+      -30px 10px transparent, 
+      -30px 0px transparent, 
+      -30px -10px transparent, 
+      -20px -20px transparent,
+      -10px -30px transparent;
   }
 }
 

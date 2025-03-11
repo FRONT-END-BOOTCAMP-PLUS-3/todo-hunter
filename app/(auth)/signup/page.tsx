@@ -363,7 +363,7 @@ const SignUp = () => {
     // router.push("/signin");
 
     // 가입 성공 시 인게임 페이지로 이동
-    router.push("/play");
+    router.push("/play/character");
   };
   /* 가입 끝 */
   

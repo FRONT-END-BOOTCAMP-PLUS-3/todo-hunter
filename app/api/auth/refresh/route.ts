@@ -7,7 +7,7 @@ import { RenewRefreshTokenUsecase } from "@/application/usecases/auth/RenewRefre
 
 export async function POST(req: NextRequest) {
     try {
-        const { loginId, refreshToken } = await req.json();
+        const { id, loginId, refreshToken } = await req.json();
         const authenticationRepository = new RdAuthenticationRepository();
         const verifyRefreshTokenUsecase = new VerifyRefreshTokenUsecase();
         const generateAccessTokenUsecase = new GenerateAccessTokenUsecase();
@@ -19,14 +19,14 @@ export async function POST(req: NextRequest) {
 
         if (decodedRefreshToken) {
             // Refresh Token이 유효하면 새 Access Token 발급
-            newAccessToken = await generateAccessTokenUsecase.execute({ loginId: loginId });
+            newAccessToken = await generateAccessTokenUsecase.execute({ id: id, loginId: loginId });
         } else {
             // Refresh Token이 만료되었으면 갱신
-            const newRefreshToken = await renewRefreshTokenUsecase.execute({ loginId: loginId });
+            const newRefreshToken = await renewRefreshTokenUsecase.execute({ id: id, loginId: loginId });
             if (!newRefreshToken) {
                 return NextResponse.json({ error: "Failed to renew refresh token" }, { status: 401 });
             }
-            newAccessToken = await generateAccessTokenUsecase.execute({ loginId: loginId });
+            newAccessToken = await generateAccessTokenUsecase.execute({ id: id, loginId: loginId });
         }
 
         // 쿠키 설정

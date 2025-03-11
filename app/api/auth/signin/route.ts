@@ -12,6 +12,7 @@ import { GenerateAccessTokenUsecase } from "@/application/usecases/auth/Generate
 import { GenerateRefreshTokenUsecase } from "@/application/usecases/auth/GenerateRefreshTokenUsecase";
 import { VerifyRefreshTokenUsecase } from "@/application/usecases/auth/VerifyRefreshTokenUsecase";
 import { RenewRefreshTokenUsecase } from "@/application/usecases/auth/RenewRefreshTokenUsecase";
+import { FindUserIdByLoginIdUsecase } from "@/application/usecases/auth/FindUserIdByLoginIdUsecase";
 
 export async function POST(req: NextRequest) {
     try {
@@ -27,9 +28,12 @@ export async function POST(req: NextRequest) {
         const renewRefreshTokenUsecase = new RenewRefreshTokenUsecase(authenticationRepository);
         const verifyRefreshTokenUsecase = new VerifyRefreshTokenUsecase();
         
-        // 사용자 ID 생성
-        const id = signInResponseDto.id;
-        // 사용자 로그인인 ID 생성
+        // 사용자 ID 생성 (FindUserIdByLoginIdUsecase를 사용하여 loginId로 id 가져오기)
+        const findUserIdByLoginIdUsecase = new FindUserIdByLoginIdUsecase(userRepository);
+        const idRaw = await findUserIdByLoginIdUsecase.execute(signInResponseDto.loginId);
+        const id = parseInt(idRaw, 10);
+
+        // 사용자 로그인 ID 생성
         const loginId = signInResponseDto.loginId;
 
         // 기존 Refresh Token 확인
