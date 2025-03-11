@@ -4,6 +4,12 @@ import { PriQuestRepository, PriSuccessDayRepository } from "@/infrastructure/re
 import { prisma } from "@/lib/prisma";
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+  const { id } = params;
+
+  if (!id) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+}
+
   try {
     const questId = Number(params.id);
     if (isNaN(questId)) {
