@@ -9,7 +9,7 @@ async function getUserFromRequest(req: Request) {
   try {
     console.log("getUserFromRequest 실행"); // 실행 여부 확인
 
-    const res = await fetch("localhost:3000/api/auth/signin-info", {
+    const res = await fetch(`${process.env.DEFAULT_API_URL}/api/auth/signin-info`, {
       credentials: "include",
       headers: req.headers, // 클라이언트의 인증 정보를 유지
     });
