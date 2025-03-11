@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/common";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RenderTitleItem from "./_components/renderTitleItem";
 import { useUserStore } from "@/utils/stores/userStore";
 
@@ -11,7 +11,7 @@ export default function TitlePage(){
 
     const { id } = useUserStore();
 
-    const getTitle = async (page: number) => {
+    const getTitle = useCallback(async (page: number) => {
         try {
             const res = await fetch(`/api/title?page=${page}`, {
                 headers: {
@@ -24,7 +24,7 @@ export default function TitlePage(){
         catch (error) {
             console.log(error);
         }
-    }
+    }, [id]);
 
     const gridItems = Array.from({ length: 9 }, (_, index) => titles[index] || { name: "잠금", titleId: "df" });
 
@@ -42,9 +42,7 @@ export default function TitlePage(){
     
     useEffect(() => {
         getTitle(page);
-    }, [page]);
-
-
+    }, [page, getTitle]);
 
     return (
         <div className="bg-slate-400 flex items-center justify-center p-5 flex-1">
