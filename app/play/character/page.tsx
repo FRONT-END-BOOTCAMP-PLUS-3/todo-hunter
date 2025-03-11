@@ -1,40 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
 import Status from "@/app/play/character/_components/status";
 import "@/app/play/character/_components/character.css";
 import Character from "./_components/character";
-import characterStore from "@/utils/stores/characterStore";
-
+import { useUserStore } from "@/utils/stores/userStore";
 
 export default function CharacterPage() {
-    const { characterData, fetchCharacterData } = characterStore();
-    
-    useEffect(() => {
-        fetchCharacterData();
-    }, [fetchCharacterData]);
+    const { nickname, progress, str, int, emo, fin, liv } = useUserStore();
 
     return (
         <div className="character-page-background">
             <div className="flex flex-col items-center">
-
-                <p className="mb-2 mt-10 text-xl text-white">{characterData?.nickname}님, 오늘의 경험치에요!</p>
+                <p className="mb-2 mt-10 text-xl text-white">{nickname}님, 오늘의 경험치에요!</p>
                 <div className="flex">
-                    <p className="mr-2 text-white text-xl">{characterData?.progress}%</p>
-                    <progress className="bg-white is-rounded-progress " value={characterData?.progress} max="100"></progress>
+                    <p className="mr-2 text-white text-xl">{progress}%</p>
+                    <progress className="bg-white is-rounded-progress" value={progress} max="100"></progress>
                 </div>
             </div>
             <Character />
-            {characterData && (
                 <Status
-                    str={characterData.str}
-                    int={characterData.int}
-                    emo={characterData.emo}
-                    fin={characterData.fin}
-                    liv={characterData.liv}
-                />
-            )}       
-         </div>
+                    str={str ?? 0}
+                    int={int ?? 0}
+                    emo={emo ?? 0}
+                    fin={fin ?? 0}
+                    liv={liv ?? 0}
+                /> 
+        </div>
     );
-  }
-  
+}

@@ -4,31 +4,64 @@ import { PriQuestRepository, PriStatusRepository } from '@/infrastructure/reposi
 import { prisma } from '@/lib/prisma';
 import { CreateQuestDTO } from '@/application/usecases/quest/dtos';
 
+// 로그인한 유저 정보
+async function getUserFromRequest(req: Request) {
+  try {
+    console.log("getUserFromRequest 실행"); // 실행 여부 확인
+
+    const res = await fetch("localhost:3000/api/auth/signin-info", {
+      credentials: "include",
+      headers: req.headers, // 클라이언트의 인증 정보를 유지
+    });
+
+    if (!res.ok) throw new Error("로그인 정보 가져오기 실패");
+    const data = await res.json();
+
+    console.log("로그인한 유저 정보:", data);
+
+    return data.user?.id; // 로그인한 유저의 ID 반환
+  } catch (error) {
+    console.error("유저 정보 가져오는 중 오류 발생:", error);
+    return null;
+  }
+}
+
 // POST 요청 (새 퀘스트 생성)
 export async function POST(req: Request) {
   try {
+    console.log("POST /api/quest 실행"); // 실행 여부 확인
+
+    const userId = await getUserFromRequest(req);
+    if (!userId) {
+      return NextResponse.json({ success: false, error: "로그인이 필요합니다." }, { status: 401 });
+    }
+
     const body = await req.json();
-    const { characterId, name, tagged, isWeekly, expiredAt } = body;
+    console.log("POST 요청 바디:", body); // 요청 데이터 확인
 
-    // Repository 인스턴스 생성
-    const questRepository = new PriQuestRepository(prisma);
-    const statusRepository = new PriStatusRepository(prisma);
-    const createQuestUseCase = new CreateQuestUseCase(questRepository, statusRepository);
+    const { name, tagged, isWeekly, expiredAt } = body;
 
-    if (!characterId || !name || !tagged) {
+    // 필수 값 검증
+    if (!name || !tagged) {
       return NextResponse.json({ success: false, error: "필수 값이 누락되었습니다." }, { status: 400 });
     }
 
-    // DTO 생성 (null 대신 undefined 사용)
+    // DTO 생성 (characterId는 로그인한 유저의 ID로 설정)
     const dto: CreateQuestDTO = {
-      characterId,
+      characterId: userId, // 로그인한 유저의 ID 사용
       name,
       tagged,
       isWeekly,
       expiredAt: expiredAt ? new Date(expiredAt) : undefined,
     };
 
-    // UseCase 실행, 퀘스트 생성
+    console.log("저장할 퀘스트 데이터:", dto); // 저장할 데이터 확인
+
+
+    // 퀘스트 생성
+    const questRepository = new PriQuestRepository(prisma);
+    const statusRepository = new PriStatusRepository(prisma);
+    const createQuestUseCase = new CreateQuestUseCase(questRepository, statusRepository);
     const newQuest = await createQuestUseCase.createQuest(dto);
 
     return NextResponse.json({ success: true, quest: newQuest }, { status: 201 });
@@ -37,10 +70,18 @@ export async function POST(req: Request) {
   }
 }
 
-// GET 요청 (모든 퀘스트 조회 또는 특정 ID 기반 조회)
+// GET 요청
 export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const characterId = searchParams.get("characterId"); // 로그인한 유저 ID 가져오기
+
+    if (!characterId) {
+      return NextResponse.json({ success: false, error: "characterId가 필요합니다." }, { status: 400 });
+    }
+
     const quests = await prisma.quest.findMany({
+      where: { characterId: Number(characterId) }, // 로그인한 유저의 퀘스트만 조회
       include: { successDays: true },
       orderBy: { updatedAt: "desc" },
     });
