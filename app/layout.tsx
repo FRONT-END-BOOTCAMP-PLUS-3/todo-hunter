@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "TODO Hunter : Return of Scroll",
   applicationName: "TODO Hunter",
   description: "A task management app",
-  manifest: "/public/manifest.webmanifest",
+  manifest: "/public/manifest.json",
 };
 
 export default function RootLayout({

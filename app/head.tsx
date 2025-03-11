@@ -6,7 +6,7 @@ export default function Head() {
         <link rel="apple-touch-icon" href="/icons/180.png" sizes="180x180" />
         <link rel="icon" href="/icons/32.png" sizes="32x32" />
         <link rel="icon" href="/icons/16.png" sizes="16x16" />
-        <link rel="manifest" href="/manifest.webmanifest" crossOrigin="use-credentials" />
+        <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials" />
       </>
     );
   }
