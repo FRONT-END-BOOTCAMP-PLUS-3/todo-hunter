@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-black">
-  <Image src="/images/Logo.png" alt="로고" className="p-6"/>
+  <Image src="/images/Logo.png" alt="로고" className="p-6" width={350} height={100}/>
   <Button size="L" state="success" onClick={handleClickStart} className="mt-20">
     시작하기
   </Button>

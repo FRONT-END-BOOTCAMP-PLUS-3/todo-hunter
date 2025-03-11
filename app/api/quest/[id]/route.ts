@@ -3,15 +3,15 @@ import { DeleteQuestUseCase } from "@/application/usecases/quest/DeleteQuestUsec
 import { PriQuestRepository, PriSuccessDayRepository } from "@/infrastructure/repositories";
 import { prisma } from "@/lib/prisma";
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   if (!id) {
     return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
 }
 
   try {
-    const questId = Number(params.id);
+    const questId = Number((await params).id);
     if (isNaN(questId)) {
       return NextResponse.json({ success: false, error: "유효하지 않은 퀘스트 ID입니다." }, { status: 400 });
     }
