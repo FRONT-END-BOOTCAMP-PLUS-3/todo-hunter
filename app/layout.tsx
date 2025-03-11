@@ -19,41 +19,7 @@ export const metadata: Metadata = {
   title: "TODO Hunter : Return of Scroll",
   applicationName: "TODO Hunter",
   description: "A task management app",
-  icons: {
-    icon: [
-      {
-        url: "/icons/48.png",
-        sizes: "48x48",
-        type: "image/png"
-      },
-      {
-        url: "/icons/72.png",
-        sizes: "72x72",
-        type: "image/png"
-      },
-      {
-        url: "/icons/96.png",
-        sizes: "96x96",
-        type: "image/png"
-      },
-      {
-        url: "/icons/144.png",
-        sizes: "144x144",
-        type: "image/png"
-      },
-      {
-        url: "/icons/192.png",
-        sizes: "192x192",
-        type: "image/png"
-      },
-      {
-        url: "/icons/512.png",
-        sizes: "512x512",
-        type: "image/png"
-      }
-    ]
-  },
-  manifest: "/manifest.json",
+  manifest: "/public/manifest.webmanifest",
 };
 
 export default function RootLayout({

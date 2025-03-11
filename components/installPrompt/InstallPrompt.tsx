@@ -46,7 +46,7 @@ export default function InstallPrompt() {
 
   return (
     deferredPrompt && (
-      <div className="is-rounded p-2">
+      <div className="is-rounded p-2 m-3">
         <div className="flex justify-center space-x-2">
           <Image src={"/icons/32.png"} alt="설치 유도 아이콘"  width={50} height={50} className="mr-5" />
           <p>홈 화면에 추가하여 <br />앱처럼 사용해보세요!</p>
