@@ -63,14 +63,15 @@ const AddDailyQuest = () => {
 
   return (
     <div className="flex-1 pt-10 justify-center items-center">
-      <div className="w-full max-w-lg bg-white rounded-lg">
+      <div className="ml-3 mr-3 bg-white rounded-lg">
+        <div>
         <h2 className="bg-black text-white text-center font-bold p-2">
           어떤 일을 하나요?
         </h2>
 
         <div className="pt-5 pb-5 flex gap-5 justify-center items-center">
-        <Select onValueChange={(value: keyof typeof STATUS) => setTagged(value)}>
-            <SelectTrigger className="w-32 h-11 text-sm px-2">
+          <Select onValueChange={(value: keyof typeof STATUS) => setTagged(value)}>
+            <SelectTrigger className="w-[120px] h-11 text-sm px-2 max-[360px]:w-[30%]">
               <SelectValue placeholder="스탯 목록"/>
             </SelectTrigger>
             <SelectContent>
@@ -86,8 +87,9 @@ const AddDailyQuest = () => {
             value={questName}
             onChange={(e) => setQuestName(e.target.value)}
             state={questName ? "current" : "default"}
-            className="w-auto h-9 text-sm"
+            className="flex-grow h-9 text-sm mr-[6px] max-[360px]:w-[70%]"
           />
+        </div>
         </div>
 
         <div className="pt-10 pb-10">

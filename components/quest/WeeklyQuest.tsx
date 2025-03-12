@@ -25,7 +25,7 @@ const WeeklyQuest = () => {
   };
 
   return (
-    <div className="pt-1">
+    <div className="pt-0">
       <h2 className="p-3 w-fit bg-black text-white font-bold">
         주간 퀘스트 ({quests.filter((q) => q.isWeekly && q.completed).length}/
         {quests.filter((q) => q.isWeekly).length})
@@ -36,7 +36,7 @@ const WeeklyQuest = () => {
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : (
-        <div className="max-h-[160px] overflow-y-auto space-y-2 pt-2">
+        <div className="max-h-[300px] overflow-y-auto space-y-2 pt-2">
           {quests
             .filter((q) => q.isWeekly) // 주간 퀘스트만 필터링
             .map(({ id, name, tagged, completed, expiredAt }) => (
