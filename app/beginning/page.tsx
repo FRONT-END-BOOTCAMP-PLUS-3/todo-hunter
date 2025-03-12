@@ -30,17 +30,9 @@ const Beginning = () => {
     {
       content: (
         <>
-        <div className="w-[330px] h-[250px] bg-[#d9d9d9] mb-6 flex justify-center items-center overflow-hidden">
-          <span className="text-[24px]">인게임<br />유튜브 동영상 임베드</span>
-        </div>
-        <span className="text-white text-[24px]">지겨운 할 일,<br />게임처럼 즐길 수 없을까?</span>
-        </>
-      ),
-    },
-    {
-      content: (
-        <>
         <Image className="mb-6" src="/images/beginning/01.png" width={326} height={259} alt="" />
+        <span className="text-white text-[24px]">지겨운 할 일,<br />게임처럼 즐길 수 없을까?</span>
+        <br />
         <span className="text-white text-[24px]">할 일을 사냥하세요.</span>
         </>
       ),
@@ -56,10 +48,10 @@ const Beginning = () => {
     {
       content: (
         <>
-        <Image className="mb-6" src="/images/beginning/03.png" width={292} height={462} alt="" />
+        <Image className="mb-6" src="/images/beginning/03.png" width={220} height={348} alt="" />
         <span className="text-white text-[24px]">성장하는 내 모습을<br />확인해보세요.</span>
-        <Button className="mt-8 text-white" size={"M"} state={"success"} onClick={handleStartClick}>
-          시작하기
+        <Button className="mt-6 text-white" size={"S"} state={"current"} onClick={handleStartClick}>
+          TODO START
         </Button>
         </>
       ),
@@ -116,8 +108,8 @@ const Beginning = () => {
       licenseKey={"NT1UH-K03K9-KARAH-9X2J9-BNOCM"} // 라이센스 키
       scrollingSpeed={isDragging ? 100 : 200} // 스크롤 속도
       controlArrows={false} // 화살표 숨김
-      dragAndMove={true} // 마우스 드래그로 슬라이드 이동 활성화
-      dragAndMoveKey="32CE28DD-CDC84FF3-951F44C5-363FFC33"
+      dragAndMove={"horizontal"} // 마우스 드래그로 슬라이드 이동 활성화
+      dragAndMoveKey={"alVkRzlrYnkxb2RXNTBaWEl1WTI5dDBTX2JDcFpISmhaMEZ1WkUxdmRtVT1PQWI="}
       scrollOverflow={false} // dragAndMove 사용 시 false로 설정 (충돌 문제)
       scrollHorizontally={true} // 좌우 슬라이드 이동 활성화
       touchSensitivity={5} // ✨ 터치 감도 증가
