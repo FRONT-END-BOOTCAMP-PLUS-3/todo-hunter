@@ -10,7 +10,7 @@ const RenderTitleItem = ({ title, index }: TitleItemProps) => {
     const imageUrl = title.titleId ? `/titles/title_df.png` : `${title.img}`;
     
             return (
-                <div key={index} className="items-center justify-center text-center mb-10">
+                <div key={index} className="items-center justify-center text-center">
                     <Image src={imageUrl} alt="칭호이미지" width={100} height={100} />
                     <p>{title.name}</p>
                 </div>
