@@ -11,19 +11,18 @@ export class CharacterUsecase {
         private readonly ISuccessDayRepository: ISuccessDayRepository
     ) {}
     
-    async getStatusAndNickname(characterId: number, userId: number): Promise<CharacterDto> {
-        console.log(`getStatusAndNickname 실행, characterId: ${characterId}, userId: ${userId}`);
+    async getStatusAndNickname(characterId: number, userId: number): Promise<CharacterDto> {  
         const characterStatus = await this.statusRepository.findByCharacterId(characterId);
         const characterNickname = await this.IUserRepository.findById(userId);
         const characterInfo = await this.characterRepository.findById(characterId);
     
-        // 현재 퀘스트 조회
-        const currentQuests = await this.IQuestRepository.findCurrentQuests(characterId, new Date());
-        const currentQuestIds = currentQuests?.map(quest => quest.id) || [];
+        const today = new Date();
     
-        console.log("현재 퀘스트 ID:", currentQuestIds);
-    
-        if (currentQuestIds.length === 0) {
+        // "오늘" 추가된 퀘스트만 가져오기
+        const todayQuests = await this.IQuestRepository.findTodayQuests(characterId, today);
+        const todayQuestIds = todayQuests?.map(quest => quest.id) || [];
+        
+        if (todayQuestIds.length === 0) {
             return {
                 nickname: characterNickname?.nickname || "",
                 progress: 0,
@@ -36,20 +35,17 @@ export class CharacterUsecase {
             };
         }
     
-        // `SuccessDay`에서 완료된 퀘스트 개수 확인
-        const successQuests = (await this.ISuccessDayRepository.findCurrentQuests(currentQuestIds, new Date())) || [];
-        console.log("성공한 퀘스트 개수:", successQuests.length);
-        console.log("성공한 퀘스트 ID:", successQuests.map(s => s.questId));
-    
-        // 진행률 계산 (현재 퀘스트 중 완료된 것만 카운트)
+        // 오늘 완료된 퀘스트만 가져오기
+        const successQuests = await this.ISuccessDayRepository.findCompletedQuests(todayQuestIds, today);
+
+        // 완료된 퀘스트 ID Set 생성
         const completedQuestIds = new Set(successQuests.map(s => s.questId));
-        const completedCurrentQuests = currentQuestIds.filter(id => completedQuestIds.has(id));
+        const completedQuestsCount = todayQuestIds.filter(id => completedQuestIds.has(id)).length;
     
-        const progress = currentQuestIds.length > 0
-            ? Math.round((completedCurrentQuests.length / currentQuestIds.length) * 100)
+        // 진행률 계산 (오늘 추가된 퀘스트 기준)
+        const progress = todayQuestIds.length > 0
+            ? Math.round((completedQuestsCount / todayQuestIds.length) * 100)
             : 0;
-    
-        console.log(`계산된 진행률: ${progress}%`);
     
         return {
             nickname: characterNickname?.nickname || "",

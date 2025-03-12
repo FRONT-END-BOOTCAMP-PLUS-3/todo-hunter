@@ -9,7 +9,7 @@ export class WeeklyQuestUsecase{
     ) {}
 
     async getWeeklyQuestList(characterId: number): Promise<GetQuestDTO[]> {
-        let weeklyQuests = await this.questRepository.findWeeklyQuests(characterId);
+        let weeklyQuests = await this.questRepository.findWeeklyQuests(characterId, new Date());
         if (!weeklyQuests) throw new Error("characterNickname not found");
         
         const successDay = await this.successDayRepository.findByQuestId(characterId);

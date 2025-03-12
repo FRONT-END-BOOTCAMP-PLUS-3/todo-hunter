@@ -27,23 +27,31 @@ export class PriSuccessDayRepository implements ISuccessDayRepository {
                 createdAt: { lte: currentDay }, // 완료된 날짜가 현재 날짜 이전인지 확인
             },
         });
-    
-        console.log("완료된 퀘스트 조회 결과:", successDays);
-        return successDays;
+            return successDays;
     }
     
+     // 주어진 날짜에 완료된 퀘스트 가져오기
+     async findCompletedQuests(questIds: number[], date: Date): Promise<SuccessDay[]> {
 
-      async create(questId: number): Promise<SuccessDay> {
-        console.log(`SuccessDay 저장 요청 - questId: ${questId}`);
-    
+      const completedQuests = await this.prisma.successDay.findMany({
+          where: {
+              questId: { in: questIds },
+              createdAt: {
+                  gte: new Date(date.setHours(0, 0, 0, 0)), // 해당 날짜의 00:00:00 이후
+                  lt: new Date(date.setHours(23, 59, 59, 999)), // 해당 날짜의 23:59:59 이전
+              },
+          },
+      });
+      return completedQuests;
+  }
+
+      async create(questId: number): Promise<SuccessDay> {    
         const successDay = await this.prisma.successDay.create({
             data: {
                 questId,
             },
         });
-    
-        console.log("SuccessDay 저장 성공:", successDay);
-        return successDay;
+            return successDay;
     }
 
   async update(id: number, data: Partial<SuccessDay>): Promise<SuccessDay | null> {

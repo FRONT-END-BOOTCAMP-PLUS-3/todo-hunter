@@ -60,7 +60,7 @@ export class PriQuestRepository implements IQuestRepository {
         createdAt: "desc", // 최신순 정렬
       },
     });
-  }
+  }  
   
   async create(questData: Omit<Quest, "id">): Promise<Quest> {
     return await this.prisma.quest.create({
@@ -77,5 +77,26 @@ export class PriQuestRepository implements IQuestRepository {
 
   async delete(id: number): Promise<void> {
     await this.prisma.quest.delete({ where: { id } });
+  }
+
+  async findTodayQuests(characterId: number, today: Date): Promise<Quest[]> {
+
+    const startOfDay = new Date(today);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const todayQuests = await this.prisma.quest.findMany({
+        where: {
+            characterId: characterId,
+            createdAt: {
+                gte: startOfDay,
+                lt: endOfDay,
+            },
+        },
+    });
+
+    return todayQuests;
   }
 }
