@@ -38,32 +38,37 @@ const WeeklyQuest = () => {
       ) : (
         <div className="max-h-[160px] overflow-y-auto space-y-2 pt-2">
           {quests
-            .filter((q) => q.isWeekly)
+            .filter((q) => q.isWeekly) // 주간 퀘스트만 필터링
             .map(({ id, name, tagged, completed, expiredAt }) => (
               <div
                 key={id}
-                className={`flex justify-between items-center border-2 border-black shadow-black shadow-[4px_4px_0px_rgba(0,0,0,1)] p-2  
-                  ${completed ? "opacity-50 line-through bg-gray-100" : "bg-white"}`}
+                className={`flex justify-between items-center border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] shadow-black p-2  
+                ${completed ? "opacity-50 line-through bg-gray-100" : "bg-white"}`}
               >
+                {/* 왼쪽: 체크박스 & 이름 */}
                 <div className="flex flex-col">
                   <div className="flex items-center space-x-2">
-                  <input
-                  type="checkbox"
-                  className="w-5 h-5 border-2 border-black"
-                  checked={completed}
-                  disabled={completed} // 완료된 항목은 체크 불가능
-                  onChange={() => {
-                    if (!completed) {
-                      completeQuest(id);
-                    }
-                  }}
-                />
+                    <input
+                      type="checkbox"
+                      className="w-5 h-5 border-2 border-black"
+                      checked={completed}
+                      disabled={completed} // 완료된 항목은 체크 불가능
+                      onChange={() => {
+                        if (!completed) {
+                          completeQuest(id);
+                        }
+                      }}
+                    />
                     <span className="text-lg">{name}</span>
                   </div>
+
+                  {/* 만료 날짜 표시 */}
                   {expiredAt && (
                     <p className="text-sm text-gray-500">{formatDate(expiredAt)}</p>
                   )}
                 </div>
+
+                {/* 오른쪽: 태그 & 삭제 버튼 */}
                 <div className="flex items-center space-x-2">
                   <Tag variant={tagged}>{tagged}</Tag>
                   <button onClick={() => deleteQuest(id)}>
@@ -75,7 +80,7 @@ const WeeklyQuest = () => {
         </div>
       )}
       <div className="flex justify-center">
-        <Button size="L" className="mt-2" onClick={handleAddQuest}>
+        <Button size="L" className="mt-2" onClick={onAddQuestHandler}>
           ⚡ 할 일 추가
         </Button>
       </div>

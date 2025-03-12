@@ -24,7 +24,6 @@ export class CharacterUsecase {
 
         // 퀘스트가 없다면 진행률을 0으로 처리
         if (!currentQuestIds || currentQuestIds.length === 0) {
-          console.warn("현재 진행 중인 퀘스트가 없습니다.");
           // 상황에 따라 빈 배열을 반환하거나 progress를 0으로 설정하는 로직을 추가할 수 있음
           // 예시:
           return {

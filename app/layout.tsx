@@ -4,6 +4,7 @@ import "./globals.css";
 import InstallPrompt from "@/components/installPrompt/InstallPrompt";
 import NavigationWrapper from "@/components/common/NavigationWrapper"; // 클라이언트 전용 네비게이션
 import Head from "./head";
+import { Toaster } from "@/components/common";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
           <InstallPrompt />
           {children}
         </main>
+        <Toaster position="top-center" />
         <NavigationWrapper /> {/* 클라이언트 전용 네비게이션 */}
       </body>
     </html>

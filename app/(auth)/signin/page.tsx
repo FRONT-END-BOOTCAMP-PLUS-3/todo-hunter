@@ -23,7 +23,7 @@ const SignIn = () => {
       const data = await response.json();
       console.log(data);
       if (response.ok) {
-        router.push("/play"); // 인게임으로 이동
+        router.push("/play/character"); // 인게임으로 이동
       }
     } catch (error) {
       console.error('로그인 중 오류 발생:', error);
