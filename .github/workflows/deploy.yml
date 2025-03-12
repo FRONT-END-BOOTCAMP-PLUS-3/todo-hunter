@@ -50,7 +50,6 @@ jobs:
           echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
           echo "SMTP_USER_EMAIL=${{ secrets.SMTP_USER_EMAIL }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
           echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
-          echo "DEFAULT_API_URL=${{ secrets.DEFAULT_API_URL }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
           echo "NODE_ENV=production" >> /home/todohunter/todohunter-repo/todohunter-app/.env
 
       - name: Install production dependencies

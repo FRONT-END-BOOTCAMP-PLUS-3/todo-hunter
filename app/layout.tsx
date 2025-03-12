@@ -17,10 +17,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TODO Hunter : Return of Scroll",
-  applicationName: "TODO Hunter",
-  description: "A task management app",
-  manifest: "/public/manifest.json",
+
+  title: {
+    default: "투두헌터", // ✅ Google 검색에서 보이는 타이틀
+    template: "%s | TODO HUNTER", // 서브 페이지에 타이틀 추가 시
+  },
+  applicationName: "TODO HUNTER",
+  description: "TODO HUNTER의 공식 웹사이트입니다.",
+  keywords: ["투두헌터", "TODO-HUNTER", "투두리스트", "게임형 투두리스트", "TODO", "일정관리"],
+  openGraph: { // SNS 공유 메시지에 표시될 내용
+    title: "TODO HUNTER - 일상의 모험을 시작하세요!", // SNS에서 표시될 제목
+    description: "TODO HUNTER의 공식 웹사이트입니다.", // SNS에서 표시될 설명
+    url: "https://todo-hunter.com",
+    siteName: "TODO HUNTER",
+    type: "website",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({

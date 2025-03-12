@@ -20,32 +20,7 @@ export async function getUserFromCookie(
 ): Promise<{ user: UserPayload | null; response?: NextResponse }> {
   try {
     const accessToken = req.cookies.get("accessToken")?.value;
-    // const refreshToken = await rdAuthenticationRepository.getRefreshToken(loginId); // 서버에서 Refresh Token 조회
     const refreshToken = req.cookies.get("refreshToken")?.value; // 쿠키에서 Refresh Token 조회
-
-    if (!accessToken && refreshToken) {
-      // Access Token이 없고 Refresh Token이 있는 경우
-      const refreshPayload = await verifyRefreshTokenUsecase.execute(refreshToken);
-      if (!refreshPayload) return { user: null };
-
-      // 새로운 Access Token 생성
-      const newAccessToken = await generateAccessTokenUsecase.execute({
-        id: refreshPayload.id as number, // id는 refreshPayload에서 추출
-        loginId: refreshPayload.loginId as string, // loginId는 refreshPayload에서 추출
-      });
-
-      // 새 Access Token을 쿠키에 설정한 응답 생성
-      const response = NextResponse.next();
-      response.cookies.set({
-        name: "accessToken",
-        value: newAccessToken,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600", 10), // 유효기간 (초 단위)
-      });
-
-      return { user: refreshPayload as UserPayload, response };
-    }
 
     if (!accessToken) {
       return { user: null }; // Access Token 없으면 null 반환

@@ -26,7 +26,7 @@ export default function NavigationWrapper() {
   }, [pathname]);
 
   // 네비게이션을 숨길 페이지 목록
-  const hiddenRoutes = ["/", "/signin", "/signup", "/findid", "/findpw", "/error", "/not-found"];
+  const hiddenRoutes = ["/", "/beginning", "/signin", "/signup", "/findid", "/findpw", "/error", "/not-found"];
   const shouldHideNavigation = hiddenRoutes.includes(pathname) || isErrorPage;
 
   if (shouldHideNavigation) return null; // 네비게이션 숨김
