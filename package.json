@@ -7,17 +7,7 @@
     "dev": "next dev --turbopack -p 3050",
     "build": "next build",
     "start": "next start -p 3050",
-    "lint": "next lint",
-    "pm2:setup": "echo 'logs directory will be created automatically'",
-    "pm2:start": "pm2 start ecosystem.config.js",
-    "pm2:stop": "pm2 stop todo-hunter todo-hunter-cron",
-    "pm2:restart": "pm2 restart todo-hunter todo-hunter-cron",
-    "pm2:delete": "pm2 delete todo-hunter todo-hunter-cron",
-    "pm2:logs": "pm2 logs",
-    "pm2:status": "pm2 list",
-    "dev:with-cron": "pm2 start ecosystem.config.js --only \"todo-hunter-dev,todo-hunter-dev-cron\"",
-    "dev:logs": "pm2 logs todo-hunter-dev todo-hunter-dev-cron",
-    "dev:stop": "pm2 stop todo-hunter-dev todo-hunter-dev-cron"
+    "lint": "next lint"
   },
   "dependencies": {
     "@hackernoon/pixel-icon-library": "^1.0.4",
