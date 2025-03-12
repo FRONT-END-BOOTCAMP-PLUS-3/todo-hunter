@@ -5,6 +5,8 @@ import ErrorIcon from "@/public/icons/Error_triangle.svg";
 import { Button } from "@/components/common";
 
 export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
+    console.error("Global Error 발생:", error); 
+
     return (
         <div className="flex flex-col justify-center items-center min-h-screen bg-black text-white text-center">
             <Image src={ErrorIcon} alt="에러 아이콘" width={100} height={100} />
