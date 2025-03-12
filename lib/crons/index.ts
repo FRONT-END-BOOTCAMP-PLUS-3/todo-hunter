@@ -4,14 +4,12 @@ import { type CronJob } from "./cron-type.js";
 import EndingOpenCron from "./ending-open-cron.js";
 import EndingCloseCron from "./ending-close-cron.js";
 import StatusResetCron from "./status-reset-cron.js";
-import TestLogCron from "./test-log-cron.js";
 
 // 모든 크론잡 목록
 const cronJobs: CronJob[] = [
   EndingOpenCron,
   EndingCloseCron,
   StatusResetCron,
-  TestLogCron,
 ];
 
 // 크론잡 설정 함수

@@ -37,7 +37,7 @@ export class SignUpUsecase {
     const accessTokenUsecase = new GenerateAccessTokenUsecase();
     const refreshTokenUsecase = new GenerateRefreshTokenUsecase(this.rdAuthenticationRepository);
 
-    const userPayload = { loginId: user.loginId }; // GenerateAccessTokenUsecase와 GenerateRefreshTokenUsecase가 요구하는 형식
+    const userPayload = { id: user.id, loginId: user.loginId }; // GenerateAccessTokenUsecase와 GenerateRefreshTokenUsecase가 요구하는 형식
     const accessToken = await accessTokenUsecase.execute(userPayload);
     const refreshToken = await refreshTokenUsecase.execute(userPayload);
 
