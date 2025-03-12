@@ -1,0 +1,69 @@
+name: Deploy todo-hunter
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, todohunter-runner]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate prisma client
+        run: npx prisma generate
+
+      - name: Build todo-hunter project
+        run: npm run build
+
+      - name: Create deployment directory
+        run: |
+          mkdir -p /home/todohunter/todohunter-repo/todohunter-app
+
+      - name: Sync to deployment directory
+        run: |
+          rsync -av --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            ./ /home/todohunter/todohunter-repo/todohunter-app/
+
+      - name: Set environment variables
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "REDIS_URL=${{ secrets.REDIS_URL }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "ACCESS_TOKEN_EXPIRES=${{ secrets.ACCESS_TOKEN_EXPIRES }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "REFRESH_TOKEN_EXPIRES=${{ secrets.REFRESH_TOKEN_EXPIRES }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "SMTP_USER_EMAIL=${{ secrets.SMTP_USER_EMAIL }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+          echo "NODE_ENV=production" >> /home/todohunter/todohunter-repo/todohunter-app/.env
+
+      - name: Install production dependencies
+        run: |
+          cd /home/todohunter/todohunter-repo/todohunter-app
+          npm ci --production
+
+      - name: Check and restart PM2 process
+        run: |
+          if pm2 list | grep -q "todohunter-app"; then
+            echo "Reloading existing PM2 process"
+            pm2 reload /home/todohunter/ecosystem.config.js --only todohunter-app
+          else
+            echo "Starting new PM2 process"
+            pm2 start /home/todohunter/ecosystem.config.js --only todohunter-app
+          fi
+          pm2 save
