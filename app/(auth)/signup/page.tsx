@@ -455,13 +455,11 @@ const SignUp = () => {
                     `
                     is-rounded-form
                     w-full
-                    ${isCodeSent && "text-muted-foreground"}
                     shadow-none
                   `}
                   type="email"
                   ref={emailRef}
-                  onChange={handleEmailChange}
-                  readOnly={isCodeSent} />
+                  onChange={handleEmailChange} />
                 <Button style={{padding: "4px 16px",marginRight: 0}} onClick={handleCheckExistEmail}>중복확인</Button>
             </div>
             {(emailEmpty
