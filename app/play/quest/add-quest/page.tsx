@@ -69,7 +69,7 @@ const AddDailyQuest = () => {
         </h2>
 
         <div className="pt-5 pb-5 flex gap-5 justify-center items-center">
-          <Select onValueChange={(value) => setTagged(value as any)}>
+        <Select onValueChange={(value: keyof typeof STATUS) => setTagged(value)}>
             <SelectTrigger className="w-32 h-11 text-sm px-2">
               <SelectValue placeholder="스탯 목록"/>
             </SelectTrigger>

@@ -79,7 +79,7 @@ const CharacterMotion: React.FC<CharacterProps> = ({
     }
 
     return () => clearInterval(interval);
-  }, [isAttacking, isDefeated, isMoving, isMovingForward, isShaking]);
+  }, [isAttacking, isDefeated, isMoving, isMovingForward, isShaking, attackFrames, frameRate, idleFrames, left, top]);
 
   return (
     <div

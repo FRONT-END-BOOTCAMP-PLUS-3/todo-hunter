@@ -1,52 +1,33 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { CreateQuestUseCase } from '@/application/usecases/quest/CreateQuestUsecase';
 import { PriQuestRepository, PriStatusRepository } from '@/infrastructure/repositories';
 import { prisma } from '@/lib/prisma';
 import { CreateQuestDTO } from '@/application/usecases/quest/dtos';
-
-// 로그인한 유저 정보
-async function getUserFromRequest(req: Request) {
-  try {
-    console.log("getUserFromRequest 실행"); // 실행 여부 확인
-
-    const res = await fetch("localhost:3000/api/auth/signin-info", {
-      credentials: "include",
-      headers: req.headers, // 클라이언트의 인증 정보를 유지
-    });
-
-    if (!res.ok) throw new Error("로그인 정보 가져오기 실패");
-    const data = await res.json();
-
-    console.log("로그인한 유저 정보:", data);
-
-    return data.user?.id; // 로그인한 유저의 ID 반환
-  } catch (error) {
-    console.error("유저 정보 가져오는 중 오류 발생:", error);
-    return null;
-  }
-}
+import { getUserFromRequest } from '@/utils/auth';
 
 // POST 요청 (새 퀘스트 생성)
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     console.log("POST /api/quest 실행"); // 실행 여부 확인
 
+    // 🔹 유저 정보 가져오기
     const userId = await getUserFromRequest(req);
-    if (!userId) {
+    if (!userId || typeof userId !== "number") {
       return NextResponse.json({ success: false, error: "로그인이 필요합니다." }, { status: 401 });
     }
 
+    // 🔹 요청 바디 파싱
     const body = await req.json();
     console.log("POST 요청 바디:", body); // 요청 데이터 확인
 
     const { name, tagged, isWeekly, expiredAt } = body;
 
-    // 필수 값 검증
+    // 🔹 필수 값 검증
     if (!name || !tagged) {
       return NextResponse.json({ success: false, error: "필수 값이 누락되었습니다." }, { status: 400 });
     }
 
-    // DTO 생성 (characterId는 로그인한 유저의 ID로 설정)
+    // 🔹 DTO 생성 (characterId는 로그인한 유저의 ID로 설정)
     const dto: CreateQuestDTO = {
       characterId: userId, // 로그인한 유저의 ID 사용
       name,
@@ -57,8 +38,7 @@ export async function POST(req: Request) {
 
     console.log("저장할 퀘스트 데이터:", dto); // 저장할 데이터 확인
 
-
-    // 퀘스트 생성
+    // 🔹 퀘스트 생성
     const questRepository = new PriQuestRepository(prisma);
     const statusRepository = new PriStatusRepository(prisma);
     const createQuestUseCase = new CreateQuestUseCase(questRepository, statusRepository);
@@ -66,7 +46,11 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, quest: newQuest }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error instanceof Error ? error.message : "알 수 없는 오류 발생" }, { status: 500 });
+    console.error("퀘스트 생성 중 오류 발생:", error);
+    return NextResponse.json(
+      { success: false, error: error instanceof Error ? error.message : "알 수 없는 오류 발생" },
+      { status: 500 }
+    );
   }
 }
 

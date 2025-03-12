@@ -86,3 +86,8 @@ export async function getUserFromCookie(
     return { user: null };
   }
 }
+
+export async function getUserFromRequest(req: NextRequest) {
+  const { user } = await getUserFromCookie(req);
+  return user?.id ?? null;
+}
