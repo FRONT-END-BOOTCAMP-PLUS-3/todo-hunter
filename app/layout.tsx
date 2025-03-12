@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "TODO HUNTER",
     type: "website",
   },
-  manifest: "/public/manifest.json",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
