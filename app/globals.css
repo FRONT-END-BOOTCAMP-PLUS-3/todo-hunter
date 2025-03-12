@@ -72,6 +72,7 @@ body {
   @font-face {
     font-family: 'Galmuri9';
     src: url('/fonts/Galmuri9.woff2') format('woff2'),
+         url('/fonts/Galmuri9.ttf') format('truetype');
   }
   .font-galmuri9 {
     font-family: 'Galmuri9', sans-serif;

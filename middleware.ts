@@ -86,5 +86,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/|api/|icons/|images/|js/|manifest.json).*)"], // _next, /api, /icons, /images 경로 제외, /mainfest.json 예외 처리
+  matcher: ["/((?!_next/|api/|fonts/|icons/|images/|js/|manifest.json).*)"], // _next, /api, /icons, /images 경로 제외, /mainfest.json 예외 처리
 };

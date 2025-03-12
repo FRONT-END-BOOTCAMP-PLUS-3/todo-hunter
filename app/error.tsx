@@ -4,7 +4,7 @@ import Image from "next/image";
 import ErrorIcon from "@/public/icons/Error_triangle.svg"; 
 import { Button } from "@/components/common";
 
-export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
+export default function GlobalError({ error }: { error: Error; }) {
     console.error("Global Error 발생:", error); 
 
     return (
