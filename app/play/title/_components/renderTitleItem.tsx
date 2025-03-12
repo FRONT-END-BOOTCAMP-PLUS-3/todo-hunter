@@ -11,7 +11,7 @@ const RenderTitleItem = ({ title, index }: TitleItemProps) => {
     
             return (
                 <div key={index} className="items-center justify-center text-center">
-                    <Image src={imageUrl} alt="칭호이미지" width={100} height={100} />
+                    <Image className="mx-auto" src={imageUrl} alt="칭호이미지" width={100} height={100} />
                     <p>{title.name}</p>
                 </div>
             );
