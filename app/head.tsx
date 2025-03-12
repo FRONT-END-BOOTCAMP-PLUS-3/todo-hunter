@@ -1,6 +1,7 @@
 export default function Head() {
     return (
       <>
+        <title>TODO HUNTER ~RETURN OF SCROLL~</title>
         <meta name="theme-color" content="#000000" />
         <link rel="apple-touch-icon" href="/icons/192.png" sizes="192x192" />
         <link rel="apple-touch-icon" href="/icons/180.png" sizes="180x180" />
