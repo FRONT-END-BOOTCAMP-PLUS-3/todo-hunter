@@ -122,7 +122,29 @@ const Beginning = () => {
       normalScrollElements={"#menu"} // 특정 요소 스크롤 방지
       credits={{ enabled: false }} // 라이센스 관련 크레딧 표시를 비활성화
       slidesNavigation={true} // 슬라이드 네비게이션 활성화
-      afterLoad={() => {}}
+      afterLoad={() => {
+        // 슬라이드 로드 후 a 태그 안에 div.slider-bullet과 div.pixel 추가
+        const links = document.querySelectorAll(".fp-slidesNav ul li a");
+        links.forEach((link) => {
+          // 1. div.slider-bullet과 div.pixel 추가
+          if (!link.querySelector(".slider-bullet")) {
+            const sliderBullet = document.createElement("div");
+            sliderBullet.className = "slider-bullet";
+
+            const pixel = document.createElement("div");
+            pixel.className = "pixel";
+
+            sliderBullet.appendChild(pixel);
+            link.appendChild(sliderBullet);
+          }
+
+          // 2. a 태그 안 span 중 nth-child(2)를 display: none으로 설정
+          const spans = link.querySelectorAll("span");
+          if (spans.length > 1) {
+            spans[1].style.display = "none"; // nth-child(2)에 해당 (0-based index이므로 1)
+          }
+        });
+      }}
       render={() => (
         <div className="section text-center">
           {slides.map((slide, index) => (
