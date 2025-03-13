@@ -23,7 +23,7 @@
         align-items: center;
         justify-content: space-around;
         background-color: #2D3748;
-        margin-bottom: 5% !important;
+        margin-bottom: 16px !important;
     }
     .custom-status-size {
         margin-left: 5% !important;
@@ -33,6 +33,9 @@
         padding: 10px; 
         padding-bottom: 0px;
         background-color: #E4E4E4;
+    }
+    .custom-status-size div:last-child {
+        margin-bottom: 10px !important;
     }
 
     .character-page-background{
@@ -55,3 +58,13 @@
         border-image-outset:2;
         margin:1px;
     }
+
+@media (max-width: 320px) {
+    .custom-progress p {
+        margin-left: 6px;
+        width: 30%;
+    }
+    .progress-bar-bg {
+        width: 70%;
+    }
+}

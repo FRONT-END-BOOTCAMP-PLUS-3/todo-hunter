@@ -20,7 +20,7 @@ const DailyQuest = () => {
   };
 
   return (
-    <div className="pt-3">
+    <div className="pt-0">
       <h2 className="p-3 w-fit bg-black text-white font-bold">
         일간 퀘스트 ({quests.filter((q) => !q.isWeekly && q.completed).length}/
         {quests.filter((q) => !q.isWeekly).length})
@@ -31,7 +31,7 @@ const DailyQuest = () => {
       ) : error ? (
         <p className="text-center text-red-500">{error}</p>
       ) : (
-        <div className="max-h-[180px] overflow-y-auto space-y-2 pt-2">
+        <div className="max-h-[300px] overflow-y-auto space-y-2 pt-2">
           {quests
             .filter((q) => !q.isWeekly)
             .map(({ id, name, tagged, completed }) => (
