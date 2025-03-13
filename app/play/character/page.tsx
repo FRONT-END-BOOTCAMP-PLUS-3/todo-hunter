@@ -4,9 +4,18 @@ import Status from "@/app/play/character/_components/status";
 import "@/app/play/character/_components/character.css";
 import Character from "./_components/character";
 import { useUserStore } from "@/utils/stores/userStore";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function CharacterPage() {
-    const { nickname, progress, str, int, emo, fin, liv } = useUserStore();
+    const pathname = usePathname();
+    const { id, nickname, progress, str, int, emo, fin, liv, fetchCharacter } = useUserStore();
+
+    useEffect(() => {
+        if (pathname === "/play/character" && id) {
+            fetchCharacter();
+        }
+    }, [pathname, id, fetchCharacter]); 
 
     return (
         <div className="character-page-background">
@@ -18,13 +27,13 @@ export default function CharacterPage() {
                 </div>
             </div>
             <Character />
-                <Status
-                    str={str ?? 0}
-                    int={int ?? 0}
-                    emo={emo ?? 0}
-                    fin={fin ?? 0}
-                    liv={liv ?? 0}
-                /> 
+            <Status
+                str={str ?? 0}
+                int={int ?? 0}
+                emo={emo ?? 0}
+                fin={fin ?? 0}
+                liv={liv ?? 0}
+            />
         </div>
     );
 }
