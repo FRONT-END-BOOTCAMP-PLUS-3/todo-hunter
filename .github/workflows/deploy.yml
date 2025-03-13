@@ -17,6 +17,11 @@ jobs:
         with:
           node-version: 'lts/*'
 
+      - name: Set build environment variables
+        run: |
+          echo "REDIS_URL=${{ secrets.REDIS_URL }}" > .env
+          echo "NODE_ENV=production" >> .env
+
       - name: Install dependencies
         run: npm ci
 
