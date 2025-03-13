@@ -9,18 +9,26 @@ import {
 } from "@/constants";
 import { toast } from "sonner";
 import { EndingImage, EndingScriptBox } from "@/app/play/ending/_components";
+import { useUserStore } from "@/utils/stores/userStore";
 
 const EndingPage = () => {
   const [endingData, setEndingData] = useState<EndingDTO | null>(null);
   const [fadeStep, setFadeStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchUser = useUserStore((state) => state.fetchUser);
+
   useEffect(() => {
-    const fetchEndingData = async () => {
+    const initializeData = async () => {
+      await fetchUser();
+      const userId = useUserStore.getState().id;
+
+      if (!userId) return;
+
       try {
         const response = await fetch("/api/ending", {
           headers: {
-            "X-User-Id": "1", // 추후 zustand 속 ID로 대체 필요
+            "X-User-Id": userId.toString(),
           },
         });
 
@@ -72,8 +80,8 @@ const EndingPage = () => {
       }
     };
 
-    fetchEndingData();
-  }, []);
+    initializeData();
+  }, [fetchUser]);
 
   const getOverlayClass = () => {
     switch (fadeStep) {

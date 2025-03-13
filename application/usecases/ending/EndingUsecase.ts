@@ -28,11 +28,11 @@ export class EndingUsecase {
 
   private findHighestStat(status: Status): StatInfo {
     const stats: StatInfo[] = [
-      { statName: "str", value: status.str },
-      { statName: "int", value: status.int },
-      { statName: "emo", value: status.emo },
-      { statName: "fin", value: status.fin },
-      { statName: "liv", value: status.liv },
+      { statName: "STR", value: status.str },
+      { statName: "INT", value: status.int },
+      { statName: "EMO", value: status.emo },
+      { statName: "FIN", value: status.fin },
+      { statName: "LIV", value: status.liv },
     ];
 
     return stats.reduce((highest, current) =>
