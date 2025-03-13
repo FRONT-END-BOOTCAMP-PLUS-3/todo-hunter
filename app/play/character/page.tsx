@@ -4,21 +4,12 @@ import Status from "@/app/play/character/_components/status";
 import "@/app/play/character/_components/character.css";
 import Character from "./_components/character";
 import { useUserStore } from "@/utils/stores/userStore";
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { Button } from "@/components/common";
 import { useRouter } from "next/navigation";
 
 export default function CharacterPage() {
     const router = useRouter(); // Next Route 호출
-    const pathname = usePathname();
-    const { id, nickname, progress, str, int, emo, fin, liv, fetchCharacter } = useUserStore();
-
-    useEffect(() => {
-        if (pathname === "/play/character" && id) {
-            fetchCharacter();
-        }
-    }, [pathname, id, fetchCharacter]);
+    const { nickname, progress, str, int, emo, fin, liv } = useUserStore();
 
     const handleLogout = async () => {
         try {
