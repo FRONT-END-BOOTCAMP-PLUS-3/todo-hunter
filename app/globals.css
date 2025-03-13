@@ -94,19 +94,89 @@ body {
   }
 
   /* 서비스 소개 슬라이드 네비게이션 버튼 스타일 변경 */
-  #fp-nav ul li a span, .fp-slidesNav ul li a span {
-    width: 12px !important;
-    height: 12px !important;
+  #fp-nav ul li, .fp-slidesNav ul li {
+    margin: 9px !important;
   }
-  .fp-slidesNav ul li a.active span {
-    background-color: white;
-    margin: -2px 0 0 -2px !important;
+  .fp-slidesNav ul li a .slider-bullet .pixel {
+    --slider-bullet-color: #333;
   }
-  #fp-nav ul li:hover a span, .fp-slidesNav ul li:hover a span {
-    margin: -2px 0 0 -2px !important;
+  .fp-slidesNav ul li a.active .slider-bullet .pixel {
+    --slider-bullet-color: #fff;
   }
-  .fp-slidesNav ul li:hover a span:nth-child(2) {
-    margin: -2px 0 0 -2px !important;
+
+  .slider-bullet {
+    width: 1rem; /* 8rem * 0.125 = 1rem (16px) */
+    height: 1rem; /* 8rem * 0.125 = 1rem (16px) */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+
+  .pixel {
+    width: 0.125rem; /* 1rem * 0.125 = 0.125rem */
+    height: 0.125rem; /* 1rem * 0.125 = 0.125rem */
+    box-shadow:
+    /* row 1 */
+    0.25rem 0rem 0 -0.00625rem var(--slider-bullet-color), /* 2rem * 0.125 = 0.25rem, -0.05rem * 0.125 = -0.00625rem */
+    0.375rem 0rem 0 -0.00625rem var(--slider-bullet-color), /* 3rem * 0.125 = 0.375rem */
+    0.5rem 0rem 0 -0.00625rem var(--slider-bullet-color), /* 4rem * 0.125 = 0.5rem */
+    0.625rem 0rem 0 -0.00625rem var(--slider-bullet-color), /* 5rem * 0.125 = 0.625rem */
+    /* row 2 */
+    0.125rem 0.125rem 0 -0.00625rem var(--slider-bullet-color), /* 1rem * 0.125 = 0.125rem */
+    0.25rem 0.125rem 0 -0.00625rem var(--slider-bullet-color),
+    0.375rem 0.125rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.125rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.125rem 0 -0.00625rem var(--slider-bullet-color),
+    0.75rem 0.125rem 0 -0.00625rem var(--slider-bullet-color), /* 6rem * 0.125 = 0.75rem */
+    /* row 3 */
+    0rem 0.25rem 0 -0.00625rem var(--slider-bullet-color), /* 2rem * 0.125 = 0.25rem */
+    0.125rem 0.25rem 0 -0.00625rem var(--slider-bullet-color),
+    0.25rem 0.25rem 0 -0.00625rem var(--slider-bullet-color),
+    0.375rem 0.25rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.25rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.25rem 0 -0.00625rem var(--slider-bullet-color),
+    0.75rem 0.25rem 0 -0.00625rem var(--slider-bullet-color),
+    0.875rem 0.25rem 0 -0.00625rem var(--slider-bullet-color), /* 7rem * 0.125 = 0.875rem */
+    /* row 4 */
+    0rem 0.375rem 0 -0.00625rem var(--slider-bullet-color), /* 3rem * 0.125 = 0.375rem */
+    0.125rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    0.25rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    0.375rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    0.75rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    0.875rem 0.375rem 0 -0.00625rem var(--slider-bullet-color),
+    /* row 5 */
+    0rem 0.5rem 0 -0.00625rem var(--slider-bullet-color), /* 4rem * 0.125 = 0.5rem */
+    0.125rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    0.25rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    0.375rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    0.75rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    0.875rem 0.5rem 0 -0.00625rem var(--slider-bullet-color),
+    /* row 6 */
+    0rem 0.625rem 0 -0.00625rem var(--slider-bullet-color), /* 5rem * 0.125 = 0.625rem */
+    0.125rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    0.25rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    0.375rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    0.75rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    0.875rem 0.625rem 0 -0.00625rem var(--slider-bullet-color),
+    /* row 7 */
+    0.125rem 0.75rem 0 -0.00625rem var(--slider-bullet-color), /* 6rem * 0.125 = 0.75rem */
+    0.25rem 0.75rem 0 -0.00625rem var(--slider-bullet-color),
+    0.375rem 0.75rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.75rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.75rem 0 -0.00625rem var(--slider-bullet-color),
+    0.75rem 0.75rem 0 -0.00625rem var(--slider-bullet-color),
+    /* row 8 */
+    0.25rem 0.875rem 0 -0.00625rem var(--slider-bullet-color), /* 7rem * 0.125 = 0.875rem */
+    0.375rem 0.875rem 0 -0.00625rem var(--slider-bullet-color),
+    0.5rem 0.875rem 0 -0.00625rem var(--slider-bullet-color),
+    0.625rem 0.875rem 0 -0.00625rem var(--slider-bullet-color);
   }
 }
 
