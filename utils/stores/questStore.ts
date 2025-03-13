@@ -169,6 +169,7 @@ export const useQuestStore = create<QuestStore>((set) => ({
       });
 
       if (!response.ok) throw new Error("퀘스트 추가 실패");
+      await useUserStore.getState().fetchCharacter();
     } catch (err) {
       console.error("퀘스트 추가 실패:", err);
     }
