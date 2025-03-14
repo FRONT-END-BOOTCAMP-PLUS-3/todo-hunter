@@ -4,8 +4,6 @@ import Status from "@/app/play/character/_components/status";
 import "@/app/play/character/_components/character.css";
 import Character from "./_components/character";
 import { useUserStore } from "@/utils/stores/userStore";
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { Button } from "@/components/common";
 import { useRouter } from "next/navigation";
 

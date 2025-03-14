@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
             httpOnly: true, // XSS 방지
             secure: process.env.NODE_ENV === "production", // 프로덕션에서만 Secure 적용
             path: "/", // 모든 경로에서 사용 가능
-            // maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600", 10), // 유효기간 (초 단위)
+            maxAge: parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600", 10), // 유효기간 (초 단위)
         });
         response.cookies.set("refreshToken", refreshToken, {
             httpOnly: true,
