@@ -9,7 +9,14 @@ import { useRouter } from "next/navigation";
 
 export default function CharacterPage() {
     const router = useRouter(); // Next Route 호출
-    const { nickname, progress, str, int, emo, fin, liv } = useUserStore();
+    const pathname = usePathname();
+    const { id, nickname, progress, str, int, emo, fin, liv, fetchUser } = useUserStore();
+
+    useEffect(() => {
+        if (pathname === "/play/character" && id) {
+            fetchUser();
+        }
+    }, [pathname, id, fetchUser]); 
 
     const handleLogout = async () => {
         try {
