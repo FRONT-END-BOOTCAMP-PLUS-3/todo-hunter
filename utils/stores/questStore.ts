@@ -114,6 +114,9 @@ export const useQuestStore = create<QuestStore>((set) => ({
 
       // 5. 완료 후 상태 메시지 띄우기
       toast.success(` ${STATUS[quest.tagged]} 스탯이 +1 증가했습니다!`);
+
+       // 6. 캐릭터 데이터 갱신
+      await useUserStore.getState().fetchCharacter(); // 캐릭터 정보 갱신
     } catch (err) {
       console.error("completeQuest 오류:", err);
 

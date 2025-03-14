@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input } from "@/components/common";
+import { useUserStore } from "@/utils/stores/userStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -9,6 +10,7 @@ const SignIn = () => {
   const router = useRouter();
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
+  const { fetchUser } = useUserStore(); // zustand에서 fetchUser 가져오기
 
   const handleSignIn = async () => {
     try {
@@ -18,11 +20,11 @@ const SignIn = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ loginId, password }),
+        credentials: "include", // 쿠키 포함
       });
-
-      const data = await response.json();
-      console.log(data);
       if (response.ok) {
+        // 로그인 성공 시 fetchUser 호출
+        await fetchUser();
         router.push("/play/character"); // 인게임으로 이동
       }
     } catch (error) {

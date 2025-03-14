@@ -2,13 +2,15 @@
 
 import { LoginError } from "@/application/usecases/auth/errors/LoginError";
 import { Button, Input } from "@/components/common";
+import { useUserStore } from "@/utils/stores/userStore";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 const SignUp = () => {
   // React Router 호출
   const router = useRouter();
-
+  // Zustand에서 fetchUser 가져오기
+  const { fetchUser } = useUserStore();
 
   /* 로그인 ID 중복확인 시작 */
   const loginIdRef = useRef<HTMLInputElement>(null);
@@ -347,6 +349,7 @@ const SignUp = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ loginId, email, nickname, password }),
+        credentials: "include", // 쿠키 포함
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -358,6 +361,9 @@ const SignUp = () => {
     }
 
     alert("가입이 완료되었습니다!");
+
+    // 회원가입 성공 시 fetchUser 호출 후 리디렉션
+    await fetchUser();
 
     // // 가입 성공 시 로그인 페이지로 이동
     // router.push("/signin");
