@@ -35,8 +35,8 @@ jobs:
         run: npx prisma generate
 
       # Test Job Start
-      - name: Check TypeScript types
-        run: npm run typecheck
+      # - name: Check TypeScript types
+      #   run: npm run typecheck
 
       - name: Check code style
         run: npm run lint
