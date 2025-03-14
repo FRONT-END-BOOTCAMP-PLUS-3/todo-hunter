@@ -5,7 +5,8 @@ import "@/app/play/character/_components/character.css";
 import Character from "./_components/character";
 import { useUserStore } from "@/utils/stores/userStore";
 import { Button } from "@/components/common";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export default function CharacterPage() {
     const router = useRouter(); // Next Route 호출
