@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import { useQuestStore } from "@/utils/stores/questStore";
 import { Tag } from "@/components/common/Tag";
 import { Button } from "@/components/common/Button";
-import OctagonX from "@/components/common/OctagonX";
 import { useRouter } from "next/navigation";
 
 const WeeklyQuest = () => {
@@ -43,7 +42,7 @@ const WeeklyQuest = () => {
               <div
                 key={id}
                 className={`flex justify-between items-center border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] shadow-black p-2  
-                ${completed ? "opacity-50 line-through bg-gray-100" : "bg-white"}`}
+                ${completed ? "opacity-50 bg-gray-100" : "bg-white"}`}
               >
                 {/* 왼쪽: 체크박스 & 이름 */}
                 <div className="flex flex-col">
@@ -72,7 +71,9 @@ const WeeklyQuest = () => {
                 <div className="flex items-center space-x-2">
                   <Tag variant={tagged}>{tagged}</Tag>
                   <button onClick={() => deleteQuest(id)}>
-                    <OctagonX className="w-10 h-10 text-red-500 hover:text-red-700 transition" />
+                  <div className="pt-1">
+                  <i className="hn hn-octagon-times-solid text-[35px] text-red-500"></i>  
+                  </div>
                   </button>
                 </div>
               </div>

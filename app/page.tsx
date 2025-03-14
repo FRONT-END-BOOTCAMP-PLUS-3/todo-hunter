@@ -91,7 +91,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-black">
-      <Image src="/Images/Logo.png" width={1001} height={395} alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)" className="p-6"/>
+      <Image src="/images/Logo.png" width={1001} height={395} alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)" className="p-6"/>
       <Button asChild size="L" state="success" className="mt-20 max-[1000px]:mt-[8vw] max-[380px]:w-4/5">
         <Link href={"/"} onClick={handleStartClick}>시작하기</Link>
       </Button>
