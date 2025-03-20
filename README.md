@@ -3,7 +3,7 @@
 <img src="https://github.com/user-attachments/assets/3ac9b908-f59a-4846-9f58-58a9e4479f73">
 
 ### 프로젝트 소개
-투두리스트 사용시 현실에서 즉각적인 성장을 체감하기 어려워 습관 형성이 힘든 문제점을 발견하고, 유저 상호작용과 시각적 성장 요소를 추가한 게이미피케이션(gamification) 웹 서비스입니다.
+투두리스트 사용시 현실에서 즉각적인 성장을 체감하기 어려워 습관 형성이 힘든 문제점을 발견하고, <br> 유저 상호작용과 시각적 성장 요소를 추가한 게이미피케이션(gamification) 웹 서비스입니다. [👉 할일 사냥하러 가기! (배포 링크)](http://todo-hunter.com) 
 
 - 개발 기간 : 2025.02.14 ~ (진행중)
  
@@ -16,7 +16,7 @@ npm run dev
 
 TEST ID : todohunter / TEST PASSWORD : 1845
 
-version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0(25.03.20 기준 LTS)
+version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0 (25.03.20 기준 LTS)
 ```
 
 ### 기술 스택
@@ -24,14 +24,14 @@ version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0(25.03.20 기�
 | --- | --- | 
 | FrontEnd| <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white"> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white"> <img src="https://img.shields.io/badge/Shadcn/UI-000000?style=for-the-badge&logo=Shadcn/UI&logoColor=white"> <img src="https://img.shields.io/badge/Zustand-8D6748?style=for-the-badge&logo=Zustand&logoColor=white"> <img src="https://img.shields.io/badge/node.cron-006600?style=for-the-badge&logo=node-cron&logoColor=white"> <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"> |
 | Database & ORM| <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white"> <img src="https://img.shields.io/badge/prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white"> <img src="https://img.shields.io/badge/redis-FF4438?style=for-the-badge&logo=redis&logoColor=white"> |
-| Deploy | <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=PWA&logoColor=white"> <img src="https://img.shields.io/badge/LINUX (Ubuntu)-FCC624?style=for-the-badge&logo=LINUX&logoColor=white">  <img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NginX&logoColor=white"> <img src="https://img.shields.io/badge/Github Actions-2088FF?style=for-the-badge&logo=NginX&logoColor=white"> <img src="https://img.shields.io/badge/PM2-2B037A?style=for-the-badge&logo=PM2&logoColor=white"> |
+| Deploy | <img src="https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=PWA&logoColor=white"> <img src="https://img.shields.io/badge/LINUX (Ubuntu)-FCC624?style=for-the-badge&logo=LINUX&logoColor=white">  <img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NginX&logoColor=white"> <img src="https://img.shields.io/badge/Github Actions-2088FF?style=for-the-badge&logo=Github Actions&logoColor=white"> <img src="https://img.shields.io/badge/PM2-2B037A?style=for-the-badge&logo=PM2&logoColor=white"> |
 | Collaboration| <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"> |
 
 
 ### 기능 소개
 | 영상 | 1. 회원가입 / 로그인 |
 | --- | --- | 
-| <img src="https://github.com/user-attachments/assets/802b3c6a-a61b-44c0-8724-51935c3023d5" width="200"> | - 초기 진입시 소개 페이지를 풀페이지 반응형 스크롤 구현 <br> - 플러그인 로드 CSR 처리 · 페이지 내용 SSR 처리로 검색엔진 노출 <br> <img src="https://github.com/user-attachments/assets/2100349a-e3f7-402c-905f-f53951c17103" width="300"> <br> - 회원가입/로그인/아이디 찾기 <br> - nodemailer(인증이메일 발송 목적) <br> - Redis(인증번호 생성 및 관리 목적) 도입|
+| <img src="https://github.com/user-attachments/assets/c260558e-650b-45a6-a303-c671dab38b2f" width="200"> | - 초기 진입시 소개 페이지를 풀페이지 반응형 스크롤 구현 <br> - 플러그인 로드 CSR 처리 · 페이지 내용 SSR 처리로 검색엔진 노출 <br> <img src="https://github.com/user-attachments/assets/2100349a-e3f7-402c-905f-f53951c17103" width="300"> <br> - 회원가입/로그인/아이디 찾기 <br> - nodemailer(인증이메일 발송 목적) <br> - Redis(인증번호 생성 및 관리 목적) 도입|
 
 | 영상 | 2. 퀘스트 페이지 |
 | --- | --- | 
@@ -51,7 +51,7 @@ version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0(25.03.20 기�
 
 ### 배포 전략
 <img src="https://github.com/user-attachments/assets/3b6bd478-cb9c-4a50-8339-5aa48cb8a869">
-- main repository와 node-cron 구동을 위한 cron repository를 동시 운영해야 했기 때문에 배포 단계가 번거로워 CI/CD를 구축하여 자동화를 통한 효율적인 개발을 진행함.
+- main repository와 node-cron 구동을 위한 cron repository를 동시 운영해야 했기 때문에 <br> 배포 단계가 번거로워 CI/CD를 구축하여 자동화를 통한 효율적인 개발을 진행함.
 
 ### ERD 설계
 <img src="https://github.com/user-attachments/assets/113680fd-4e7b-4a2a-999e-01dd979cd77f">
