@@ -1,9 +1,9 @@
 # TODO-HUNTER : ~ RETURN OF SCROLL ~
 
-이미지 삽입
+<img src="https://github.com/user-attachments/assets/3ac9b908-f59a-4846-9f58-58a9e4479f73">
 
 ### 프로젝트 소개
-투두리스트 사용시 현실에서 즉각적인 성장을 체감하기 어려워 습관 형성이 힘든 문제점을 발견하고, 개선하기 위해 유저 상호작용과 시각적 성장 요소를 반영한 모바일 웹 서비스입니다.
+투두리스트 사용시 현실에서 즉각적인 성장을 체감하기 어려워 습관 형성이 힘든 문제점을 발견하고, 유저 상호작용과 시각적 성장 요소를 추가한 게이미피케이션(gamification) 웹 서비스입니다.
 
 - 개발 기간 : 2025.02.14 ~ (진행중)
  
@@ -14,7 +14,7 @@ cd todo-hunter
 npm install
 npm run dev
 
-TEST ID : todohunter / TEST PW : 1845
+TEST ID : todohunter / TEST PASSWORD : 1845
 
 version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0(25.03.20 기준 LTS)
 ```
@@ -31,7 +31,7 @@ version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0(25.03.20 기�
 ### 기능 소개
 | 영상 | 1. 회원가입 / 로그인 |
 | --- | --- | 
-| <img src="https://github.com/user-attachments/assets/802b3c6a-a61b-44c0-8724-51935c3023d5" width="200"> <br> <img src="https://github.com/user-attachments/assets/2100349a-e3f7-402c-905f-f53951c17103" width="300"> | - 초기 진입시 소개 페이지를 풀페이지 반응형 스크롤 구현 <br> - 플러그인 로드 CSR 처리 · 페이지 내용 SSR 처리로 검색엔진 노출 <br> - 회원가입/로그인/아이디 찾기 <br> -nodemailer(인증이메일 발송 목적) <br> - Redis(인증번호 생성 및 관리 목적) 도입|
+| <img src="https://github.com/user-attachments/assets/802b3c6a-a61b-44c0-8724-51935c3023d5" width="200"> | - 초기 진입시 소개 페이지를 풀페이지 반응형 스크롤 구현 <br> - 플러그인 로드 CSR 처리 · 페이지 내용 SSR 처리로 검색엔진 노출 <br> <img src="https://github.com/user-attachments/assets/2100349a-e3f7-402c-905f-f53951c17103" width="300"> <br> - 회원가입/로그인/아이디 찾기 <br> - nodemailer(인증이메일 발송 목적) <br> - Redis(인증번호 생성 및 관리 목적) 도입|
 
 | 영상 | 2. 퀘스트 페이지 |
 | --- | --- | 
@@ -47,7 +47,14 @@ version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0(25.03.20 기�
 
 | 영상 | 5. 주간 엔딩 페이지 |
 | --- | --- | 
-| <img scr="https://github.com/user-attachments/assets/e4509d25-1b56-4d5b-a866-4f7f5ddda896" width="200"> | - 칭호 조건에 따른 일요일 엔딩 스토리 확인 <br> - 텍스트 + 이미지 처리를 통한 스토리 전달 <br> - 주기적 DB 업데이트 스케줄링: node-cron을 활용하여 <br> 특정 요일과 시간에 character 및 status 테이블의 데이터를 자동 업데이트, 주간엔딩 실행 |
+| <img src="https://github.com/user-attachments/assets/e0dd58f5-bd36-401b-95ea-89ba77557de2" width="200"> | - 칭호 조건에 따른 일요일 엔딩 스토리 확인 <br> - 텍스트 + 이미지 처리를 통한 스토리 전달 <br> - 주기적 DB 업데이트 스케줄링: node-cron을 활용하여 <br> 특정 요일과 시간에 character 및 status 테이블의 데이터를 자동 업데이트, 주간엔딩 실행 |
+
+### 배포 전략
+<img src="https://github.com/user-attachments/assets/3b6bd478-cb9c-4a50-8339-5aa48cb8a869">
+- main repository와 node-cron 구동을 위한 cron repository를 동시 운영해야 했기 때문에 배포 단계가 번거로워 CI/CD를 구축하여 자동화를 통한 효율적인 개발을 진행함.
+
+### ERD 설계
+<img src="https://github.com/user-attachments/assets/113680fd-4e7b-4a2a-999e-01dd979cd77f">
 
 ### 팀원 소개
 
