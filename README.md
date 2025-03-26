@@ -3,7 +3,9 @@
 <img src="https://github.com/user-attachments/assets/3ac9b908-f59a-4846-9f58-58a9e4479f73">
 
 ### 프로젝트 소개
-투두리스트 사용시 현실에서 즉각적인 성장을 체감하기 어려워 습관 형성이 힘든 문제점을 발견하고, <br> 유저 상호작용과 시각적 성장 요소를 추가한 게이미피케이션(gamification) 웹 서비스입니다. [👉 할일 사냥하러 가기! (배포 링크)](http://todo-hunter.com) 
+투두리스트 사용시 현실에서 즉각적인 성장을 체감하기 어려워 습관 형성이 힘든 문제점을 발견하고, <br> 유저 상호작용과 시각적 성장 요소를 추가한 게이미피케이션(gamification) 웹 서비스입니다.
+
+[👉 할일 사냥하러 가기! (배포 링크)](http://todo-hunter.com) 
 
 - 개발 기간 : 2025.02.14 ~ (진행중)
  
@@ -14,7 +16,7 @@ cd todo-hunter
 npm install
 npm run dev
 
-TEST ID : todohunter / TEST PASSWORD : 1845
+TEST ID : todohunter / TEST PASSWORD : todohuntertest
 
 version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0 (25.03.20 기준 LTS)
 ```
@@ -51,7 +53,9 @@ version : Typescript 5+ / React 19+ / Next.js 15+ / Node v22.14.0 (25.03.20 기�
 
 ### 배포 전략
 <img src="https://github.com/user-attachments/assets/3b6bd478-cb9c-4a50-8339-5aa48cb8a869">
-- main repository와 node-cron 구동을 위한 cron repository를 동시 운영해야 했기 때문에 <br> 배포 단계가 번거로워 CI/CD를 구축하여 자동화를 통한 효율적인 개발을 진행함.
+- main repository와 node-cron 구동을 위한 cron repository를 동시 운영을 위해 CI/CD를 구축하여 자동화를 통한 효율적인 배포를 진행함.
+
+[관련 링크 : 👉cron-job repository](https://github.com/FRONT-END-BOOTCAMP-PLUS-3/todo-hunter-cron)
 
 ### ERD 설계
 <img src="https://github.com/user-attachments/assets/113680fd-4e7b-4a2a-999e-01dd979cd77f">
