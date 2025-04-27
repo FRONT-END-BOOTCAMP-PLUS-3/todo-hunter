@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
+import Head from "next/head";
 
 const setCookie = (name: string, value: string, maxAge: number) => {
   document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; ${
@@ -89,12 +90,35 @@ export default function Home() {
     return <Loading color={"black"} />; // 쿠키 값을 기다리는 동안 로딩 상태 표시
   }
 
+  // 이미지 로딩이 완료되면 로딩 상태를 false로 변경
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
+
   return (
+    <>
+    <Head>
+      <link rel="preload" href="/images/Logo.png" as="image" />
+    </Head>
     <div className="flex flex-col justify-center items-center min-h-screen bg-black">
-      <Image src="/images/Logo.png" width={1001} height={395} alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)" className="p-6"/>
+      {isLoading ? (
+        <Loading color={"black"} /> // 이미지 로딩 중일 때 로딩 상태 표시
+      ) : (
+        <Image
+          src="/images/Logo.png"
+          width={1001}
+          height={395}
+          alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)"
+          className="p-6"
+          unoptimized
+          onLoad={handleImageLoad} // 이미지 로딩 완료 시 핸들러 호출
+        />
+      )}
+      {/* <Image src="/images/Logo.png" width={1001} height={395} alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)" className="p-6"/> */}
       <Button asChild size="L" state="success" className="mt-20 max-[1000px]:mt-[8vw] max-[380px]:w-4/5">
         <Link href={"/"} onClick={handleStartClick}>시작하기</Link>
       </Button>
     </div>
+    </>
   );
 }

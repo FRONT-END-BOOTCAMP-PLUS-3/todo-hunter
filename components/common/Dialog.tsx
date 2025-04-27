@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
-import "@hackernoon/pixel-icon-library/fonts/iconfont.css";
+// import "/pixel-icon-library/fonts/iconfont.css";
 
 import { cn } from "@/lib/utils"
 

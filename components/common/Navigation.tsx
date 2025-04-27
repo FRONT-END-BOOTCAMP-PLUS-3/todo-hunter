@@ -3,7 +3,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/common/tabs";
-import "@hackernoon/pixel-icon-library/fonts/iconfont.css";
+// import "/pixel-icon-library/fonts/iconfont.css";
+import './Navigation.css';
 import { MENUS } from "@/constants/menu";
 import { useUserStore } from "@/utils/stores/userStore";
 
@@ -93,7 +94,7 @@ const Navigation: React.FC<NavigationProps> = ({
             {MENUS[2] && (
               <TabsTrigger
                 key={MENUS[2].menu}
-                className={`is-rounded-full flex flex-col justify-center items-center absolute left-1/2 -translate-x-1/2 -translate-y-1/2
+                className={`round-button flex flex-col justify-center items-center absolute left-1/2 -translate-x-1/2 -translate-y-1/2
                 min-w-[100px] max-[430px]:min-w-[90px] max-[300px]:w-[80px]
                 h-[100px] max-[300px]:h-[80px] max-[430px]:pt-3 border-transparent
                 data-[state=active]:bg-transparent data-[state=active]:text-white
@@ -104,6 +105,11 @@ const Navigation: React.FC<NavigationProps> = ({
                 } text-lg sm:text-base`}
                 value={MENUS[2].menu}
               >
+                <div className="pixel-wrapper">
+                  <div className="pixel"></div>
+                  <div className="pixel"></div>
+                  <div className="pixel"></div>
+                </div>
                 <div className="icon flex justify-center items-start h-9 max-[430px]:h-7">
                   <i
                     className={`hn ${
