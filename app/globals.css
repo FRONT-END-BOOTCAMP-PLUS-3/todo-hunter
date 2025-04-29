@@ -4,6 +4,16 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto; /* 중앙 정렬 */
+  width: 100%; /* 기본 너비 */
+  max-width: 414px; /* 최대 너비 */
+
+}
+
+@media (min-width: 414px) {
+  body {
+    margin: 0 auto; /* 화면 중앙 정렬 */
+  }
 }
 
 

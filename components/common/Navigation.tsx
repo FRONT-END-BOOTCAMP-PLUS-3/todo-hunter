@@ -44,7 +44,7 @@ const Navigation: React.FC<NavigationProps> = ({
           is-rounded-navi
           flex
           relative
-          justify-between
+          justify-center
           h-full
           max-[300px]:h-[66px]
           mt-[-2px] mb-[-2px] ml-[4px] mr-[4px]
