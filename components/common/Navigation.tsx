@@ -3,7 +3,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/common/tabs";
-// import "/pixel-icon-library/fonts/iconfont.css";
 import './Navigation.css';
 import { MENUS } from "@/constants/menu";
 import { useUserStore } from "@/utils/stores/userStore";
