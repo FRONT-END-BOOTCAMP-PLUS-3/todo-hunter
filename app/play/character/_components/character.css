@@ -39,7 +39,7 @@
     }
 
     .character-page-background{
-        background-image: url('/images/backgrounds/Character-Page-Bg.png');
+        background-image: url('/images/backgrounds/Character-Page-Bg.webp');
         background-size: cover; 
         background-position: center;
         background-repeat: no-repeat;
