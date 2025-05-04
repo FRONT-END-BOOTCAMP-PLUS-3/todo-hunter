@@ -25,8 +25,12 @@ export default function TitlePage(){
             console.log(error);
         }
     }, [id]);
-
-    const gridItems = Array.from({ length: 9 }, (_, index) => titles[index] || { name: "잠금", titleId: "df" });
+    
+    const gridItems = Array.from({ 
+        length: 9 }, 
+        (_, index) => 
+            titles[index] || 
+        { name: "잠금", titleId: "df" });
 
     const handlePreviousPage = () => {
         if (page > 1) {
@@ -42,7 +46,7 @@ export default function TitlePage(){
     
     useEffect(() => {
         getTitle(page);
-    }, [page, getTitle]);
+    }, [getTitle, page]);
 
     return (
         <div className="bg-slate-400 flex items-center justify-center p-5 flex-1">
