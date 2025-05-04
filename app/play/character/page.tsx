@@ -18,6 +18,7 @@ export default function CharacterPage() {
     useEffect(() => {
         const bgImage = new Image();
         bgImage.src = "/images/backgrounds/Character-Page-Bg.webp";
+        bgImage.alt = "캐릭터페이지 배경 이미지";
         bgImage.onload = () => setContentLoaded(true);
     }, []);
 
@@ -40,7 +41,7 @@ export default function CharacterPage() {
         <div className="character-page-background">
             <Button className="absolute top-8 right-5" size={"S"} state={"error"} onClick={handleLogout}>로그아웃</Button>
             {contentLoaded && (
-                <Suspense >
+                <Suspense>
                     <ProgressBar nickname={nickname} progress={progress} />
                     <div className="mt-10">
                         <Character />
