@@ -41,8 +41,8 @@ export default function CharacterPage() {
                     <progress className="bg-white is-rounded-progress w-full" value={progress} max="100"></progress>
                 </div>
             </div>
-            <div style={{ marginTop: "-20px" }}>
-            <Character />
+            <div className="mt-10">
+                <Character />
             </div>
             <Status
                 str={str ?? 0}
