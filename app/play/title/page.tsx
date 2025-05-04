@@ -49,7 +49,7 @@ export default function TitlePage(){
     }, [getTitle, page]);
 
     return (
-        <div className="bg-slate-400 flex items-center justify-center p-5 flex-1">
+        <div className="bg-slate-400 flex items-center justify-center p-5 flex-1 min-h-screen overscroll-none">
             <div className="bg-white p-8 w-full overflow-hidden">
                 <h1 className="mb-10 text-2xl">칭호 도감</h1>
                 <div className="grid grid-cols-3 gap-5">
@@ -64,5 +64,5 @@ export default function TitlePage(){
                 </div> 
             </div>
         </div>
-    )
+    );
 }
