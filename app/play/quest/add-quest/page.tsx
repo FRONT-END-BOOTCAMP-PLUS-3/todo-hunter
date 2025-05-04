@@ -62,8 +62,8 @@ const AddDailyQuest = () => {
   };
 
   return (
-    <div className="flex-1 pt-10 justify-center items-center">
-      <div className="ml-3 mr-3 bg-white rounded-lg">
+    <div className="flex-1 pt-10 justify-center items-center bg-white">
+      <div className="ml-3 mr-3 rounded-lg">
         <div>
         <h2 className="bg-black text-white text-center font-bold p-2">
           어떤 일을 하나요?
