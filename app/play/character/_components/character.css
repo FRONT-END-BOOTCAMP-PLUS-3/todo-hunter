@@ -50,16 +50,6 @@
     margin-bottom: 10px !important;
 }
 
-/* Background styles */
-.character-page-background {
-    background-image: url('/images/backgrounds/Character-Page-Bg.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-}
 
 /* Rounded progress styles */
 .is-rounded-progress {
@@ -83,4 +73,9 @@
     .progress-bar-bg {
         width: 70%;
     }
+}
+
+/* Adjust height to 90% */
+.character-page-background {
+    height: 90vh;
 }

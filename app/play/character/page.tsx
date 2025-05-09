@@ -6,21 +6,14 @@ import Character from "./_components/character";
 import { useUserStore } from "@/utils/stores/userStore";
 import { Button } from "@/components/common";
 import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, Suspense } from "react";
 import ProgressBar from "./_components/ProgressBar";
+import Image from "next/image";
 
 export default function CharacterPage() {
     const router = useRouter();
     const pathname = usePathname();
     const { id, nickname, progress, str, int, emo, fin, liv, fetchUser } = useUserStore();
-    const [contentLoaded, setContentLoaded] = useState(false);
-
-    useEffect(() => {
-        const bgImage = new Image();
-        bgImage.src = "/images/backgrounds/Character-Page-Bg.webp";
-        bgImage.alt = "캐릭터페이지 배경 이미지";
-        bgImage.onload = () => setContentLoaded(true);
-    }, []);
 
     useEffect(() => {
         if (pathname === "/play/character" && id) {
@@ -38,23 +31,31 @@ export default function CharacterPage() {
     };
 
     return (
-        <div className="character-page-background">
+        <>
+        <div className="relative w-full h-[91vh] overflow-hidden"> 
+            <Image
+                src="/images/backgrounds/Character-Page-Bg.webp"
+                alt="캐릭터 페이지 배경"
+                fill
+                priority
+                className="object-cover z-[-1]"
+                quality={70}
+            />
             <Button className="absolute top-8 right-5" size={"S"} state={"error"} onClick={handleLogout}>로그아웃</Button>
-            {contentLoaded && (
-                <Suspense>
-                    <ProgressBar nickname={nickname} progress={progress} />
-                    <div className="mt-10">
-                        <Character />
-                    </div>
-                    <Status
-                        str={str ?? 0}
-                        int={int ?? 0}
-                        emo={emo ?? 0}
-                        fin={fin ?? 0}
-                        liv={liv ?? 0}
-                    />
-                </Suspense>
-            )}
+            <Suspense>
+                <ProgressBar nickname={nickname} progress={progress} />
+                <div className="mt-10">
+                    <Character />
+                </div>
+                <Status
+                    str={str ?? 0}
+                    int={int ?? 0}
+                    emo={emo ?? 0}
+                    fin={fin ?? 0}
+                    liv={liv ?? 0}
+                />
+            </Suspense>
         </div>
+        </>
     );
 }
