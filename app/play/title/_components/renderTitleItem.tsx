@@ -7,8 +7,7 @@ type TitleItemProps = {
 };
 
 const RenderTitleItem = ({ title, index }: TitleItemProps) => {
-    const imageUrl = title.titleId ? `/titles/title_df.png` : `${title.img}`;
-    
+    const imageUrl = title.titleId ? `/titles/title_df.webp` : `${title.img}`;
     return (
         <div key={index} className="items-center justify-center text-center">
             <Image 
@@ -19,7 +18,9 @@ const RenderTitleItem = ({ title, index }: TitleItemProps) => {
                 height={120} 
                 loading={index === 0 ? "eager" : "lazy"} // 첫 번째 이미지는 eager 로드
                 priority={index === 0} // 첫 번째 이미지는 우선 로드
-                sizes="(max-width: 768px) 80px, (max-width: 1024px) 100px, 120px"
+                sizes="(max-width: 414px) 100px, 120px"
+                placeholder="blur"
+                blurDataURL="/titles/title_blur.webp" // 블러 처리된 이미지
             />
             <p className="mt-2 text-sm">{title.name}</p>
         </div>
