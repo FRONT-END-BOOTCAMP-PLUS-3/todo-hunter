@@ -26,10 +26,7 @@ export default function TitlePage(){
         }
     }, [id]);
     
-    const gridItems = Array.from({ 
-        length: 9 }, 
-        (_, index) => 
-            titles[index] || 
+    const gridItems = Array.from({ length: 9 }, (_, index) => titles[index] || 
         { name: "잠금", titleId: "df" });
 
     const handlePreviousPage = () => {
