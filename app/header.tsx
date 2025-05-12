@@ -1,6 +1,8 @@
-export default function Head() {
+import Head from 'next/head';
+
+export default function Header() {
     return (
-      <head>
+      <Head>
         <title>TODO HUNTER ~RETURN OF SCROLL~</title>
         {/* ↑ 브라우저 탭에 표시할 타이틀 (검색 엔진용과 다르게 설정, 강제적용) */}
         <meta name="theme-color" content="#000000" />
@@ -9,7 +11,7 @@ export default function Head() {
         <link rel="icon" href="/icons/32.png" sizes="32x32" />
         <link rel="icon" href="/icons/16.png" sizes="16x16" />
         {/* <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials" /> */}
-      </head>
+      </Head>
     );
   }
   

@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "@hackernoon/pixel-icon-library/fonts/iconfont.css";
 import InstallPrompt from "@/components/installPrompt/InstallPrompt";
 import NavigationWrapper from "@/components/common/NavigationWrapper"; // 클라이언트 전용 네비게이션
-import Head from "./head";
+import Header from "./header";
 import { Toaster } from "@/components/common";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
 
@@ -40,8 +30,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <Head />
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
+      <Header />
+      <body className={"antialiased flex flex-col min-h-screen"}>
         <main className="flex-1 flex flex-col">
           <InstallPrompt />
           {children}
