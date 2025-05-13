@@ -35,18 +35,21 @@ export default function CharacterPage() {
         <div className="relative w-full h-[91vh] overflow-hidden"> 
             <Image
                 src="/images/backgrounds/Character-Page-Bg.webp"
+                // src="/images/backgrounds/Character-Page-Bg.png"
                 alt="캐릭터 페이지 배경"
                 fill
-                priority
+                loading="eager"
                 className="object-cover z-[-1]"
                 quality={70}
             />
             <Button className="absolute top-8 right-5" size={"S"} state={"error"} onClick={handleLogout}>로그아웃</Button>
             <Suspense>
                 <ProgressBar nickname={nickname} progress={progress} />
-                <div className="mt-10">
-                    <Character />
-                </div>
+            </Suspense>
+            <div className="mt-10">
+                <Character />
+            </div>
+            <Suspense>
                 <Status
                     str={str ?? 0}
                     int={int ?? 0}

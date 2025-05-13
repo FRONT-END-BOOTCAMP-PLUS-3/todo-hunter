@@ -7,7 +7,7 @@ type TitleItemProps = {
 };
 
 const RenderTitleItem = ({ title, index }: TitleItemProps) => {
-    const imageUrl = title.titleId ? `/titles/title_df.webp` : `${title.img}`;
+    const imageUrl = title.titleId ? `/titles/title_df.png` : `${title.img}`;
     return (
         <div key={index} className="items-center justify-center text-center">
             <Image 
@@ -20,7 +20,7 @@ const RenderTitleItem = ({ title, index }: TitleItemProps) => {
                 priority={index === 0} // 첫 번째 이미지는 우선 로드
                 sizes="(max-width: 414px) 100px, 120px"
                 placeholder="blur"
-                blurDataURL="/titles/title_blur.webp" // 블러 처리된 이미지
+                blurDataURL="/titles/title_blur.png" // 블러 처리된 이미지
             />
             <p className="mt-2 text-sm">{title.name}</p>
         </div>
