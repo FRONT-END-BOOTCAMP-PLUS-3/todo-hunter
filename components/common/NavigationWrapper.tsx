@@ -37,7 +37,8 @@ export default function NavigationWrapper() {
     return matchedMenu ? matchedMenu.menu : "character"; // 기본값 "character"
   };
 
-  return <Navigation selectedMenu={getSelectedMenu()} className="fixed bottom-0 w-full max-w-[414px]" />;
+  return <Navigation selectedMenu={getSelectedMenu()} className="fixed bottom-0 w-full" />;
+
 
   
 }
