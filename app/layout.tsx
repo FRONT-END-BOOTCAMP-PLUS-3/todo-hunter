@@ -29,9 +29,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="flex justify-center">
       <Header />
-      <body className={"antialiased flex flex-col min-h-screen"}>
+      <body className={"antialiased flex flex-col min-h-screen mobile-layout"}>
         <main className="flex-1 flex flex-col">
           <InstallPrompt />
           {children}

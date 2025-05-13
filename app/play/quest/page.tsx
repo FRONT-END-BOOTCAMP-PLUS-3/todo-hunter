@@ -8,7 +8,7 @@ import FightField from "@/components/quest/FightField";
 const QuestPage = () => {
 
   return (
-    <div className="flex-1 mt-3 min-vh overflow-x-hidden">
+    <div className="flex-1 mt-3 min-vh overflow-x-hidden bg-white">
       {/* 경험치 진행 UI */}
       <div className="left-0 right-0">
         <div className="mb-3 w-full bg-black text-white text-center font-bold">

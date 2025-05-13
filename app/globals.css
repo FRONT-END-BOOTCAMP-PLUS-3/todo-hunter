@@ -3,18 +3,15 @@
 @tailwind utilities;
 
 
-html {
-  display: flex;
-  justify-content: center; 
-}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  max-width: 414px; 
-  width: 100%;  
-  background-color: #e8e8e8 
 }
 
+.mobile-layout {
+  width: 100%;
+  max-width: 414px;
+}
 
 
 @layer base {
