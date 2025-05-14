@@ -14,6 +14,7 @@ const Character = () => {
         for (let i = 1; i <= frameCount; i++) {
             const img = new Image();
             img.src = `/images/characters/player/idle0${i}.png`; // 이미지 경로 설정
+            img.alt = `캐릭터`; // alt 속성 추가
             images.push(img);
         }
 
