@@ -23,28 +23,35 @@ export default function InstallPrompt() {
         } else {
           console.log("User dismissed the install prompt");
         }
+        localStorage.setItem("pwaPromptDismissed", "true");
         setDeferredPrompt(null);
       });
     }
   };
 
   const closeHandler = () => {
+    localStorage.setItem("pwaPromptDismissed", "true");
     setDeferredPrompt(null);
     setShowIOSPrompt(false);
   };
 
   useEffect(() => {
+    const isPromptDismissed = localStorage.getItem("pwaPromptDismissed") === "true";
+
+    if (isPromptDismissed) return;
+
+    // iOS 디바이스에서 PWA 설치 프롬프트를 표시하지 않도록 처리
     const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !('MSStream' in window);
     if (isIOS) {
       setShowIOSPrompt(true);
       return;
     }
-
+    // IOS 제외한 브라우저에서만 PWA 설치 프롬프트를 처리
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
-
+    // PWA 설치 프롬프트 이벤트 리스너 등록
     window.addEventListener("beforeInstallPrompt", handleBeforeInstallPrompt as EventListener);
 
     return () => {
