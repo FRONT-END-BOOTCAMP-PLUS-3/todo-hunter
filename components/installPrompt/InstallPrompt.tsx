@@ -12,7 +12,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 export default function InstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [showiOSPrompt, setShowiOSPrompt] = useState(false);
+  const [showIOSPrompt, setShowIOSPrompt] = useState(false);
 
   const installHandler = () => {
     if (deferredPrompt) {
@@ -30,25 +30,25 @@ export default function InstallPrompt() {
 
   const closeHandler = () => {
     setDeferredPrompt(null);
-    setShowiOSPrompt(false);
+    setShowIOSPrompt(false);
   };
 
   useEffect(() => {
     const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !('MSStream' in window);
     if (isIOS) {
-      setShowiOSPrompt(true);
+      setShowIOSPrompt(true);
       return;
     }
 
-    const handlebeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
+    const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
 
-    window.addEventListener("beforeinstallprompt", handlebeforeInstallPrompt as EventListener);
+    window.addEventListener("beforeInstallPrompt", handleBeforeInstallPrompt as EventListener);
 
     return () => {
-      window.removeEventListener("beforeinstallprompt", handlebeforeInstallPrompt as EventListener);
+      window.removeEventListener("beforeInstallPrompt", handleBeforeInstallPrompt as EventListener);
     };
   }, []);
 
@@ -71,7 +71,7 @@ export default function InstallPrompt() {
         </div>
       )}
 
-      {showiOSPrompt && (
+      {showIOSPrompt && (
         <div className="is-rounded p-2 m-3 fixed bg-white z-10 left-0 right-0">
           <div className="flex justify-center space-x-2">
             <Image src={"/icons/32.png"} alt="설치 유도 아이콘" width={50} height={50} className="mr-5" />
