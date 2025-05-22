@@ -29,7 +29,16 @@ export default function InstallPrompt() {
     }
   };
 
+  // 5분 후에 다시 뜨게
   const closeHandler = () => {
+    const nextShow = Date.now() + 5 * 60 * 1000; // 5분 후 타임스탬프
+    localStorage.setItem("pwaPromptNextShow", nextShow.toString());
+    setDeferredPrompt(null);
+    setShowIOSPrompt(false);
+  };
+
+  // 영구히 거절
+  const neverShowHandler = () => {
     localStorage.setItem("pwaPromptDismissed", "true");
     setDeferredPrompt(null);
     setShowIOSPrompt(false);
@@ -37,8 +46,10 @@ export default function InstallPrompt() {
 
   useEffect(() => {
     const isPromptDismissed = localStorage.getItem("pwaPromptDismissed") === "true";
-
     if (isPromptDismissed) return;
+
+    const nextShow = localStorage.getItem("pwaPromptNextShow");
+    if (nextShow && Date.now() < Number(nextShow)) return;
 
     // iOS 디바이스에서 PWA 설치 프롬프트를 표시하지 않도록 처리
     const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !('MSStream' in window);
@@ -51,11 +62,11 @@ export default function InstallPrompt() {
       e.preventDefault();
       setDeferredPrompt(e);
     };
-    // PWA 설치 프롬프트 이벤트 리스너 등록
-    window.addEventListener("beforeInstallPrompt", handleBeforeInstallPrompt as EventListener);
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt as EventListener);
 
     return () => {
-      window.removeEventListener("beforeInstallPrompt", handleBeforeInstallPrompt as EventListener);
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt as EventListener);
     };
   }, []);
 
@@ -74,6 +85,9 @@ export default function InstallPrompt() {
             <Button size="XS" onClick={closeHandler}>
               닫기
             </Button>
+            <Button size="XS" onClick={neverShowHandler}>
+              다시는 표시하지 않음
+            </Button>
           </div>
         </div>
       )}
@@ -86,9 +100,13 @@ export default function InstallPrompt() {
             &quot;홈 화면에 추가&quot;를 선택하세요!</p>
           </div>
           <div className="flex justify-center space-x-2">
+            <Button size="M" onClick={neverShowHandler}>
+              다시는 표시하지 않음
+            </Button>
             <Button size="XS" onClick={closeHandler}>
               닫기
             </Button>
+            
           </div>
         </div>
       )}
