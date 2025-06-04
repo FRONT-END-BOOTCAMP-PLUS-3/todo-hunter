@@ -106,8 +106,8 @@ export default function Home() {
       ) : (
         <Image
           src="/images/logo.png"
-          width={1001}
-          height={395}
+          width={150}
+          height={150}
           alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)"
           className="p-6"
           unoptimized
