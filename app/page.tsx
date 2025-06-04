@@ -98,23 +98,23 @@ export default function Home() {
   return (
     <>
     <Head>
-      <link rel="preload" href="/images/Logo.png" as="image" />
+      <link rel="preload" href="/images/logo.png" as="image" />
     </Head>
     <div className="flex flex-col justify-center items-center min-h-screen bg-black">
       {isLoading ? (
         <Loading color={"black"} /> // 이미지 로딩 중일 때 로딩 상태 표시
       ) : (
         <Image
-          src="/images/Logo.png"
-          width={1001}
-          height={395}
+          src="/images/logo.png"
+          width={150}
+          height={150}
           alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)"
           className="p-6"
           unoptimized
           onLoad={handleImageLoad} // 이미지 로딩 완료 시 핸들러 호출
         />
       )}
-      {/* <Image src="/images/Logo.png" width={1001} height={395} alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)" className="p-6"/> */}
+      {/* <Image src="/images/logo.png" width={1001} height={395} alt="TODO HUNTER ~RETURN OF SCROLL~ (투두 헌터 -리턴 오브 스크롤-)" className="p-6"/> */}
       <Button asChild size="L" state="success" className="mt-20 max-[1000px]:mt-[8vw] max-[380px]:w-4/5">
         <Link href={"/"} onClick={handleStartClick}>시작하기</Link>
       </Button>
