@@ -83,7 +83,7 @@ const CharacterMotion: React.FC<CharacterProps> = ({
 
   return (
     <div
-      className="absolute cursor-pointer transition-all duration-500"
+      className="absolute transition-all duration-500"
       style={{
         top: position.top,
         left: position.left,
@@ -92,7 +92,7 @@ const CharacterMotion: React.FC<CharacterProps> = ({
         animation: isShaking ? "shake 0.5s infinite" : "none", //  진동 효과
       }}
     >
-      <Image src={isAttacking ? attackFrames[currentFrame] : idleFrames[currentFrame]} alt={alt} width={120} height={120} />
+      <Image src={isAttacking ? attackFrames[currentFrame] : idleFrames[currentFrame]} alt={alt} width={100} height={320} />
     </div>
   );
 };

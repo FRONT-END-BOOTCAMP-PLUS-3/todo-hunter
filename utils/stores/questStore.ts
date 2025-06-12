@@ -10,6 +10,7 @@ interface Quest {
   tagged: "STR" | "INT" | "EMO" | "FIN" | "LIV";
   expiredAt?: string | null;
   completed: boolean;
+  completedAt: Date;
   characterId: number;
 }
 

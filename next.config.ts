@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     register: true,    // 서비스 워커 등록
     sw: "service-worker.js", // 서비스 워커 파일 이름
   },
+  
 };
 
 /** @type {import("next").NextConfig} */

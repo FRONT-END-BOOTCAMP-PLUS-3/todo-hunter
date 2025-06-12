@@ -68,7 +68,7 @@ const DailyQuest = () => {
 
       <div className="flex justify-center">
         <Button size="L" className="mt-2" onClick={onAddQuestHandler}>
-          ⚡ 할 일 추가
+           할 일 추가
         </Button>
       </div>
     </div>

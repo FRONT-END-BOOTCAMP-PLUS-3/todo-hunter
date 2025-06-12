@@ -38,9 +38,9 @@ const FightField = () => {
   ];
 
   return (
-    <div className="relative w-auto h-[150px]">
+    <div className="relative w-auto h-[200px]">
       <Image
-        src="/images/backgrounds/underwater-fantasy-background3.png"
+        src="/images/backgrounds/quest-fightfield.png"
         alt="field image"
         fill
         style={{ objectFit: "cover" }}
